@@ -1,0 +1,47 @@
+{
+  "name": "mainland_js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack serve --mode development",
+    "build": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mainland-AI/mainland_js.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mainland-AI/mainland_js/issues"
+  },
+  "homepage": "https://github.com/Mainland-AI/mainland_js#readme",
+  "dependencies": {
+    "@babel/cli": "^7.21.0",
+    "@babel/core": "^7.21.4",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/preset-env": "^7.21.4",
+    "@babel/preset-react": "^7.18.6",
+    "babel-loader": "^9.1.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.14",
+    "css-loader": "^6.7.3",
+    "file-loader": "^6.2.0",
+    "node-sass": "^8.0.0",
+    "postcss": "^8.4.23",
+    "postcss-import": "^15.1.0",
+    "postcss-loader": "^7.2.4",
+    "postcss-nesting": "^11.2.2",
+    "sass-loader": "^13.2.2",
+    "style-loader": "^3.3.2",
+    "tailwindcss": "^3.3.2",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.81.0",
+    "webpack-cli": "^5.0.2",
+    "webpack-dev-server": "^4.13.3"
+  }
+}
