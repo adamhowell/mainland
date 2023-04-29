@@ -1,4 +1,5 @@
 const path = require("path");
+const CopyPlugin = require('copy-webpack-plugin');
 
 let configDev = {
   entry: "./src/index.js",
@@ -173,6 +174,13 @@ let configProd = {
     libraryTarget: "umd",
     umdNamedDefine: true,
   },
+  plugins: [
+    new CopyPlugin({
+      patterns: [
+        { from: path.resolve('src/index.html'), to: path.resolve('dist/index.html') },
+      ],
+    }),
+  ]
 };
 
 module.exports = (env, argv) => {

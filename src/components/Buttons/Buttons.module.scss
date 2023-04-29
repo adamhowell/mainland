@@ -1,0 +1,33 @@
+@import "../../styles//variables.scss";
+
+.root {
+  background-color: transparent;
+  border: transparent;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 1rem;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: all $transition ease;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.active {
+  opacity: 1;
+}
+
+.md {
+  height: $button-md;
+}
+
+.sm {
+  height: $button-sm;
+}
+
+.lg {
+  height: $button-lg;
+}
