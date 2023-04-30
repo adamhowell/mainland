@@ -7,16 +7,7 @@
   justify-content: space-between;
 }
 
-.sidebarActions {
+.sidebarActionsContainer {
   width: $sidebar-width;
   height: 100%;
-  display: flex;
-  align-items: stretch;
-  justify-content: space-between;
-  font-size: 1.4rem;
-}
-
-.plus {
-  font-size: 1.8rem;
-  transform: rotate(-45deg);
 }

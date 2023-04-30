@@ -1,7 +1,7 @@
 const SET_ACTIVE_TAB = 'layout-reducer/SET_ACTIVE_TAB'
 
 const initialState = {
-  activeTab: "styles"
+  activeTab: "style-manager"
 };
 
 const layoutReducer = (state = initialState, action) => {

@@ -31,3 +31,47 @@
 .lg {
   height: $button-lg;
 }
+
+.buttonBlock {
+  width: calc(50% - #{$gutter/2});
+  height: $button-block-height;
+  background-color: rgba($white, 0.1);
+  padding: 1rem;
+  border-radius: 6px;
+  border: transparent;
+  outline: none;
+  display: inline-flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: all $transition ease;
+
+  svg {
+    fill: $white;
+    width: auto;
+    height: $button-block-height * 0.5;
+    margin-bottom: 0.5rem;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.active {
+  opacity: 1;
+}
+
+.md {
+  height: $button-md;
+}
+
+.sm {
+  height: $button-sm;
+}
+
+.lg {
+  height: $button-lg;
+}

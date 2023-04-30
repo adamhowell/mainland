@@ -11,17 +11,23 @@ import { setConfig } from "./redux/data-reducer";
 
 import "./styles/index.css";
 
-const Init = ({userConfig}) => {
+const Init = ({ userConfig }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setConfig({ ...defaultConfig, ...userConfig }));
+    dispatch(
+      setConfig({
+        ...defaultConfig,
+        ...userConfig,
+        blocks: [...defaultConfig.blocks, ...userConfig.blocks],
+      })
+    );
   }, [userConfig]);
 
   return <></>;
 };
 
-const App = ({userConfig}) => {
+const App = ({ userConfig }) => {
   return (
     <Provider store={store}>
       <Init userConfig={userConfig} />
