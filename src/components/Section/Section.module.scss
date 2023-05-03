@@ -1,0 +1,24 @@
+@import "../../../src/styles/variables.scss";
+
+.root {
+  width: 100%;
+  min-height: 100px;
+  position: relative;
+}
+
+.actions {
+  position: absolute;
+  left: -30px;
+  top: 0;
+  cursor: pointer;
+  font-size: 0.7rem;
+
+  svg {
+    color: rgba($white, 0.4);
+    transition: color $transition ease;
+
+    &:hover {
+      color: rgba($white, 1);
+    }
+  }
+}
