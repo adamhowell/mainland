@@ -11,3 +11,47 @@
     height: 100px;
   }
 }
+
+.actions {
+  position: absolute;
+  left: 0;
+  top: -25px;
+  height: 20px;
+  display: flex;
+  background-color: $white;
+  align-items: center;
+  cursor: pointer;
+  padding: 0.25rem 0.4rem;
+  font-size: 0.7rem;
+  opacity: 0;
+  border-radius: 4px;
+  pointer-events: none;
+  transition: opacity $transition ease;
+
+  span {
+    color: $black;
+    line-height: 1;
+    font-size: 0.875rem;
+    text-transform: capitalize;
+  }
+
+  &:global(.active) {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  svg {
+    color: rgba($black, 0.8);
+    transition: color $transition ease;
+
+    &:hover {
+      color: rgba($black, 0.5);
+    }
+  }
+}
+
+.card {
+  &:global(.empty) {
+    height: 50px;
+  }
+}

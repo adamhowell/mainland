@@ -12,12 +12,7 @@ const StyleManager = () => {
   const dispatch = useDispatch();
 
   const onAddSection = (block) => {
-    dispatch(
-      addToDom({
-        ...block,
-        id: shortid.generate(),
-      })
-    );
+    dispatch(addToDom(block));
   };
 
   return (
