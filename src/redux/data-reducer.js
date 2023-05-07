@@ -170,18 +170,22 @@ export const moveNode = (dragId, hoverId, node) => (dispatch, getState) => {
 
   let newDom = [];
 
+
+  console.log(dragId, hoverId, node)
+
   const checkEndReturnNode = (nx) => {
     let newNode = { ...nx };
 
-    if (nx.children)
+    if (nx.children) {
       nx.children.forEach((n) => {
         n.id === hoverId
-          ? newNode.push({
+          ? newNode.children.push({
               ...n,
-              ...(n.children ? { children: [...n.children, node] } : {}),
+              children: [...n.children, node],
             })
-          : newNode.push(checkEndReturnNode(n));
+          : newNode.children.push(checkEndReturnNode(n));
       });
+    }
 
     return newNode;
   };
@@ -232,14 +236,14 @@ export const updateText = (id, text) => (dispatch, getState) => {
   } = getState();
 
   const checkEndReturnNode = (node) => {
-    let newNode = {...node};
+    let newNode = { ...node };
 
     if (node.children) {
-      newNode.children = []
+      newNode.children = [];
 
       node.children.forEach((n) => {
         n.id === id
-          ? newNode.children.push({...n, content: text })
+          ? newNode.children.push({ ...n, content: text })
           : newNode.children.push(checkEndReturnNode(n));
       });
     }

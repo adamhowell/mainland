@@ -44,8 +44,8 @@ const Canvas = () => {
     return renderContent(item);
   };
 
-  const moveCard = useCallback((dragId, hoverId) => {
-    dispatch(moveNode(dragId, hoverId));
+  const moveCard = useCallback((dragId, hoverId, node) => {
+    dispatch(moveNode(dragId, hoverId, node));
   }, []);
 
   const renderCard = useCallback(
