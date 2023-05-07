@@ -43,6 +43,9 @@ export const Card = ({
       if (!ref.current) {
         return;
       }
+      const dragId = item.id;
+      const hoverId = id;
+
       const dragIndex = item.index;
       const hoverIndex = index;
       if (dragIndex === hoverIndex) {
@@ -52,15 +55,18 @@ export const Card = ({
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-        return;
+
+      if(clientOffset) {
+        const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+        if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+          return;
+        }
+        if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+          return;
+        }
+        moveCard(dragId, hoverId, node);
+        item.index = hoverIndex;
       }
-      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-        return;
-      }
-      moveCard(dragIndex, hoverIndex);
-      item.index = hoverIndex;
     },
   });
   const [dragTargetProps, drag] = useDrag({

@@ -4,9 +4,10 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import {
   setDom,
-  moveDom,
+  moveNode,
   setSelectedSection,
   setHoveredSection,
+  removeNode,
 } from "../../redux/data-reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { Card } from "./Card";
@@ -35,16 +36,16 @@ const Canvas = () => {
       dispatch(setDom(t));
     }
   };
-  const onRemove = (i) => {
-    dispatch(setDom(dom.filter((c, z) => z != i)));
+  const onRemove = (id) => {
+    dispatch(removeNode(id));
   };
 
   const renderComponent = (item) => {
     return renderContent(item);
   };
 
-  const moveCard = useCallback((dragIndex, hoverIndex) => {
-    dispatch(moveDom(dragIndex, hoverIndex));
+  const moveCard = useCallback((dragId, hoverId) => {
+    dispatch(moveNode(dragId, hoverId));
   }, []);
 
   const renderCard = useCallback(
@@ -55,6 +56,7 @@ const Canvas = () => {
           index={index}
           node={node}
           moveCard={moveCard}
+          onRemove={() => onRemove(node.id)}
         >
           {node.children?.length && node.children[0].tagName !== "span"
             ? node.children.map((n, i) => renderCard(n, i))
@@ -70,7 +72,7 @@ const Canvas = () => {
   };
 
   const onCanvasClick = (e) => {
-    if(e.target.id === "canvas") dispatch(setSelectedSection(null));
+    if (e.target.id === "canvas") dispatch(setSelectedSection(null));
   };
 
   return (
@@ -80,11 +82,11 @@ const Canvas = () => {
       id="canvas"
       className={`${styles.root} bg-secondary text-white`}
     >
-      <div className={`${styles.container} container mx-auto`}>
-        <DndProvider backend={HTML5Backend}>
+      <DndProvider backend={HTML5Backend}>
+        <div className={`${styles.container} container mx-auto`}>
           {dom?.map((item, i) => renderCard(item, i))}
-        </DndProvider>
-      </div>
+        </div>
+      </DndProvider>
     </div>
   );
 };

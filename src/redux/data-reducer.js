@@ -8,8 +8,10 @@ const SET_DOM = "data-reducer/SET_DOM";
 const SET_ERROR = "data-reducer/SET_ERROR";
 const SET_SELECTED_SECTION = "data-reducer/SET_SELECTED_SECTION";
 const SET_HOVERED_SECTION = "data-reducer/SET_HOVERED_SECTION";
-const MOVE_DOM = "data-reducer/MOVE_DOM";
-const ADD_TO_DOM = "modals-reducer/ADD_TO_DOM";
+const MOVE_NODE = "data-reducer/MOVE_NODE";
+const ADD_TO_DOM = "data-reducer/ADD_TO_DOM";
+const REMOVE_NODE = "data-reducer/REMOVE_NODE";
+const UPDATE_TEXT = "data-reducer/UPDATE_TEXT";
 
 const initialState = {
   config: null,
@@ -89,16 +91,8 @@ const dataReducer = (state = initialState, action) => {
     case SET_DOM: {
       return { ...state, dom: action.data };
     }
-    case MOVE_DOM: {
-      return {
-        ...state,
-        dom: update([...state.dom], {
-          $splice: [
-            [action.data.dragIndex, 1],
-            [action.data.hoverIndex, 0, state.dom[action.data.dragIndex]],
-          ],
-        }),
-      };
+    case MOVE_NODE: {
+      return { ...state, dom: action.data };
     }
     case ADD_TO_DOM: {
       return {
@@ -114,6 +108,12 @@ const dataReducer = (state = initialState, action) => {
     }
     case SET_HOVERED_SECTION: {
       return { ...state, hoveredSection: action.data };
+    }
+    case REMOVE_NODE: {
+      return { ...state, dom: action.data };
+    }
+    case UPDATE_TEXT: {
+      return { ...state, dom: action.data };
     }
     default:
       return state;
@@ -133,9 +133,9 @@ const actions = {
     type: SET_SELECTED_SECTION,
     data: data,
   }),
-  moveDom: (dragIndex, hoverIndex) => ({
-    type: MOVE_DOM,
-    data: { dragIndex: dragIndex, hoverIndex: hoverIndex },
+  moveNode: (data) => ({
+    type: MOVE_NODE,
+    data: data,
   }),
   addToDom: (data) => ({
     type: ADD_TO_DOM,
@@ -143,6 +143,14 @@ const actions = {
   }),
   setHoveredSection: (data) => ({
     type: SET_HOVERED_SECTION,
+    data: data,
+  }),
+  removeNode: (data) => ({
+    type: REMOVE_NODE,
+    data: data,
+  }),
+  updateText: (data) => ({
+    type: UPDATE_TEXT,
     data: data,
   }),
   setError: (data) => ({
@@ -155,8 +163,36 @@ export const setError = (err) => (dispatch) => {
   dispatch(actions.setError(err));
 };
 
-export const moveDom = (dragIndex, hoverIndex) => (dispatch) => {
-  dispatch(actions.moveDom(dragIndex, hoverIndex));
+export const moveNode = (dragId, hoverId, node) => (dispatch, getState) => {
+  const {
+    data: { dom },
+  } = getState();
+
+  let newDom = [];
+
+  const checkEndReturnNode = (nx) => {
+    let newNode = { ...nx };
+
+    if (nx.children)
+      nx.children.forEach((n) => {
+        n.id === hoverId
+          ? newNode.push({
+              ...n,
+              ...(n.children ? { children: [...n.children, node] } : {}),
+            })
+          : newNode.push(checkEndReturnNode(n));
+      });
+
+    return newNode;
+  };
+
+  removeNodeInternal(dom, dragId).forEach((ny) => {
+    ny.id === hoverId
+      ? newDom.push({ ...ny, children: [...ny.children, node] })
+      : newDom.push(checkEndReturnNode(ny));
+  });
+
+  dispatch(actions.moveNode(newDom));
 };
 
 export const setDom = (data) => (dispatch) => {
@@ -179,6 +215,67 @@ export const setConfig = (data) => (dispatch) => {
 
 export const setSelectedSection = (data) => (dispatch) => {
   dispatch(actions.setSelectedSection(data));
+};
+
+export const removeNode = (id) => (dispatch, getState) => {
+  const {
+    data: { dom },
+  } = getState();
+
+  dispatch(actions.removeNode(removeNodeInternal(dom, id)));
+};
+
+export const updateText = (id, text) => (dispatch, getState) => {
+  let newDom = [];
+  const {
+    data: { dom },
+  } = getState();
+
+  const checkEndReturnNode = (node) => {
+    let newNode = {...node};
+
+    if (node.children) {
+      newNode.children = []
+
+      node.children.forEach((n) => {
+        n.id === id
+          ? newNode.children.push({...n, content: text })
+          : newNode.children.push(checkEndReturnNode(n));
+      });
+    }
+
+    return newNode;
+  };
+
+  dom.forEach((node) => {
+    node.id === id
+      ? newDom.push({ ...node, content: text })
+      : newDom.push(checkEndReturnNode(node));
+  });
+
+  dispatch(actions.updateText(newDom));
+};
+
+const removeNodeInternal = (dom, id) => {
+  let newDom = [];
+
+  const checkEndReturnNode = (node) => {
+    let newNode = { ...node };
+    newNode.children = [];
+
+    if (node.children)
+      node.children.forEach((n) => {
+        if (n.id !== id) newNode.children.push(checkEndReturnNode(n));
+      });
+
+    return newNode;
+  };
+
+  dom.forEach((node) => {
+    if (node.id !== id) newDom.push(checkEndReturnNode(node));
+  });
+
+  return newDom;
 };
 
 export default dataReducer;
