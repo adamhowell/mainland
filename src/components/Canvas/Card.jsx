@@ -1,12 +1,14 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import { IconClose, IconChevronDown, IconChevronUp } from "../Icons";
 import styles from "./Canvas.module.scss";
 import {
   setSelectedSection,
   setHoveredSection,
+  updateText,
 } from "../../redux/data-reducer";
 import { useDispatch, useSelector } from "react-redux";
+import Actions from "./Actions";
+import EditableNode from "./EditableNode";
 
 const style = {
   position: "relative",
@@ -14,16 +16,8 @@ const style = {
   backgroundColor: "transparent",
   cursor: "move",
 };
-export const Card = ({
-  text,
-  index,
-  moveCard,
-  children,
-  onUp,
-  onDown,
-  onRemove,
-  node,
-}) => {
+
+export const Card = ({ index, moveCard, children, node, isEditable }) => {
   const { id, className } = node;
   const ref = useRef(null);
   const dispatch = useDispatch();
@@ -32,7 +26,7 @@ export const Card = ({
   );
 
   const [dropTargetProps, drop] = useDrop({
-    accept: ["card", "div"],
+    accept: ["card"],
     collect(monitor) {
       return {
         handlerId: monitor.getHandlerId(),
@@ -40,6 +34,7 @@ export const Card = ({
       };
     },
     drop(item, monitor) {
+      console.log(item)
       if (!ref.current) {
         return;
       }
@@ -56,17 +51,17 @@ export const Card = ({
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
 
-      if(clientOffset) {
-        const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-        if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-          return;
-        }
-        if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-          return;
-        }
+      // if (clientOffset) {
+      //   const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      //   if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+      //     return;
+      //   }
+      //   if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+      //     return;
+      //   }
         moveCard(dragId, hoverId, node);
         item.index = hoverIndex;
-      }
+      //}
     },
   });
   const [dragTargetProps, drag] = useDrag({
@@ -94,9 +89,34 @@ export const Card = ({
     if (e.target.id === id) dispatch(setSelectedSection(node));
   };
 
-  return (
+  return isEditable && node.content ? (
+    <EditableNode
+      id={id}
+      onChange={(e) => dispatch(updateText(id, e))}
+      tagName={node.tagName}
+      className={`${styles.card} ${className ? className : ""}`}
+      content={node.content}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      onClick={onClick}
+      ref={ref}
+      style={{
+        ...style,
+        opacity,
+        border:
+          selectedSection?.id === id || hoveredSection?.id === id
+            ? "1px solid #adadad"
+            : "1px dashed #696969",
+      }}
+      data-handler-id={dropTargetProps.handlerId}
+    >
+      <Actions node={node} />
+    </EditableNode>
+  ) : (
     <node.tagName
-      className={`${styles.card} ${node.children.length ? "" : "empty"} ${className ? className : ""}`}
+      className={`${styles.card} ${node.children?.length ? "" : "empty"} ${
+        className ? className : ""
+      }`}
       id={id}
       onClick={onClick}
       onMouseEnter={onMouseEnter}
@@ -112,41 +132,7 @@ export const Card = ({
       }}
       data-handler-id={dropTargetProps.handlerId}
     >
-      <div
-        className={`${styles.actions} ${
-          selectedSection?.id === id || hoveredSection?.id === id ? "active" : ""
-        }`}
-      >
-        {hoveredSection?.id === id && !(selectedSection?.id === id) ? (
-          <span>{node.tagName}</span>
-        ) : (
-          <>
-            <div
-              onClick={() => {
-                if (onUp) onUp();
-              }}
-              className="mr-2"
-            >
-              <IconChevronUp />
-            </div>
-            <div
-              className="mr-2"
-              onClick={() => {
-                if (onDown) onDown();
-              }}
-            >
-              <IconChevronDown />
-            </div>
-            <div
-              onClick={() => {
-                if (onRemove) onRemove();
-              }}
-            >
-              <IconClose />
-            </div>
-          </>
-        )}
-      </div>
+      <Actions node={node} />
       {children}
     </node.tagName>
   );

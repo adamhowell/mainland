@@ -43,6 +43,7 @@ const initialState = {
         {
           id: "lCWQLK7tX0",
           tagName: "div",
+          className: "p-3",
           children: [
             {
               id: "AFxhldq2O2",
@@ -54,6 +55,7 @@ const initialState = {
         {
           id: "UNQNaXsjPl",
           tagName: "div",
+          className: "p-3",
           children: [
             {
               id: "IMzpPdaPh8",
@@ -65,6 +67,7 @@ const initialState = {
         {
           id: "FnDTXhKNLM",
           tagName: "div",
+          className: "p-3",
           children: [
             {
               id: "LX2vTs_Q7R",
@@ -165,34 +168,31 @@ export const setError = (err) => (dispatch) => {
 
 export const moveNode = (dragId, hoverId, node) => (dispatch, getState) => {
   const {
-    data: { dom },
+    data: { dom, hoveredSection },
   } = getState();
 
   let newDom = [];
 
-
-  console.log(dragId, hoverId, node)
+  console.log(dragId, hoverId, hoveredSection);
 
   const checkEndReturnNode = (nx) => {
     let newNode = { ...nx };
 
     if (nx.children) {
-      nx.children.forEach((n) => {
+      nx.children.forEach((n, i) => {
+        if(n.id === hoverId) console.log(n, newNode.children[i])
         n.id === hoverId
-          ? newNode.children.push({
-              ...n,
-              children: [...n.children, node],
-            })
-          : newNode.children.push(checkEndReturnNode(n));
+          ? newNode.children[i].children.push(hoveredSection)
+          : checkEndReturnNode(n);
       });
     }
 
     return newNode;
   };
 
-  removeNodeInternal(dom, dragId).forEach((ny) => {
+  removeNodeInternal(dom, hoveredSection.id).forEach((ny) => {
     ny.id === hoverId
-      ? newDom.push({ ...ny, children: [...ny.children, node] })
+      ? newDom.push({ ...ny, children: [...ny.children, hoveredSection] })
       : newDom.push(checkEndReturnNode(ny));
   });
 

@@ -51,6 +51,7 @@
 }
 
 .card {
+  width: 100%;
   &:global(.empty) {
     height: 50px;
   }
