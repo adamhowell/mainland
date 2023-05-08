@@ -5,10 +5,12 @@ import {
   setSelectedSection,
   setHoveredSection,
   updateText,
+  addToNode,
 } from "../../redux/data-reducer";
 import { useDispatch, useSelector } from "react-redux";
 import Actions from "./Actions";
 import EditableNode from "./EditableNode";
+import { htmlToJson } from "../../utils";
 
 const style = {
   position: "relative",
@@ -26,7 +28,7 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
   );
 
   const [dropTargetProps, drop] = useDrop({
-    accept: ["card"],
+    accept: ["card", "block"],
     collect(monitor) {
       return {
         handlerId: monitor.getHandlerId(),
@@ -34,7 +36,7 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
       };
     },
     drop(item, monitor) {
-      console.log(item)
+      console.log(item);
       if (!ref.current) {
         return;
       }
@@ -59,8 +61,20 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
       //   if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
       //     return;
       //   }
+
+      if (item.data) {
+        const doc = new DOMParser().parseFromString(
+          item.data.content,
+          "text/xml"
+        );
+        dispatch(
+          addToNode(htmlToJson(doc.firstChild, item.data.attributes), hoverId)
+        );
+      } else {
         moveCard(dragId, hoverId, node);
         item.index = hoverIndex;
+      }
+
       //}
     },
   });

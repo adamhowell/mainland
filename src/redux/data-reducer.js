@@ -180,7 +180,6 @@ export const moveNode = (dragId, hoverId, node) => (dispatch, getState) => {
 
     if (nx.children) {
       nx.children.forEach((n, i) => {
-        if(n.id === hoverId) console.log(n, newNode.children[i])
         n.id === hoverId
           ? newNode.children[i].children.push(hoveredSection)
           : checkEndReturnNode(n);
@@ -211,6 +210,36 @@ export const addToDom = (data) => (dispatch) => {
   const doc = new DOMParser().parseFromString(data.content, "text/xml");
 
   dispatch(actions.addToDom(htmlToJson(doc.firstChild, data.attributes)));
+};
+
+export const addToNode = (data, id) => (dispatch, getState) => {
+
+  let newDom = [];
+  const {
+    data: { dom },
+  } = getState();
+
+  const checkEndReturnNode = (nx) => {
+    let newNode = { ...nx };
+
+    if (nx.children) {
+      nx.children.forEach((n, i) => {
+        n.id === id
+          ? newNode.children[i].children.push(data)
+          : checkEndReturnNode(n);
+      });
+    }
+
+    return newNode;
+  };
+
+  dom.forEach((ny) => {
+    ny.id === id
+      ? newDom.push({ ...ny, children: [...ny.children, data] })
+      : newDom.push(checkEndReturnNode(ny));
+  });
+
+  dispatch(actions.setDom(newDom));
 };
 
 export const setConfig = (data) => (dispatch) => {

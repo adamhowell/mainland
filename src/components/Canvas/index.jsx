@@ -1,7 +1,5 @@
 import React, { useCallback } from "react";
 import styles from "./Canvas.module.scss";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import {
   moveNode,
   setSelectedSection,
@@ -15,10 +13,6 @@ const Canvas = () => {
   const { dom, selectedSection } = useSelector((state) => state.data);
 
   console.log("DOM", dom);
-
-  const renderComponent = (item) => {
-    return renderContent(item);
-  };
 
   const moveCard = useCallback((dragId, hoverId, node) => {
     dispatch(moveNode(dragId, hoverId, node));
@@ -63,11 +57,9 @@ const Canvas = () => {
       id="canvas"
       className={`${styles.root} bg-secondary text-white`}
     >
-      <DndProvider backend={HTML5Backend}>
-        <div className={`${styles.container} container mx-auto`}>
-          {dom?.map((item, i) => renderCard(item, i))}
-        </div>
-      </DndProvider>
+      <div className={`${styles.container} container mx-auto`}>
+        {dom?.map((item, i) => renderCard(item, i))}
+      </div>
     </div>
   );
 };

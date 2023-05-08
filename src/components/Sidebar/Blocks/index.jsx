@@ -1,9 +1,8 @@
 import React from "react";
 import styles from "./Blocks.module.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { ButtonBlock } from "../../Buttons";
+import ButtonBlock from "./ButtonBlock";
 import { addToDom } from "../../../redux/data-reducer";
-import shortid from "shortid";
 
 const StyleManager = () => {
   const {
@@ -18,7 +17,7 @@ const StyleManager = () => {
   return (
     <div className={`${styles.root}`}>
       {blocks.map((block, i) => (
-        <ButtonBlock onClick={() => onAddSection(block)} key={`bi-${i}`}>
+        <ButtonBlock data={block} onClick={() => onAddSection(block)} key={`bi-${i}`}>
           <div dangerouslySetInnerHTML={{ __html: block.icon }}></div>
           {block.label}
         </ButtonBlock>

@@ -8,6 +8,8 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import { useDispatch } from "react-redux";
 import { setConfig } from "./redux/data-reducer";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 import "./styles/index.css";
 
@@ -31,11 +33,13 @@ const App = ({ userConfig }) => {
   return (
     <Provider store={store}>
       <Init userConfig={userConfig} />
-      <Layout
-        slotHeader={<Header />}
-        slotSidebar={<Sidebar />}
-        slotCanvas={<Canvas />}
-      />
+      <DndProvider backend={HTML5Backend}>
+        <Layout
+          slotHeader={<Header />}
+          slotSidebar={<Sidebar />}
+          slotCanvas={<Canvas />}
+        />
+      </DndProvider>
     </Provider>
   );
 };

@@ -26,18 +26,3 @@ export const Button = (props) => {
     </div>
   );
 };
-
-export const ButtonBlock = (props) => {
-  const { children, size, active, className, ...rest } = props;
-
-  return (
-    <div
-      {...rest}
-      className={`${styles.buttonBlock} text-white ${active ? styles.active : ""} ${
-        className ? className : ""
-      }`}
-    >
-      {children}
-    </div>
-  );
-};

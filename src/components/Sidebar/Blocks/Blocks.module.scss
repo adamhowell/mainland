@@ -12,3 +12,34 @@
     width: 100%;
   }
 }
+
+.buttonBlock {
+  height: $button-block-height;
+  background-color: rgba($white, 0.1);
+  padding: 1rem;
+  border-radius: 6px;
+  border: transparent;
+  outline: none;
+  display: inline-flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: all $transition ease;
+
+  svg {
+    fill: $white;
+    width: auto;
+    height: $button-block-height * 0.5;
+    margin-bottom: 0.5rem;
+  }
+
+  &:hover {
+    background-color: rgba($white, 0.2);
+  }
+}
+
+.active {
+  opacity: 1;
+}
