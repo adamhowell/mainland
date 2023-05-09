@@ -52,6 +52,8 @@
 
 .card {
   width: 100%;
+  position: relative;
+  
   &:global(.empty) {
     height: 50px;
   }

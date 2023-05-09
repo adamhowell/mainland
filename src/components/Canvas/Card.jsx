@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import styles from "./Canvas.module.scss";
 import {
@@ -9,8 +9,8 @@ import {
 } from "../../redux/data-reducer";
 import { useDispatch, useSelector } from "react-redux";
 import Actions from "./Actions";
-import EditableNode from "./EditableNode";
 import { htmlToJson } from "../../utils";
+import ContentEditable from "react-contenteditable";
 
 const style = {
   position: "relative",
@@ -26,6 +26,7 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
   const { hoveredSection, selectedSection } = useSelector(
     (state) => state.data
   );
+  const [isCanEdit, setIsCanEdit] = useState(0);
 
   const [dropTargetProps, drop] = useDrop({
     accept: ["card", "block"],
@@ -36,22 +37,23 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
       };
     },
     drop(item, monitor) {
-      console.log(item);
+      if ((!item.data && !node) || (!item.data && !hoveredSection) || monitor.didDrop() || (!item.data && item.id === id)) return;
       if (!ref.current) {
         return;
       }
+
       const dragId = item.id;
       const hoverId = id;
 
-      const dragIndex = item.index;
-      const hoverIndex = index;
-      if (dragIndex === hoverIndex) {
-        return;
-      }
-      const hoverBoundingRect = ref.current?.getBoundingClientRect();
-      const hoverMiddleY =
-        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      const clientOffset = monitor.getClientOffset();
+      // const dragIndex = item.index;
+      // const hoverIndex = index;
+      // if (dragIndex === hoverIndex) {
+      //   return;
+      // }
+      // const hoverBoundingRect = ref.current?.getBoundingClientRect();
+      // const hoverMiddleY =
+      //   (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      // const clientOffset = monitor.getClientOffset();
 
       // if (clientOffset) {
       //   const hoverClientY = clientOffset.y - hoverBoundingRect.top;
@@ -72,22 +74,27 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
         );
       } else {
         moveCard(dragId, hoverId, node);
-        item.index = hoverIndex;
+        //item.index = hoverIndex;
       }
 
       //}
     },
   });
-  const [dragTargetProps, drag] = useDrag({
-    type: "card",
-    item: () => {
-      return { id, index };
+  const [dragTargetProps, drag] = useDrag(
+    {
+      type: "card",
+      canDrag: hoveredSection?.id === id,
+      item: () => {
+        return { id, index };
+      },
+      collect: (monitor) => ({
+        isDragging: monitor.isDragging(),
+        id: id,
+      }),
     },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-      id: id,
-    }),
-  });
+    [hoveredSection, id]
+  );
+
   const opacity = dragTargetProps.isDragging ? 0 : 1;
   drag(drop(ref));
 
@@ -104,15 +111,12 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
   };
 
   return isEditable && node.content ? (
-    <EditableNode
+    <div
+      className={`${styles.card} p-1 ${className ? className : ""}`}
       id={id}
-      onChange={(e) => dispatch(updateText(id, e))}
-      tagName={node.tagName}
-      className={`${styles.card} ${className ? className : ""}`}
-      content={node.content}
+      onClick={onClick}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      onClick={onClick}
       ref={ref}
       style={{
         ...style,
@@ -125,7 +129,18 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
       data-handler-id={dropTargetProps.handlerId}
     >
       <Actions node={node} />
-    </EditableNode>
+      <ContentEditable
+        html={node.content}
+        onBlur={() => setIsCanEdit(false)}
+        onClick={() => {
+          setIsCanEdit(true);
+        }}
+        disabled={!isCanEdit}
+        className="w-full block"
+        onChange={(e) => dispatch(updateText(id, e.target.value))}
+        tagName={node.tagName}
+      />
+    </div>
   ) : (
     <node.tagName
       className={`${styles.card} ${node.children?.length ? "" : "empty"} ${

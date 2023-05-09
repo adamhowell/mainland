@@ -19,13 +19,6 @@ const initialState = {
     {
       id: "C2BOHNi-z",
       tagName: "div",
-      children: [
-        {
-          id: "sEBbIsYtmc",
-          tagName: "span",
-          content: "div",
-        },
-      ],
       className: "ml-div",
       position: 1,
     },
@@ -189,13 +182,15 @@ export const moveNode = (dragId, hoverId, node) => (dispatch, getState) => {
     return newNode;
   };
 
-  removeNodeInternal(dom, hoveredSection.id).forEach((ny) => {
-    ny.id === hoverId
-      ? newDom.push({ ...ny, children: [...ny.children, hoveredSection] })
-      : newDom.push(checkEndReturnNode(ny));
-  });
+  if (!checkIfChild(hoveredSection.children, hoverId)) {
+    removeNodeInternal(dom, hoveredSection.id).forEach((ny) => {
+      ny.id === hoverId
+        ? newDom.push({ ...ny, children: [...ny.children, hoveredSection] })
+        : newDom.push(checkEndReturnNode(ny));
+    });
 
-  dispatch(actions.moveNode(newDom));
+    dispatch(actions.moveNode(newDom));
+  }
 };
 
 export const setDom = (data) => (dispatch) => {
@@ -213,6 +208,7 @@ export const addToDom = (data) => (dispatch) => {
 };
 
 export const addToNode = (data, id) => (dispatch, getState) => {
+  console.log("ADD");
 
   let newDom = [];
   const {
@@ -309,6 +305,23 @@ const removeNodeInternal = (dom, id) => {
   });
 
   return newDom;
+};
+
+const checkIfChild = (dom, id) => {
+  let isContains = false;
+
+  const checkEndReturnNode = (node) => {
+    if (node.children)
+      node.children.forEach((n) => {
+        n.id !== id ? checkEndReturnNode(n) : (isContains = true);
+      });
+  };
+
+  dom?.forEach((node) => {
+    node.id !== id ? checkEndReturnNode(node) : (isContains = true);
+  });
+
+  return isContains;
 };
 
 export default dataReducer;
