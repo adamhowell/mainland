@@ -1,6 +1,3 @@
-import update from "immutability-helper";
-import shortid from "shortid";
-import parse from "html-react-parser";
 import { htmlToJson } from "../utils";
 
 const SET_CONFIG = "data-reducer/SET_CONFIG";
@@ -41,6 +38,7 @@ const initialState = {
             {
               id: "AFxhldq2O2",
               tagName: "span",
+              isClosed: true,
               content: "1",
             },
           ],
@@ -53,6 +51,7 @@ const initialState = {
             {
               id: "IMzpPdaPh8",
               tagName: "span",
+              isClosed: true,
               content: "2",
             },
           ],
@@ -65,6 +64,7 @@ const initialState = {
             {
               id: "LX2vTs_Q7R",
               tagName: "span",
+              isClosed: true,
               content: "3",
             },
           ],
@@ -182,7 +182,10 @@ export const moveNode = (dragId, hoverId, node) => (dispatch, getState) => {
     return newNode;
   };
 
-  if (!checkIfChild(hoveredSection.children, hoverId)) {
+  if (
+    !checkIfChild(hoveredSection.children, hoverId) &&
+    !getNodeById(dom, hoverId)?.isClosed
+  ) {
     removeNodeInternal(dom, hoveredSection.id).forEach((ny) => {
       ny.id === hoverId
         ? newDom.push({ ...ny, children: [...ny.children, hoveredSection] })
@@ -322,6 +325,23 @@ const checkIfChild = (dom, id) => {
   });
 
   return isContains;
+};
+
+const getNodeById = (dom, id) => {
+  let resultNode = null;
+
+  const checkEndReturnNode = (node) => {
+    if (node.children)
+      node.children.forEach((n) => {
+        n.id !== id ? checkEndReturnNode(n) : (resultNode = n);
+      });
+  };
+
+  dom?.forEach((node) => {
+    node.id !== id ? checkEndReturnNode(node) : (resultNode = node);
+  });
+
+  return resultNode;
 };
 
 export default dataReducer;

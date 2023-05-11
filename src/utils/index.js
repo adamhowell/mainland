@@ -1,5 +1,7 @@
 import shortid from "shortid";
 
+export const closedTags = ["span", "p", "i", "h1", "h2", "h3", "h4", "h5", "h6"]
+
 export const htmlToJson = (node, attributes) => {
   const id = shortid.generate();
 
@@ -13,6 +15,8 @@ export const htmlToJson = (node, attributes) => {
       tag[key === "class" ? "className" : key] = attributes[key];
     });
   }
+
+  if(closedTags.indexOf(node.tagName) >= 0) tag["isClosed"] = true;
 
   if (
     (node.innerHTML && !node.innerHTML.includes("<")) ||
