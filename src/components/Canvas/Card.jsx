@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useMemo } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import styles from "./Canvas.module.scss";
 import {
@@ -6,15 +6,19 @@ import {
   setHoveredSection,
   updateText,
   addToNode,
+  setHighlight,
 } from "../../redux/data-reducer";
 import { useDispatch, useSelector } from "react-redux";
 import Actions from "./Actions";
 import { htmlToJson } from "../../utils";
 import ContentEditable from "react-contenteditable";
 
+const colorBright = "#adadad";
+const colorDark = "#696969";
+
 const style = {
   position: "relative",
-  border: "1px dashed #696969",
+  border: `1px dashed ${colorDark}`,
   backgroundColor: "transparent",
 };
 
@@ -22,18 +26,14 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
   const { id, className } = node;
   const ref = useRef(null);
   const dispatch = useDispatch();
-  const { hoveredSection, selectedSection } = useSelector(
+  const { hoveredSection, selectedSection, dropHighlight } = useSelector(
     (state) => state.data
   );
   const [isCanEdit, setIsCanEdit] = useState(0);
-  const [isHighLightTop, setIsHighLightTop] = useState(false);
-  const [isHighLightBottom, setIsHighLightBottom] = useState(false);
-  const [isHighLightLeft, setIsHighLightLeft] = useState(false);
-  const [isHighLightRight, setIsHighLightRight] = useState(false);
 
-  useEffect(()=>{
-    if(!hoveredSection) clearHightLight()
-  }, [hoveredSection])
+  useEffect(() => {
+    if (!hoveredSection) clearHightLight();
+  }, [hoveredSection]);
 
   const highlight = (monitor) => {
     const hoverBoundingRect = ref.current?.getBoundingClientRect();
@@ -45,10 +45,31 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
       const hoverClientX = clientOffset.x - hoverBoundingRect.left;
 
-      setIsHighLightTop(hoverClientY < hoverMiddleY);
-      setIsHighLightBottom(hoverClientY > hoverMiddleY);
-      setIsHighLightLeft(hoverClientX < hoverMiddleX);
-      setIsHighLightRight(hoverClientX > hoverMiddleX);
+      const left = (hoverClientX * 100) / hoverMiddleX;
+      const top = (hoverClientY * 100) / hoverMiddleY;
+
+      const offset = 50;
+
+      const percentages = [
+        { position: "top", value: top < 100 && top < offset ? top : 0 },
+        { position: "left", value: left < 100 && left < offset ? left : 0 },
+        {
+          position: "right",
+          value: left > 100 && left - 100 > offset ? 100 - (left - 100) : 0,
+        },
+        {
+          position: "bottom",
+          value: top > 100 && top - 100 > offset ? 100 - (top - 100) : 0,
+        },
+      ];
+
+      const greater = percentages.sort((a, b) => a.value - b.value).pop();
+
+      console.log(greater);
+
+      greater.value > 0
+        ? dispatch(setHighlight({ id: id, position: greater.position }))
+        : dispatch(setHighlight(null));
     }
   };
 
@@ -124,15 +145,64 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
   };
 
   const clearHightLight = () => {
-    setIsHighLightTop(false);
-    setIsHighLightBottom(false);
-    setIsHighLightLeft(false);
-    setIsHighLightRight(false);
-  }
+    dispatch(setHighlight(null));
+  };
 
   const onDragLeave = () => {
-    clearHightLight()
-  }
+    clearHightLight();
+  };
+
+  const borderStyles = useMemo(() => ({
+    borderWidth: "1px",
+    borderTopColor:
+      dropHighlight?.id === id && dropHighlight.position === "top"
+        ? "white"
+        : selectedSection?.id === id || hoveredSection?.id === id
+        ? colorBright
+        : colorDark,
+    borderTopStyle:
+      dropHighlight?.id === id && dropHighlight.position === "top"
+        ? "solid"
+        : selectedSection?.id === id || hoveredSection?.id === id
+        ? "solid"
+        : "dashed",
+    borderBottomColor:
+      dropHighlight?.id === id && dropHighlight.position === "bottom"
+        ? "white"
+        : selectedSection?.id === id || hoveredSection?.id === id
+        ? colorBright
+        : colorDark,
+    borderBottomStyle:
+      dropHighlight?.id === id && dropHighlight.position === "bottom"
+        ? "solid"
+        : selectedSection?.id === id || hoveredSection?.id === id
+        ? "solid"
+        : "dashed",
+    borderLeftColor:
+      dropHighlight?.id === id && dropHighlight.position === "left"
+        ? "white"
+        : selectedSection?.id === id || hoveredSection?.id === id
+        ? colorBright
+        : colorDark,
+    borderLeftStyle:
+      dropHighlight?.id === id && dropHighlight.position === "left"
+        ? "solid"
+        : selectedSection?.id === id || hoveredSection?.id === id
+        ? "solid"
+        : "dashed",
+    borderRightColor:
+      dropHighlight?.id === id && dropHighlight.position === "right"
+        ? "white"
+        : selectedSection?.id === id || hoveredSection?.id === id
+        ? colorBright
+        : colorDark,
+    borderRightStyle:
+      dropHighlight?.id === id && dropHighlight.position === "right"
+        ? "solid"
+        : selectedSection?.id === id || hoveredSection?.id === id
+        ? "solid"
+        : "dashed",
+  }), [selectedSection, hoveredSection, dropHighlight]);
 
   return isEditable && node.content ? (
     <div
@@ -147,47 +217,7 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
         ...style,
         cursor: hoveredSection?.id === id ? "move" : "default",
         opacity,
-        borderWidth: "1px",
-        borderTopColor: isHighLightTop
-          ? "white"
-          : selectedSection?.id === id || hoveredSection?.id === id
-          ? "#adadad"
-          : "#696969",
-        borderTopStyle: isHighLightTop
-          ? "solid"
-          : selectedSection?.id === id || hoveredSection?.id === id
-          ? "solid"
-          : "dashed",
-        borderBottomColor: isHighLightBottom
-          ? "white"
-          : selectedSection?.id === id || hoveredSection?.id === id
-          ? "#adadad"
-          : "#696969",
-        borderBottomStyle: isHighLightBottom
-          ? "solid"
-          : selectedSection?.id === id || hoveredSection?.id === id
-          ? "solid"
-          : "dashed",
-        borderLeftColor: isHighLightLeft
-          ? "white"
-          : selectedSection?.id === id || hoveredSection?.id === id
-          ? "#adadad"
-          : "#696969",
-        borderLeftStyle: isHighLightLeft
-          ? "solid"
-          : selectedSection?.id === id || hoveredSection?.id === id
-          ? "solid"
-          : "dashed",
-        borderRightColor: isHighLightRight
-          ? "white"
-          : selectedSection?.id === id || hoveredSection?.id === id
-          ? "#adadad"
-          : "#696969",
-        borderRightStyle: isHighLightRight
-          ? "solid"
-          : selectedSection?.id === id || hoveredSection?.id === id
-          ? "solid"
-          : "dashed",
+        ...borderStyles,
       }}
       data-handler-id={handlerId}
     >
@@ -219,46 +249,7 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
         ...style,
         cursor: hoveredSection?.id === id ? "move" : "default",
         opacity,
-        borderTopColor: isHighLightTop
-          ? "white"
-          : selectedSection?.id === id || hoveredSection?.id === id
-          ? "#adadad"
-          : "#696969",
-        borderTopStyle: isHighLightTop
-          ? "solid"
-          : selectedSection?.id === id || hoveredSection?.id === id
-          ? "solid"
-          : "dashed",
-        borderBottomColor: isHighLightBottom
-          ? "white"
-          : selectedSection?.id === id || hoveredSection?.id === id
-          ? "#adadad"
-          : "#696969",
-        borderBottomStyle: isHighLightBottom
-          ? "solid"
-          : selectedSection?.id === id || hoveredSection?.id === id
-          ? "solid"
-          : "dashed",
-        borderLeftColor: isHighLightLeft
-          ? "white"
-          : selectedSection?.id === id || hoveredSection?.id === id
-          ? "#adadad"
-          : "#696969",
-        borderLeftStyle: isHighLightLeft
-          ? "solid"
-          : selectedSection?.id === id || hoveredSection?.id === id
-          ? "solid"
-          : "dashed",
-        borderRightColor: isHighLightRight
-          ? "white"
-          : selectedSection?.id === id || hoveredSection?.id === id
-          ? "#adadad"
-          : "#696969",
-        borderRightStyle: isHighLightRight
-          ? "solid"
-          : selectedSection?.id === id || hoveredSection?.id === id
-          ? "solid"
-          : "dashed",
+        ...borderStyles
       }}
       data-handler-id={handlerId}
     >

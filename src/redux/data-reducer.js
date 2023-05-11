@@ -9,6 +9,7 @@ const MOVE_NODE = "data-reducer/MOVE_NODE";
 const ADD_TO_DOM = "data-reducer/ADD_TO_DOM";
 const REMOVE_NODE = "data-reducer/REMOVE_NODE";
 const UPDATE_TEXT = "data-reducer/UPDATE_TEXT";
+const SET_HIGHLIGHT = "data-reducer/SET_HIGHLIGHT"
 
 const initialState = {
   config: null,
@@ -76,6 +77,7 @@ const initialState = {
   ],
   selectedSection: null,
   hoveredSection: null,
+  dropHighlight: null,
   error: null,
 };
 
@@ -110,6 +112,9 @@ const dataReducer = (state = initialState, action) => {
     }
     case UPDATE_TEXT: {
       return { ...state, dom: action.data };
+    }
+    case SET_HIGHLIGHT: {
+      return { ...state, dropHighlight: action.data };
     }
     default:
       return state;
@@ -149,6 +154,10 @@ const actions = {
     type: UPDATE_TEXT,
     data: data,
   }),
+  setHighlight: (data) => ({
+    type: SET_HIGHLIGHT,
+    data: data,
+  }),
   setError: (data) => ({
     type: SET_ERROR,
     data: data,
@@ -157,6 +166,10 @@ const actions = {
 
 export const setError = (err) => (dispatch) => {
   dispatch(actions.setError(err));
+};
+
+export const setHighlight = (err) => (dispatch) => {
+  dispatch(actions.setHighlight(err));
 };
 
 export const moveNode = (dragId, hoverId, node) => (dispatch, getState) => {
