@@ -67,7 +67,7 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
 
       greater.value > 0
         ? dispatch(setHighlight({ id: id, position: greater.position }))
-        : dispatch(setHighlight(null));
+        : !node.isClosed ? dispatch(setHighlight({ id: id, position: "all" })) : dispatch(setHighlight(null));
     }
   };
 
@@ -150,57 +150,60 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
     clearHightLight();
   };
 
-  const borderStyles = useMemo(() => ({
-    borderWidth: "1px",
-    borderTopColor:
-      dropHighlight?.id === id && dropHighlight.position === "top"
-        ? "white"
-        : selectedSection?.id === id || hoveredSection?.id === id
-        ? colorBright
-        : colorDark,
-    borderTopStyle:
-      dropHighlight?.id === id && dropHighlight.position === "top"
-        ? "solid"
-        : selectedSection?.id === id || hoveredSection?.id === id
-        ? "solid"
-        : "dashed",
-    borderBottomColor:
-      dropHighlight?.id === id && dropHighlight.position === "bottom"
-        ? "white"
-        : selectedSection?.id === id || hoveredSection?.id === id
-        ? colorBright
-        : colorDark,
-    borderBottomStyle:
-      dropHighlight?.id === id && dropHighlight.position === "bottom"
-        ? "solid"
-        : selectedSection?.id === id || hoveredSection?.id === id
-        ? "solid"
-        : "dashed",
-    borderLeftColor:
-      dropHighlight?.id === id && dropHighlight.position === "left"
-        ? "white"
-        : selectedSection?.id === id || hoveredSection?.id === id
-        ? colorBright
-        : colorDark,
-    borderLeftStyle:
-      dropHighlight?.id === id && dropHighlight.position === "left"
-        ? "solid"
-        : selectedSection?.id === id || hoveredSection?.id === id
-        ? "solid"
-        : "dashed",
-    borderRightColor:
-      dropHighlight?.id === id && dropHighlight.position === "right"
-        ? "white"
-        : selectedSection?.id === id || hoveredSection?.id === id
-        ? colorBright
-        : colorDark,
-    borderRightStyle:
-      dropHighlight?.id === id && dropHighlight.position === "right"
-        ? "solid"
-        : selectedSection?.id === id || hoveredSection?.id === id
-        ? "solid"
-        : "dashed",
-  }), [selectedSection, hoveredSection, dropHighlight]);
+  const borderStyles = useMemo(
+    () => ({
+      borderWidth: "1px",
+      borderTopColor:
+        dropHighlight?.id === id && (dropHighlight.position === "top" || dropHighlight.position === "all")
+          ? "white"
+          : selectedSection?.id === id || hoveredSection?.id === id
+          ? colorBright
+          : colorDark,
+      borderTopStyle:
+        dropHighlight?.id === id && (dropHighlight.position === "top" || dropHighlight.position === "all")
+          ? "solid"
+          : selectedSection?.id === id || hoveredSection?.id === id
+          ? "solid"
+          : "dashed",
+      borderBottomColor:
+        dropHighlight?.id === id && (dropHighlight.position === "bottom" || dropHighlight.position === "all")
+          ? "white"
+          : selectedSection?.id === id || hoveredSection?.id === id
+          ? colorBright
+          : colorDark,
+      borderBottomStyle:
+        dropHighlight?.id === id && (dropHighlight.position === "bottom" || dropHighlight.position === "all")
+          ? "solid"
+          : selectedSection?.id === id || hoveredSection?.id === id
+          ? "solid"
+          : "dashed",
+      borderLeftColor:
+        dropHighlight?.id === id && (dropHighlight.position === "left" || dropHighlight.position === "all")
+          ? "white"
+          : selectedSection?.id === id || hoveredSection?.id === id
+          ? colorBright
+          : colorDark,
+      borderLeftStyle:
+        dropHighlight?.id === id && (dropHighlight.position === "left" || dropHighlight.position === "all")
+          ? "solid"
+          : selectedSection?.id === id || hoveredSection?.id === id
+          ? "solid"
+          : "dashed",
+      borderRightColor:
+        dropHighlight?.id === id && (dropHighlight.position === "right" || dropHighlight.position === "all")
+          ? "white"
+          : selectedSection?.id === id || hoveredSection?.id === id
+          ? colorBright
+          : colorDark,
+      borderRightStyle:
+        dropHighlight?.id === id && (dropHighlight.position === "right" || dropHighlight.position === "all")
+          ? "solid"
+          : selectedSection?.id === id || hoveredSection?.id === id
+          ? "solid"
+          : "dashed",
+    }),
+    [selectedSection, hoveredSection, dropHighlight]
+  );
 
   return isEditable && node.content ? (
     <div
@@ -247,7 +250,7 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
         ...style,
         cursor: hoveredSection?.id === id ? "move" : "default",
         opacity,
-        ...borderStyles
+        ...borderStyles,
       }}
       data-handler-id={handlerId}
     >

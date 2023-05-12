@@ -9,7 +9,7 @@ const MOVE_NODE = "data-reducer/MOVE_NODE";
 const ADD_TO_DOM = "data-reducer/ADD_TO_DOM";
 const REMOVE_NODE = "data-reducer/REMOVE_NODE";
 const UPDATE_TEXT = "data-reducer/UPDATE_TEXT";
-const SET_HIGHLIGHT = "data-reducer/SET_HIGHLIGHT"
+const SET_HIGHLIGHT = "data-reducer/SET_HIGHLIGHT";
 
 const initialState = {
   config: null,
@@ -228,7 +228,7 @@ export const addToNode = (data, id) => (dispatch, getState) => {
 
   let newDom = [];
   const {
-    data: { dom },
+    data: { dom, dropHighlight },
   } = getState();
 
   const checkEndReturnNode = (nx) => {
@@ -236,9 +236,64 @@ export const addToNode = (data, id) => (dispatch, getState) => {
 
     if (nx.children) {
       nx.children.forEach((n, i) => {
-        n.id === id
-          ? newNode.children[i].children.push(data)
-          : checkEndReturnNode(n);
+        if (n.id === id) {
+          if (n.id === dropHighlight.id) {
+            //if (newNode.children[i].children) {
+              if (dropHighlight.position === "all")
+                newNode.children[i].children.push(data);
+              if (
+                dropHighlight.position === "top" ||
+                dropHighlight.position === "left"
+              ) {
+                const index = newNode.children.findIndex(
+                  (c) => c.id === dropHighlight.id
+                );
+
+                newNode.children.splice(index, 0, data).join()
+              }
+
+              if (
+                dropHighlight.position === "bottom" ||
+                dropHighlight.position === "right"
+              ) {
+                const index = newNode.children.findIndex(
+                  (c) => c.id === dropHighlight.id
+                );
+                newNode.children.splice(index + 1 , 0, data).join();
+              }
+            // } else {
+            //   if (!newNode.children[i].isClosed)
+            //     newNode.children[i].children = [data];
+            // }
+          }
+          // else {
+          //   if (newNode.children[i].children) {
+          //     if (
+          //       dropHighlight.position === "top" ||
+          //       dropHighlight.position === "left"
+          //     ) {
+          //       const index = newNode.children[i].children.findIndex(
+          //         (c) => c.id === dropHighlight.id
+          //       );
+          //       console.log(index);
+          //       newNode.children[i].children.splice(index, 0, data).join();
+          //     }
+          //     if (
+          //       dropHighlight.position === "bottom" ||
+          //       dropHighlight.position === "right"
+          //     ) {
+          //       const index = newNode.children[i].children.findIndex(
+          //         (c) => c.id === dropHighlight.id
+          //       );
+          //       console.log(index);
+          //       newNode.children[i].children.splice(index, 0, data).join();
+          //     }
+          //     //newNode.children[i].children.push(data);
+          //   }
+          // }
+        } else {
+          checkEndReturnNode(n);
+        }
       });
     }
 
@@ -247,7 +302,10 @@ export const addToNode = (data, id) => (dispatch, getState) => {
 
   dom.forEach((ny) => {
     ny.id === id
-      ? newDom.push({ ...ny, children: [...ny.children ? ny.children : [], data] })
+      ? newDom.push({
+          ...ny,
+          children: [...(ny.children ? ny.children : []), data],
+        })
       : newDom.push(checkEndReturnNode(ny));
   });
 
