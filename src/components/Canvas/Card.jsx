@@ -65,8 +65,6 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
 
       const greater = percentages.sort((a, b) => a.value - b.value).pop();
 
-      console.log(greater);
-
       greater.value > 0
         ? dispatch(setHighlight({ id: id, position: greater.position }))
         : dispatch(setHighlight(null));

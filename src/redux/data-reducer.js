@@ -247,7 +247,7 @@ export const addToNode = (data, id) => (dispatch, getState) => {
 
   dom.forEach((ny) => {
     ny.id === id
-      ? newDom.push({ ...ny, children: [...ny.children, data] })
+      ? newDom.push({ ...ny, children: [...ny.children ? ny.children : [], data] })
       : newDom.push(checkEndReturnNode(ny));
   });
 
