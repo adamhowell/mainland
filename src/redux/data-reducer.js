@@ -223,8 +223,7 @@ export const moveNode = (dragId, hoverId) => (dispatch, getState) => {
   };
 
   if (
-    !checkIfChild(hoveredSection.children, hoverId) &&
-    !getNodeById(dom, hoverId)?.isClosed
+    !checkIfChild(hoveredSection.children, hoverId)
   ) {
     newDom.forEach((ny, i) => {
       if(ny.id === hoverId) {
