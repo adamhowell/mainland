@@ -172,12 +172,13 @@ export const setHighlight = (err) => (dispatch) => {
   dispatch(actions.setHighlight(err));
 };
 
-export const moveNode = (dragId, hoverId, node) => (dispatch, getState) => {
+export const moveNode = (dragId, hoverId) => (dispatch, getState) => {
   const {
-    data: { dom, hoveredSection },
+    data: { dom, hoveredSection, dropHighlight },
   } = getState();
 
-  let newDom = [];
+  let newDom = [...removeNodeInternal(dom, hoveredSection.id)];
+  let added = false;
 
   console.log(dragId, hoverId, hoveredSection);
 
@@ -186,9 +187,35 @@ export const moveNode = (dragId, hoverId, node) => (dispatch, getState) => {
 
     if (nx.children) {
       nx.children.forEach((n, i) => {
-        n.id === hoverId
-          ? newNode.children[i].children.push(hoveredSection)
-          : checkEndReturnNode(n);
+        if(n.id === hoverId) {
+          if (n.id === dropHighlight.id) {
+            if (dropHighlight.position === "all")
+              newNode.children[i].children.push(hoveredSection);
+            if (
+              dropHighlight.position === "top" ||
+              dropHighlight.position === "left"
+            ) {
+              const index = newNode.children.findIndex(
+                (c) => c.id === dropHighlight.id
+              );
+              if (!added) newNode.children.splice(index, 0, hoveredSection).join();
+              added = true;
+            }
+
+            if (
+              dropHighlight.position === "bottom" ||
+              dropHighlight.position === "right"
+            ) {
+              const index = newNode.children.findIndex(
+                (c) => c.id === dropHighlight.id
+              );
+              if (!added) newNode.children.splice(index + 1, 0, hoveredSection).join();
+              added = true;
+            }
+          }
+        }else {
+          checkEndReturnNode(n);
+        }
       });
     }
 
@@ -199,10 +226,37 @@ export const moveNode = (dragId, hoverId, node) => (dispatch, getState) => {
     !checkIfChild(hoveredSection.children, hoverId) &&
     !getNodeById(dom, hoverId)?.isClosed
   ) {
-    removeNodeInternal(dom, hoveredSection.id).forEach((ny) => {
-      ny.id === hoverId
-        ? newDom.push({ ...ny, children: [...ny.children, hoveredSection] })
-        : newDom.push(checkEndReturnNode(ny));
+    newDom.forEach((ny, i) => {
+      if(ny.id === hoverId) {
+        if (ny.id === dropHighlight.id) {
+          if (dropHighlight.position === "all") {
+            newDom[i].children.push(hoveredSection)
+          }
+          if (
+            dropHighlight.position === "top" ||
+            dropHighlight.position === "left"
+          ) {
+            const index = newDom.findIndex(
+              (c) => c.id === dropHighlight.id
+            );
+            if (!added) newDom.splice(index, 0, hoveredSection).join();
+            added = true;
+          }
+  
+          if (
+            dropHighlight.position === "bottom" ||
+            dropHighlight.position === "right"
+          ) {
+            const index = newDom.findIndex(
+              (c) => c.id === dropHighlight.id
+            );
+            if (!added) newDom.splice(index + 1, 0, hoveredSection).join();
+            added = true;
+          }
+        }
+      }else {
+        if (!added) newDom[i] = checkEndReturnNode(ny);
+      }
     });
 
     dispatch(actions.moveNode(newDom));
@@ -225,11 +279,13 @@ export const addToDom = (data) => (dispatch) => {
 
 export const addToNode = (data, id) => (dispatch, getState) => {
   console.log("ADD");
+  let added = false;
 
-  let newDom = [];
   const {
     data: { dom, dropHighlight },
   } = getState();
+
+  let newDom = [...dom];
 
   const checkEndReturnNode = (nx) => {
     let newNode = { ...nx };
@@ -238,59 +294,30 @@ export const addToNode = (data, id) => (dispatch, getState) => {
       nx.children.forEach((n, i) => {
         if (n.id === id) {
           if (n.id === dropHighlight.id) {
-            //if (newNode.children[i].children) {
-              if (dropHighlight.position === "all")
-                newNode.children[i].children.push(data);
-              if (
-                dropHighlight.position === "top" ||
-                dropHighlight.position === "left"
-              ) {
-                const index = newNode.children.findIndex(
-                  (c) => c.id === dropHighlight.id
-                );
+            if (dropHighlight.position === "all")
+              newNode.children[i].children.push(data);
+            if (
+              dropHighlight.position === "top" ||
+              dropHighlight.position === "left"
+            ) {
+              const index = newNode.children.findIndex(
+                (c) => c.id === dropHighlight.id
+              );
+              if (!added) newNode.children.splice(index, 0, data).join();
+              added = true;
+            }
 
-                newNode.children.splice(index, 0, data).join()
-              }
-
-              if (
-                dropHighlight.position === "bottom" ||
-                dropHighlight.position === "right"
-              ) {
-                const index = newNode.children.findIndex(
-                  (c) => c.id === dropHighlight.id
-                );
-                newNode.children.splice(index + 1 , 0, data).join();
-              }
-            // } else {
-            //   if (!newNode.children[i].isClosed)
-            //     newNode.children[i].children = [data];
-            // }
+            if (
+              dropHighlight.position === "bottom" ||
+              dropHighlight.position === "right"
+            ) {
+              const index = newNode.children.findIndex(
+                (c) => c.id === dropHighlight.id
+              );
+              if (!added) newNode.children.splice(index + 1, 0, data).join();
+              added = true;
+            }
           }
-          // else {
-          //   if (newNode.children[i].children) {
-          //     if (
-          //       dropHighlight.position === "top" ||
-          //       dropHighlight.position === "left"
-          //     ) {
-          //       const index = newNode.children[i].children.findIndex(
-          //         (c) => c.id === dropHighlight.id
-          //       );
-          //       console.log(index);
-          //       newNode.children[i].children.splice(index, 0, data).join();
-          //     }
-          //     if (
-          //       dropHighlight.position === "bottom" ||
-          //       dropHighlight.position === "right"
-          //     ) {
-          //       const index = newNode.children[i].children.findIndex(
-          //         (c) => c.id === dropHighlight.id
-          //       );
-          //       console.log(index);
-          //       newNode.children[i].children.splice(index, 0, data).join();
-          //     }
-          //     //newNode.children[i].children.push(data);
-          //   }
-          // }
         } else {
           checkEndReturnNode(n);
         }
@@ -300,13 +327,37 @@ export const addToNode = (data, id) => (dispatch, getState) => {
     return newNode;
   };
 
-  dom.forEach((ny) => {
-    ny.id === id
-      ? newDom.push({
-          ...ny,
-          children: [...(ny.children ? ny.children : []), data],
-        })
-      : newDom.push(checkEndReturnNode(ny));
+  dom.forEach((ny, i) => {
+    if (ny.id === id) {
+      if (ny.id === dropHighlight.id) {
+        if (dropHighlight.position === "all") {
+          newDom[i].children.push(data)
+        }
+        if (
+          dropHighlight.position === "top" ||
+          dropHighlight.position === "left"
+        ) {
+          const index = newDom.findIndex(
+            (c) => c.id === dropHighlight.id
+          );
+          if (!added) newDom.splice(index, 0, data).join();
+          added = true;
+        }
+
+        if (
+          dropHighlight.position === "bottom" ||
+          dropHighlight.position === "right"
+        ) {
+          const index = newDom.findIndex(
+            (c) => c.id === dropHighlight.id
+          );
+          if (!added) newDom.splice(index + 1, 0, data).join();
+          added = true;
+        }
+      }
+    } else {
+      if (!added) newDom[i] = checkEndReturnNode(ny);
+    }
   });
 
   dispatch(actions.setDom(newDom));
