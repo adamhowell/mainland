@@ -1,0 +1,14 @@
+@import "../../../src/styles/variables.scss";
+
+.root {
+  display: block;
+}
+
+.toggler {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  font-size: 0.4rem;
+}

@@ -10,6 +10,7 @@ const ADD_TO_DOM = "data-reducer/ADD_TO_DOM";
 const REMOVE_NODE = "data-reducer/REMOVE_NODE";
 const UPDATE_TEXT = "data-reducer/UPDATE_TEXT";
 const SET_HIGHLIGHT = "data-reducer/SET_HIGHLIGHT";
+const SET_ATTRIBUTE = "data-reducer/SET_ATTRIBUTE";
 
 const initialState = {
   config: null,
@@ -34,7 +35,7 @@ const initialState = {
         {
           id: "lCWQLK7tX0",
           tagName: "div",
-          className: "p-3",
+          className: "p-3 mt-4",
           children: [
             {
               id: "AFxhldq2O2",
@@ -116,6 +117,9 @@ const dataReducer = (state = initialState, action) => {
     case SET_HIGHLIGHT: {
       return { ...state, dropHighlight: action.data };
     }
+    case SET_ATTRIBUTE: {
+      return { ...state, dom: action.data };
+    }
     default:
       return state;
   }
@@ -158,6 +162,10 @@ const actions = {
     type: SET_HIGHLIGHT,
     data: data,
   }),
+  setAttribute: (data) => ({
+    type: SET_ATTRIBUTE,
+    data: data,
+  }),
   setError: (data) => ({
     type: SET_ERROR,
     data: data,
@@ -187,7 +195,7 @@ export const moveNode = (dragId, hoverId) => (dispatch, getState) => {
 
     if (nx.children) {
       nx.children.forEach((n, i) => {
-        if(n.id === hoverId) {
+        if (n.id === hoverId) {
           if (n.id === dropHighlight.id) {
             if (dropHighlight.position === "all")
               newNode.children[i].children.push(hoveredSection);
@@ -198,7 +206,8 @@ export const moveNode = (dragId, hoverId) => (dispatch, getState) => {
               const index = newNode.children.findIndex(
                 (c) => c.id === dropHighlight.id
               );
-              if (!added) newNode.children.splice(index, 0, hoveredSection).join();
+              if (!added)
+                newNode.children.splice(index, 0, hoveredSection).join();
               added = true;
             }
 
@@ -209,11 +218,12 @@ export const moveNode = (dragId, hoverId) => (dispatch, getState) => {
               const index = newNode.children.findIndex(
                 (c) => c.id === dropHighlight.id
               );
-              if (!added) newNode.children.splice(index + 1, 0, hoveredSection).join();
+              if (!added)
+                newNode.children.splice(index + 1, 0, hoveredSection).join();
               added = true;
             }
           }
-        }else {
+        } else {
           checkEndReturnNode(n);
         }
       });
@@ -222,38 +232,32 @@ export const moveNode = (dragId, hoverId) => (dispatch, getState) => {
     return newNode;
   };
 
-  if (
-    !checkIfChild(hoveredSection.children, hoverId)
-  ) {
+  if (!checkIfChild(hoveredSection.children, hoverId)) {
     newDom.forEach((ny, i) => {
-      if(ny.id === hoverId) {
+      if (ny.id === hoverId) {
         if (ny.id === dropHighlight.id) {
           if (dropHighlight.position === "all") {
-            newDom[i].children.push(hoveredSection)
+            newDom[i].children.push(hoveredSection);
           }
           if (
             dropHighlight.position === "top" ||
             dropHighlight.position === "left"
           ) {
-            const index = newDom.findIndex(
-              (c) => c.id === dropHighlight.id
-            );
+            const index = newDom.findIndex((c) => c.id === dropHighlight.id);
             if (!added) newDom.splice(index, 0, hoveredSection).join();
             added = true;
           }
-  
+
           if (
             dropHighlight.position === "bottom" ||
             dropHighlight.position === "right"
           ) {
-            const index = newDom.findIndex(
-              (c) => c.id === dropHighlight.id
-            );
+            const index = newDom.findIndex((c) => c.id === dropHighlight.id);
             if (!added) newDom.splice(index + 1, 0, hoveredSection).join();
             added = true;
           }
         }
-      }else {
+      } else {
         if (!added) newDom[i] = checkEndReturnNode(ny);
       }
     });
@@ -330,15 +334,13 @@ export const addToNode = (data, id) => (dispatch, getState) => {
     if (ny.id === id) {
       if (ny.id === dropHighlight.id) {
         if (dropHighlight.position === "all") {
-          newDom[i].children.push(data)
+          newDom[i].children.push(data);
         }
         if (
           dropHighlight.position === "top" ||
           dropHighlight.position === "left"
         ) {
-          const index = newDom.findIndex(
-            (c) => c.id === dropHighlight.id
-          );
+          const index = newDom.findIndex((c) => c.id === dropHighlight.id);
           if (!added) newDom.splice(index, 0, data).join();
           added = true;
         }
@@ -347,9 +349,7 @@ export const addToNode = (data, id) => (dispatch, getState) => {
           dropHighlight.position === "bottom" ||
           dropHighlight.position === "right"
         ) {
-          const index = newDom.findIndex(
-            (c) => c.id === dropHighlight.id
-          );
+          const index = newDom.findIndex((c) => c.id === dropHighlight.id);
           if (!added) newDom.splice(index + 1, 0, data).join();
           added = true;
         }
@@ -409,6 +409,40 @@ export const updateText = (id, text) => (dispatch, getState) => {
   dispatch(actions.updateText(newDom));
 };
 
+export const setAttribute = (attributeName, value) => (dispatch, getState) => {
+  let newDom = [];
+  const {
+    data: { dom, selectedSection },
+  } = getState();
+  const id = selectedSection.id;
+
+  console.log(id, attributeName, value);
+
+  const checkEndReturnNode = (node) => {
+    let newNode = { ...node };
+
+    if (node.children) {
+      newNode.children = [];
+
+      node.children.forEach((n) => {
+        n.id === id
+          ? newNode.children.push({ ...n, [attributeName]: value })
+          : newNode.children.push(checkEndReturnNode(n));
+      });
+    }
+
+    return newNode;
+  };
+
+  dom.forEach((node) => {
+    node.id === id
+      ? newDom.push({ ...node, [attributeName]: value })
+      : newDom.push(checkEndReturnNode(node));
+  });
+
+  dispatch(actions.setAttribute(newDom));
+};
+
 const removeNodeInternal = (dom, id) => {
   let newDom = [];
 
@@ -446,23 +480,6 @@ const checkIfChild = (dom, id) => {
   });
 
   return isContains;
-};
-
-const getNodeById = (dom, id) => {
-  let resultNode = null;
-
-  const checkEndReturnNode = (node) => {
-    if (node.children)
-      node.children.forEach((n) => {
-        n.id !== id ? checkEndReturnNode(n) : (resultNode = n);
-      });
-  };
-
-  dom?.forEach((node) => {
-    node.id !== id ? checkEndReturnNode(node) : (resultNode = node);
-  });
-
-  return resultNode;
 };
 
 export default dataReducer;

@@ -19,7 +19,6 @@ const colorDark = "#696969";
 const style = {
   position: "relative",
   border: `1px dashed ${colorDark}`,
-  backgroundColor: "transparent",
 };
 
 export const Card = ({ index, moveCard, children, node, isEditable }) => {

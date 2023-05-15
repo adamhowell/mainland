@@ -1,19 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./StyleManager.module.scss";
 import { useSelector } from "react-redux";
+import CollapseMenu from "../../CollapseMenu";
+import Classes from "./Classes";
+import Layout from "./Layout";
+import Spacing from "./Spacing";
 
 const StyleManager = () => {
-  const { selectedSection } = useSelector((state) => state.data);
-
   return (
-    <div className={`${styles.root} p-4`}>
-      {selectedSection && (
-        <>
-          {" "}
-          Selected: <span className="opacity-50">{selectedSection?.tagName}</span>{" "}
-          <span className="opacity-50">#{selectedSection?.id}</span>
-        </>
-      )}
+    <div className={`${styles.root}`}>
+      <CollapseMenu title={`Classes`}>
+        <Classes />
+      </CollapseMenu>
+      <CollapseMenu title={`Layout`}>
+        <Layout />
+      </CollapseMenu>
+      <CollapseMenu title={`Spacing`}>
+        <Spacing />
+      </CollapseMenu>
     </div>
   );
 };

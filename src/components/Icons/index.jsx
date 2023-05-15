@@ -100,3 +100,21 @@ export const IconChevronUp = (props) => (
     <path d="M0.4,8.9l9-8.6C9.5,0.1,9.8,0,10.1,0c0.3,0,0.6,0.1,0.8,0.3l9,8.6c0.5,0.4,0.5,1.2,0,1.6c-0.4,0.5-1.1,0.5-1.6,0l-8.2-7.9l-8.2,7.9c-0.4,0.4-1.2,0.4-1.6,0C-0.1,10.1-0.1,9.3,0.4,8.9z" />
   </svg>
 );
+
+export const IconTriangle = (props) => (
+  <svg
+    {...props}
+    fill="currentColor"
+    width="1em"
+    height="1em"
+    xmlns="http://www.w3.org/2000/svg"
+    x="0px"
+    y="0px"
+    viewBox="0 0 16 16"
+  >
+    <path
+      fill-rule="evenodd"
+      d="M7.022 1.566a1.13 1.13 0 0 1 1.96 0l6.857 11.667c.457.778-.092 1.767-.98 1.767H1.144c-.889 0-1.437-.99-.98-1.767L7.022 1.566z"
+    />
+  </svg>
+);
