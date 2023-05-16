@@ -12,6 +12,7 @@ const Classes = () => {
   return (
     <div className={`${styles.root} pt-2`}>
       <TextArea
+        disabled={!selectedNode}
         onChange={(e) =>
           dispatch(
             setAttribute("className", e.target.value)

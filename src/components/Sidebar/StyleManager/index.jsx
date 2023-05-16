@@ -5,6 +5,7 @@ import CollapseMenu from "../../CollapseMenu";
 import Classes from "./Classes";
 import Layout from "./Layout";
 import Spacing from "./Spacing";
+import Size from "./Size";
 
 const StyleManager = () => {
   return (
@@ -17,6 +18,9 @@ const StyleManager = () => {
       </CollapseMenu>
       <CollapseMenu title={`Spacing`}>
         <Spacing />
+      </CollapseMenu>
+      <CollapseMenu title={`Size`}>
+        <Size />
       </CollapseMenu>
     </div>
   );
