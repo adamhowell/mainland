@@ -298,7 +298,9 @@ export const addToNode = (data, id) => (dispatch, getState) => {
         if (n.id === id) {
           if (n.id === dropHighlight.id) {
             if (dropHighlight.position === "all")
-              newNode.children[i].children.push(data);
+              newNode.children[i].children
+                ? newNode.children[i].children.push(data)
+                : (newNode.children[i].children = [data]);
             if (
               dropHighlight.position === "top" ||
               dropHighlight.position === "left"
@@ -334,7 +336,9 @@ export const addToNode = (data, id) => (dispatch, getState) => {
     if (ny.id === id) {
       if (ny.id === dropHighlight.id) {
         if (dropHighlight.position === "all") {
-          newDom[i].children.push(data);
+          newDom[i].children
+            ? newDom[i].children.push(data)
+            : (newDom[i].children = [data]);
         }
         if (
           dropHighlight.position === "top" ||
