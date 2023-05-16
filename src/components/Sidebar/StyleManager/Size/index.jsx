@@ -1,16 +1,16 @@
 import React from "react";
-import SizeSelector from "./SizeSelector";
+import ClassSelector from "../../../ClassSelector";
 
 const Size = () => {
   return (
     <div className={`pt-2`}>
-      <SizeSelector name="width" title="Width" defaultValue="auto" />
-      <SizeSelector name="minWidth" title="Min width" defaultValue="0" />
-      <SizeSelector name="maxWidth" title="Max width" defaultValue="none" />
+      <ClassSelector name="width" title="Width" defaultValue="auto" />
+      <ClassSelector name="minWidth" title="Min width" defaultValue="0" />
+      <ClassSelector name="maxWidth" title="Max width" defaultValue="none" />
       <div className="pb-3"></div>
-      <SizeSelector name="height" title="Height" defaultValue="auto" />
-      <SizeSelector name="minHeight" title="Min height" defaultValue="0" />
-      <SizeSelector name="maxHeight" title="Max height" defaultValue="none" />
+      <ClassSelector name="height" title="Height" defaultValue="auto" />
+      <ClassSelector name="minHeight" title="Min height" defaultValue="0" />
+      <ClassSelector name="maxHeight" title="Max height" defaultValue="none" />
     </div>
   );
 };

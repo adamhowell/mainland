@@ -1,4 +1,4 @@
-const colors = require('tailwindcss/colors')
+import { combinedColors } from "./src/configs/tailwind";
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -7,11 +7,7 @@ module.exports = {
     "./components/**/*.{html,js,jsx}"
   ],
   theme: {
-    colors: {
-      primary: "#333333",
-      secondary: "#222222",
-      ...colors
-    },
+    colors: combinedColors,
     extend: {},
   },
   plugins: [],

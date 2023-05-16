@@ -1,10 +1,10 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import Select, { components } from "react-select";
 const colors = require("tailwindcss/colors");
 import { IconTriangle } from "../../Icons";
 
 const SelectComp = (props) => {
-  const { label, isDefault, ...rest } = props;
+  const { label, isDefault, isColor, ...rest } = props;
 
   const customStyles = useMemo(
     () => ({
@@ -29,10 +29,10 @@ const SelectComp = (props) => {
         color: colors.stone[200],
         paddingLeft: "0.5rem",
       }),
-      singleValue: (base) => ({
+      singleValue: (base, { data }) => ({
         ...base,
         color: isDefault ? colors.stone[400] : colors.stone[200],
-        paddingLeft: "0.5rem",
+        paddingLeft: isColor && data.value !== "none" ? 0 : "0.5rem",
         paddingRight: "0.5rem",
       }),
       placeholder: (base) => ({
@@ -51,7 +51,7 @@ const SelectComp = (props) => {
         padding: 0,
         background: colors.stone[600],
       }),
-      option: (base, { isFocused, isSelected }) => ({
+      option: (base, { isFocused, isSelected, data }) => ({
         ...base,
         background: isFocused
           ? colors.stone[500]
@@ -60,6 +60,7 @@ const SelectComp = (props) => {
           : undefined,
         color: colors.stone[200],
         zIndex: 1,
+        ...(isColor ? (data.value !== "none" ? dot(data.color) : {}) : {}),
       }),
       indicatorsContainer: (base) => ({
         ...base,
@@ -69,11 +70,48 @@ const SelectComp = (props) => {
     [isDefault]
   );
 
+  const dot = (color = "transparent") => ({
+    alignItems: "center",
+    display: "flex",
+
+    ":before": {
+      backgroundColor: color,
+      borderRadius: 4,
+      content: '" "',
+      display: "block",
+      marginRight: "0.5rem",
+      height: 16,
+      width: 16,
+    },
+  });
+
   const DropdownIndicator = (props) => {
     return (
       <components.DropdownIndicator {...props}>
         <IconTriangle style={{ fontSize: "0.5rem" }} className="rotate-180" />
       </components.DropdownIndicator>
+    );
+  };
+
+  const SingleValue = (props) => {
+    return (
+      <components.SingleValue {...props}>
+        <div className="flex items-center">
+          {isColor && props.data.value !== "none" && (
+            <div
+              style={{
+                width: "16px",
+                height: "16px",
+                borderRadius: "4px",
+                marginRight: "0.5rem",
+                flexShrink: "0",
+                backgroundColor: props.data.color,
+              }}
+            ></div>
+          )}
+          <span>{props.data.label}</span>
+        </div>
+      </components.SingleValue>
     );
   };
 
@@ -87,7 +125,11 @@ const SelectComp = (props) => {
         <></>
       )}
       <Select
-        components={{ DropdownIndicator, IndicatorSeparator: () => null }}
+        components={{
+          DropdownIndicator,
+          IndicatorSeparator: () => null,
+          SingleValue,
+        }}
         {...rest}
         className="w-full"
         styles={customStyles}

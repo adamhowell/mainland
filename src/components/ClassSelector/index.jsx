@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import Select from "../../../../Inputs/Select";
-import { setAttribute } from "../../../../../redux/data-reducer";
-import { useSelectedNode } from "../../../../../helpers";
-import { clearClassNames } from "../../../../../utils";
-import { classes } from "../../../../../configs/tailwind";
+import Select from "../Inputs/Select";
+import { setAttribute } from "../../redux/data-reducer";
+import { useSelectedNode } from "../../helpers";
+import { clearClassNames } from "../../utils";
+import { classes, combinedColors } from "../../configs/tailwind";
+const colors = require("tailwindcss/colors");
 
-const SizeSelector = ({ title, name, defaultValue }) => {
+const ClassSelector = ({ title, name, defaultValue, isColor }) => {
   const [selectedOption, setSelectedOption] = useState({
     value: defaultValue,
     label: defaultValue,
@@ -15,7 +16,20 @@ const SizeSelector = ({ title, name, defaultValue }) => {
   const dispatch = useDispatch();
   const selectedNode = useSelectedNode();
 
-  const options = classes[name] ? classes[name].map((c) => ({ value: c, label: c })) : [];
+  const getColor = (name) => {
+    if (name) {
+      const parts = name.split("-");
+      return parts.length > 2 ? combinedColors[parts[1]][parts[2]] : combinedColors[parts[1]];
+    }
+  };
+
+  const options = classes[name]
+    ? classes[name].map((c) => ({
+        value: c,
+        label: c,
+        ...(isColor ? { color: getColor(c) } : {}),
+      }))
+    : [];
 
   useEffect(() => {
     if (selectedNode) {
@@ -63,9 +77,10 @@ const SizeSelector = ({ title, name, defaultValue }) => {
         isDefault={isDefault}
         placeholder={"Select"}
         label={title}
+        isColor={isColor}
       />
     </div>
   );
 };
 
-export default SizeSelector;
+export default ClassSelector;
