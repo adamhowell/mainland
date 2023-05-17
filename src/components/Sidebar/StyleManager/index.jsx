@@ -7,6 +7,9 @@ import Spacing from "./Spacing";
 import Size from "./Size";
 import Position from "./Position";
 import Typography from "./Typography";
+import Background from "./Background";
+import Effects from "./Effects";
+import BoxShadow from "./BoxShadow";
 
 const StyleManager = () => {
   return (
@@ -28,6 +31,15 @@ const StyleManager = () => {
       </CollapseMenu>
       <CollapseMenu title={`Typography`}>
         <Typography />
+      </CollapseMenu>
+      <CollapseMenu title={`Background`}>
+        <Background />
+      </CollapseMenu>
+      <CollapseMenu title={`Effects`}>
+        <Effects />
+      </CollapseMenu>
+      <CollapseMenu title={`Box Shadow`}>
+        <BoxShadow />
       </CollapseMenu>
     </div>
   );
