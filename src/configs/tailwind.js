@@ -6,6 +6,31 @@ export const combinedColors = {
   ...colors,
 };
 
+export const opacityValues = [
+  "1",
+  "0.9",
+  "0.8",
+  "0.7",
+  "0.6",
+  "0.5",
+  "0.4",
+  "0.3",
+  "0.2",
+  "0.1",
+];
+
+export const shadowLengthValues = [
+  "-20px",
+  "-10px",
+  "-5px",
+  "0px",
+  "5px",
+  "10px",
+  "20px",
+];
+
+export const shadowBlurValues = ["0px", "5px", "10px", "20px"];
+
 export const classes = {
   display: ["block", "flex", "grid", "inline-block", "inline", "hidden"],
   width: [
@@ -960,5 +985,15 @@ export const classes = {
     "blur-xl",
     "blur-2xl",
     "blur-3xl",
+  ],
+  boxShadow: [
+    "shadow-sm",
+    "shadow",
+    "shadow-md",
+    "shadow-lg",
+    "shadow-xl",
+    "shadow-2xl",
+    "shadow-inner",
+    "shadow-none",
   ],
 };

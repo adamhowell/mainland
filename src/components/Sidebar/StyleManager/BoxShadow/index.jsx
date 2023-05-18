@@ -1,55 +1,52 @@
 import React, { useState, useEffect } from "react";
 import Select from "../../../Inputs/Select";
-import { useSelectedNode } from "../../../../helpers";
-import { combinedColors } from "../../../../configs/tailwind";
+import { useSelectedNode, useShadowProps } from "../../../../helpers";
+import {
+  combinedColors,
+  opacityValues,
+  shadowLengthValues,
+  shadowBlurValues,
+} from "../../../../configs/tailwind";
+import hexToRgba from "hex-to-rgba";
+import { useDispatch } from "react-redux";
+import { setAttribute } from "../../../../redux/data-reducer";
+import {
+  clearShadowClassNames,
+  rgba2hex,
+  getColorNameByValue,
+  addStyle
+} from "../../../../utils";
 
-const values = [
-  "-50px",
-  "-40px",
-  "-30px",
-  "-20px",
-  "-10px",
-  "-5px",
-  "0px",
-  "5px",
-  "10px",
-  "20px",
-  "30px",
-  "40px",
-  "50px",
-].map((c) => ({ value: c, label: c }));
-
-const valuesOpacity = [
-  "1",
-  "0.9",
-  "0.8",
-  "0.7",
-  "0.6",
-  "0.5",
-  "0.4",
-  "0.3",
-  "0.2",
-  "0.1",
-  "0",
-].map((c) => ({ value: c, label: c }));
+const values = shadowLengthValues.map((c) => ({ value: c, label: c }));
+const valuesOpacity = opacityValues.map((c) => ({ value: c, label: c }));
+const valuesBlur = shadowBlurValues.map((c) => ({ value: c, label: c }));
 
 let colors = [];
 
 Object.keys(combinedColors).map((c) => {
-  typeof combinedColors[c] === "string"
-    ? colors.push({
-        value: combinedColors[c],
-        label: c,
-        color: combinedColors[c],
-      })
-    : Object.keys(combinedColors[c]).map((k) => {
-        colors.push({
-          value: combinedColors[c][k],
-          label: `${c}-${k}`,
-          color: combinedColors[c][k],
-        });
-      });
+  if (typeof combinedColors[c] === "string") {
+    colors.push({
+      value: combinedColors[c],
+      label: c,
+      color: combinedColors[c],
+    });
+  } else {
+    colors.push({
+      value: combinedColors[c][500],
+      label: `${c}-${500}`,
+      color: combinedColors[c][500],
+    });
+  }
 });
+
+console.log(
+  console.log(
+    "Clear",
+    clearShadowClassNames(
+      "shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)]"
+    )
+  )
+);
 
 const BoxShadow = () => {
   const selectedNode = useSelectedNode();
@@ -60,18 +57,95 @@ const BoxShadow = () => {
   const [spread, setSpread] = useState(null);
   const [opacity, setOpacity] = useState(null);
   const [color, setColor] = useState(null);
+  const dispatch = useDispatch();
+  const {
+    shadowHorizontalLength,
+    shadowVerticalLength,
+    shadowBlur,
+    shadowSpread,
+    shadowColor,
+  } = useShadowProps();
 
   useEffect(() => {
-    setIsDefault(true);
-    setLengthH(null);
-    setLengthV(null);
-    setBlur(null);
-    setSpread(null);
-    setOpacity(null);
-    setColor(null);
-  }, [selectedNode]);
+    if (shadowHorizontalLength) {
+      const color = rgba2hex(shadowColor);
+      setLengthH({
+        value: shadowHorizontalLength,
+        label: shadowHorizontalLength,
+      });
+      setLengthV({ value: shadowVerticalLength, label: shadowVerticalLength });
+      setBlur({ value: shadowBlur, label: shadowBlur });
+      setSpread({ value: shadowSpread, label: shadowSpread });
+      setOpacity({ value: color.opacity, label: color.opacity });
+      setColor({
+        value: color.color,
+        label: getColorNameByValue(combinedColors, color.color),
+        color: color.color,
+      });
+    } else {
+      setIsDefault(true);
+      setLengthH(null);
+      setLengthV(null);
+      setBlur(null);
+      setSpread(null);
+      setOpacity(null);
+      setColor(null);
+    }
+  }, [
+    selectedNode,
+    shadowHorizontalLength,
+    shadowVerticalLength,
+    shadowBlur,
+    shadowSpread,
+    shadowColor,
+  ]);
 
-  const onChange = (e) => {};
+  useEffect(() => {
+    if (color && opacity && spread && blur && lengthV && lengthH) {
+      const className = `shadow-[${lengthH.value}_${lengthV.value}_${
+        blur.value
+      }_${spread.value}_${hexToRgba(color.value, opacity.value).replaceAll(
+        " ",
+        ``
+      )}]`;
+
+      if (!selectedNode?.className?.includes(className)) {
+        const classNameSelector = `shadow-\\[${lengthH.value}_${
+          lengthV.value
+        }_${blur.value}_${spread.value}_${hexToRgba(color.value, opacity.value)
+          .replaceAll(",", `\\2c`)
+          .replace("(", `\\(`)
+          .replaceAll(".", `\\.`)
+          .replace(")", `\\)`)}\\]`;
+
+        const css = `.${classNameSelector}{box-shadow:${lengthH.value} ${
+          lengthV.value
+        } ${blur.value} ${spread.value} ${hexToRgba(
+          color.value,
+          opacity.value
+        )}}`;
+
+        addStyle(css)
+
+        const clearClassNames = clearShadowClassNames(selectedNode?.className);
+
+        dispatch(
+          setAttribute(
+            "className",
+            `${
+              selectedNode?.className
+                ? `${
+                    clearClassNames
+                      ? `${clearClassNames} ${className}`
+                      : `${className}`
+                  }`
+                : className
+            }`
+          )
+        );
+      }
+    }
+  }, [color, opacity, spread, blur, lengthV, lengthH]);
 
   return (
     <div className={`pt-2`}>
@@ -79,9 +153,8 @@ const BoxShadow = () => {
         <Select
           isDisabled={!selectedNode}
           value={selectedNode ? lengthH : null}
-          onChange={onChange}
+          onChange={setLengthH}
           options={values}
-          isDefault={isDefault}
           placeholder={"Select"}
           label={`Length H`}
         />
@@ -90,9 +163,8 @@ const BoxShadow = () => {
         <Select
           isDisabled={!selectedNode}
           value={selectedNode ? lengthV : null}
-          onChange={onChange}
+          onChange={setLengthV}
           options={values}
-          isDefault={isDefault}
           placeholder={"Select"}
           label={`Length V`}
         />
@@ -101,9 +173,8 @@ const BoxShadow = () => {
         <Select
           isDisabled={!selectedNode}
           value={selectedNode ? blur : null}
-          onChange={onChange}
-          options={values}
-          isDefault={isDefault}
+          onChange={setBlur}
+          options={valuesBlur}
           placeholder={"Select"}
           label={`Blur`}
         />
@@ -112,9 +183,8 @@ const BoxShadow = () => {
         <Select
           isDisabled={!selectedNode}
           value={selectedNode ? spread : null}
-          onChange={onChange}
+          onChange={setSpread}
           options={values}
-          isDefault={isDefault}
           placeholder={"Select"}
           label={`Spread`}
         />
@@ -123,9 +193,8 @@ const BoxShadow = () => {
         <Select
           isDisabled={!selectedNode}
           value={selectedNode ? opacity : null}
-          onChange={onChange}
+          onChange={setOpacity}
           options={valuesOpacity}
-          isDefault={isDefault}
           placeholder={"Select"}
           label={`Opacity`}
         />
@@ -134,9 +203,8 @@ const BoxShadow = () => {
         <Select
           isDisabled={!selectedNode}
           value={selectedNode ? color : null}
-          onChange={onChange}
+          onChange={setColor}
           options={colors}
-          isDefault={isDefault}
           isColor
           placeholder={"Select"}
           label={`Color`}

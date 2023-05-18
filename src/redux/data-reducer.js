@@ -420,8 +420,6 @@ export const setAttribute = (attributeName, value) => (dispatch, getState) => {
   } = getState();
   const id = selectedSection.id;
 
-  console.log(id, attributeName, value);
-
   const checkEndReturnNode = (node) => {
     let newNode = { ...node };
 

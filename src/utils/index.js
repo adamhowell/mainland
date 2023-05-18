@@ -59,6 +59,19 @@ export const clearClassNames = (current, exclude) => {
   return result;
 };
 
+export const clearShadowClassNames = (current) => {
+  let result = current;
+
+  if (result) {
+    result = result
+      .split(" ")
+      .filter((c) => c.indexOf("shadow-[") === -1)
+      .join(" ");
+  }
+
+  return result;
+};
+
 export const getWordBoundsAtPosition = (str, position) => {
   const isSpace = (c) => /\s/.exec(c);
   let start = position - 1;
@@ -85,3 +98,39 @@ export const getDefaultDisplayClass = (tag) => {
       return "block";
   }
 };
+
+export const rgba2hex = (rgba) => {
+  const [red, green, blue, alpha] = rgba.match(/[\d.]+/g);
+  const color = `#${Number(red).toString(16).padStart(2, "0")}${Number(green)
+    .toString(16)
+    .padStart(2, "0")}${Number(blue).toString(16).padStart(2, "0")}`;
+  const opacity = parseFloat(alpha);
+
+  return {
+    color: color,
+    opacity: opacity,
+  };
+};
+
+export const getColorNameByValue = (colors, value) => {
+  let result = null;
+  Object.keys(colors).forEach((ck) => {
+    if (typeof colors[ck] === "string") {
+      if (colors[ck] === value) result = ck;
+    } else {
+      Object.keys(colors[ck]).forEach((zk) => {
+        if (colors[ck][zk] === value) result = `${ck}-${zk}`;
+      });
+    }
+  });
+
+  return result;
+};
+
+export const addStyle = (css) => {
+  const head = document.head || document.getElementsByTagName("head")[0];
+  const style = document.createElement("style");
+  style.appendChild(document.createTextNode(css));
+
+  head.appendChild(style);
+}

@@ -67,7 +67,7 @@ const ClassSelector = ({ title, name, defaultValue, isColor }) => {
   };
 
   return (
-    <div className={`mb-2 text-stone-800 shadow-[0_35px_60px_-15px_rgba(255,255,255,0.3)]`}>
+    <div className={`mb-2 text-stone-800`}>
       <Select
         isDisabled={!selectedNode}
         value={selectedNode ? selectedOption : null}
