@@ -118,7 +118,7 @@ const SelectComp = (props) => {
   return (
     <div className="flex items-center w-full">
       {label ? (
-        <span className="uppercase text-stone-400 me-4 text-sm font-medium w-3/5">
+        <span className="uppercase text-stone-400 text-sm font-medium w-2/5 shrink-0">
           {label}
         </span>
       ) : (
@@ -131,7 +131,7 @@ const SelectComp = (props) => {
           SingleValue,
         }}
         {...rest}
-        className="w-full"
+        className="w-3/5 shrink-0"
         styles={customStyles}
       />
     </div>

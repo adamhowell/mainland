@@ -996,4 +996,12 @@ export const classes = {
     "shadow-inner",
     "shadow-none",
   ],
+  textAlign: [
+    "text-left",
+    "text-center",
+    "text-right",
+    "text-justify",
+    "text-start",
+    "text-end",
+  ],
 };

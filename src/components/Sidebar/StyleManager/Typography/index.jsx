@@ -1,9 +1,11 @@
 import React from "react";
 import ClassSelector from "../../../ClassSelector";
+import AlignSelector from "../../../AlignSelector";
 
 const Typography = () => {
   return (
     <div className={`pt-2`}>
+      <AlignSelector name="textAlign" title="ALign" defaultValue="left"/>
       <ClassSelector name="fontSize" title="Size" defaultValue="none" />
       <ClassSelector name="textColor" title="Color" defaultValue="none" isColor />
       <ClassSelector name="fontWeight" title="Weight" defaultValue="none" />

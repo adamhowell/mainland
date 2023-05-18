@@ -115,3 +115,75 @@ export const IconTriangle = (props) => (
     <path d="M24,20H0L12,0L24,20z" />
   </svg>
 );
+
+export const IconTextLeft = (props) => (
+  <svg
+    {...props}
+    fill="currentColor"
+    width="1em"
+    height="1em"
+    xmlns="http://www.w3.org/2000/svg"
+    x="0px"
+    y="0px"
+    viewBox="0 0 16 16"
+  >
+    <path
+      fillRule="evenodd"
+      d="M2 12.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"
+    />
+  </svg>
+);
+
+export const IconTextRight = (props) => (
+  <svg
+    {...props}
+    fill="currentColor"
+    width="1em"
+    height="1em"
+    xmlns="http://www.w3.org/2000/svg"
+    x="0px"
+    y="0px"
+    viewBox="0 0 16 16"
+  >
+    <path
+      fillRule="evenodd"
+      d="M6 12.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-4-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm4-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-4-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"
+    />
+  </svg>
+);
+
+export const IconTextCenter = (props) => (
+  <svg
+    {...props}
+    fill="currentColor"
+    width="1em"
+    height="1em"
+    xmlns="http://www.w3.org/2000/svg"
+    x="0px"
+    y="0px"
+    viewBox="0 0 16 16"
+  >
+    <path
+      fillRule="evenodd"
+      d="M4 12.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"
+    />
+  </svg>
+);
+
+export const IconTextJustify = (props) => (
+  <svg
+    {...props}
+    fill="currentColor"
+    width="1em"
+    height="1em"
+    xmlns="http://www.w3.org/2000/svg"
+    x="0px"
+    y="0px"
+    viewBox="0 0 16 16"
+  >
+    <path
+      fillRule="evenodd"
+      d="M2,9.5C2,9.2,2.2,9,2.5,9h11C13.8,9,14,9.2,14,9.5S13.8,10,13.5,10h-11C2.2,10,2,9.8,2,9.5z M2,3.5C2,3.2,2.2,3,2.5,3h11C13.8,3,14,3.2,14,3.5S13.8,4,13.5,4h-11C2.2,4,2,3.8,2,3.5z M2,6.5C2,6.2,2.2,6,2.5,6h11C13.8,6,14,6.2,14,6.5S13.8,7,13.5,7h-11C2.2,7,2,6.8,2,6.5z M2,12.5C2,12.2,2.2,12,2.5,12h11c0.3,0,0.5,0.2,0.5,0.5S13.8,13,13.5,13h-11C2.2,13,2,12.8,2,12.5z"
+    />
+  </svg>
+);
