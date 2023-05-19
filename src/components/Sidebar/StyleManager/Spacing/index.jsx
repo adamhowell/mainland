@@ -1,13 +1,10 @@
-import React, { useState } from "react";
-import styles from "./Spacing.module.scss";
-import { useSelector } from "react-redux";
+import React from "react";
+import SpacingSelector from "../../../SpacingSelector";
 
 const Spacing = () => {
-  const { selectedSection } = useSelector((state) => state.data);
-
   return (
-    <div className={`${styles.root} p-4`}>
-      Spacing
+    <div className={`pt-2`}>
+      <SpacingSelector />
     </div>
   );
 };

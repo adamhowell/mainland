@@ -1,0 +1,39 @@
+@import "../../../src/styles/variables.scss";
+
+.root {
+  width: 100%;
+}
+
+.button {
+  background-color: transparent;
+  outline: none;
+  position: absolute;
+  width: 20px;
+  text-align: center;
+
+  &:global(.tr-left) {
+    transform: translateX(-50%);
+  }
+  &:global(.tr-top) {
+    transform: translateY(-50%);
+  }
+}
+
+.padding {
+  position: absolute;
+  width: calc(100% - 60px);
+  height: calc(100% - 56px);
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.shape {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 80px;
+  height: 10px;
+  border-radius: 20px;
+}

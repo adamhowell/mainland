@@ -11,7 +11,7 @@ const SelectComp = (props) => {
       control: (base, state) => ({
         ...base,
         background: colors.stone[600],
-        borderRadius: state.isFocused ? "3px 3px 0 0" : 3,
+        borderRadius: state.isFocused ? "8px 8px 0 0" : 8,
         borderColor: "transparent",
         boxShadow: state.isFocused ? null : null,
         color: colors.stone[200],

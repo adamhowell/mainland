@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setAttribute } from "../../redux/data-reducer";
 import { useSelectedNode } from "../../helpers";
 import { clearClassNames } from "../../utils";
-import { classes, combinedColors } from "../../configs/tailwind";
+import { classes } from "../../configs/tailwind";
 import {
   IconTextLeft,
   IconTextRight,
@@ -30,12 +30,7 @@ const buttons = [
   },
 ];
 
-const AlignSelector = ({ title, name, defaultValue, isColor }) => {
-  const [selectedOption, setSelectedOption] = useState({
-    value: defaultValue,
-    label: defaultValue,
-  });
-  const [isDefault, setIsDefault] = useState(true);
+const AlignSelector = ({ title, name, isColor }) => {
   const dispatch = useDispatch();
   const selectedNode = useSelectedNode();
 
@@ -46,29 +41,6 @@ const AlignSelector = ({ title, name, defaultValue, isColor }) => {
         ...(isColor ? { color: getColor(c) } : {}),
       }))
     : [];
-
-  // useEffect(() => {
-  //   if (selectedNode) {
-  //     if (selectedNode?.className) {
-  //       let option = null;
-  //       selectedNode?.className?.split(" ").map((c) => {
-  //         const index = options.map((c) => c.value).indexOf(c);
-  //         if (index !== -1) option = options[index];
-  //       });
-
-  //       if (option) {
-  //         setSelectedOption(option);
-  //         setIsDefault(false);
-  //       } else {
-  //         setSelectedOption({ value: defaultValue, label: defaultValue });
-  //         setIsDefault(true);
-  //       }
-  //     } else {
-  //       setSelectedOption({ value: defaultValue, label: defaultValue });
-  //       setIsDefault(true);
-  //     }
-  //   }
-  // }, [selectedNode]);
 
   const isActive = (name) => {
     return selectedNode?.className?.includes(name);
@@ -98,7 +70,7 @@ const AlignSelector = ({ title, name, defaultValue, isColor }) => {
           <></>
         )}
         <div
-          className={`flex items-center rounded bg-stone-600 overflow-hidden text-xl w-3/5 shrink-0 ${
+          className={`flex items-center rounded-lg bg-stone-600 overflow-hidden text-xl w-3/5 shrink-0 ${
             !selectedNode ? "pointer-events-none" : ""
           }`}
         >
