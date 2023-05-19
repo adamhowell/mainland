@@ -2,7 +2,7 @@ export const defaultConfig = {
   blocks: [
     {
       label: "Div",
-      attributes: { class: "ml-div" },
+      attributes: { class: "mld-div" },
       content: `<div></div>`,
       icon: '<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="64px" height="64px" viewBox="0 0 64 64"><path d="M58,2c2.2,0,4,1.8,4,4v52c0,2.2-1.8,4-4,4H6c-2.2,0-4-1.8-4-4V6c0-2.2,1.8-4,4-4H58 M58,0H6C2.7,0,0,2.7,0,6v52c0,3.3,2.7,6,6,6h52c3.3,0,6-2.7,6-6V6C64,2.7,61.3,0,58,0L58,0z"/></svg>'
     },
@@ -14,7 +14,7 @@ export const defaultConfig = {
     },
     {
       label: "Text",
-      attributes: { class: "ml-span" },
+      attributes: { class: "mld-span" },
       content: `<span>Text</span>`,
       icon: '<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"width="64px" height="64px" viewBox="0 0 64 64"><path d="M12,21.9c0-1,0.9-1.8,2-1.8h36c1.1,0,2,0.8,2,1.8s-0.9,1.8-2,1.8H14C12.9,23.7,12,22.9,12,21.9z M12,31.9c0-1,0.9-1.8,2-1.8h36c1.1,0,2,0.8,2,1.8s-0.9,1.8-2,1.8H14C12.9,33.7,12,32.9,12,31.9z M12,41.9c0-1,0.9-1.8,2-1.8h24c1.1,0,2,0.8,2,1.8s-0.9,1.8-2,1.8H14C12.9,43.7,12,42.9,12,41.9z"/><path d="M58.5,11.2c1.4,0,2.5,1.1,2.5,2.5v37c0,1.4-1.1,2.5-2.5,2.5h-53C4.1,53.2,3,52,3,50.7v-37c0-1.4,1.1-2.5,2.5-2.5H58.5M58.5,8.2h-53c-3,0-5.5,2.5-5.5,5.5v37c0,3,2.5,5.5,5.5,5.5h53c3,0,5.5-2.5,5.5-5.5v-37C64,10.6,61.5,8.2,58.5,8.2L58.5,8.2z"/></svg>'
     },

@@ -1,0 +1,15 @@
+@import "../../../src/styles/variables.scss";
+
+.close {
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 50%;
+  position: absolute;
+  top: -1.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  right: 0;
+  font-size: 0.5rem;
+  cursor: pointer;
+}

@@ -18,14 +18,14 @@ const initialState = {
     {
       id: "C2BOHNi-z",
       tagName: "div",
-      className: "ml-div",
+      className: "mld-div",
       position: 1,
     },
     {
       id: "i0g1N0-f3",
       tagName: "section",
       children: [],
-      className: "ml-section",
+      className: "mld-section",
       position: 0,
     },
     {

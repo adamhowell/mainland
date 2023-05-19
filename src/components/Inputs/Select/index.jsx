@@ -131,7 +131,7 @@ const SelectComp = (props) => {
           SingleValue,
         }}
         {...rest}
-        className="w-3/5 shrink-0"
+        className={`${props.className ? props.className : ''} ${label ? "w-3/5" : ""} shrink-0`}
         styles={customStyles}
       />
     </div>
