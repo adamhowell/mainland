@@ -74,63 +74,63 @@ const SpacingSelector = () => {
       clear();
       if (selectedNode?.className) {
         selectedNode?.className?.split(" ").map((c) => {
-          if (c.includes("pt-")) {
+          if (c.indexOf("pt-") === 0) {
             const v = c.split("pt-");
             setSelectedOption((c) => ({
               ...c,
               pt: v[1],
             }));
           }
-          if (c.includes("pb-")) {
+          if (c.indexOf("pb-") === 0) {
             const v = c.split("pb-");
             setSelectedOption((c) => ({
               ...c,
               pb: v[1],
             }));
           }
-          if (c.includes("pl-")) {
+          if (c.indexOf("pl-") === 0) {
             const v = c.split("pl-");
             setSelectedOption((c) => ({
               ...c,
               pl: v[1],
             }));
           }
-          if (c.includes("pr-")) {
+          if (c.indexOf("pr-") === 0) {
             const v = c.split("pr-");
             setSelectedOption((c) => ({
               ...c,
               pr: v[1],
             }));
           }
-          if (c.includes("m-")) {
+          if (c.indexOf("mt-") === 0) {
             const v = c.split("mt-");
             setSelectedOption((c) => ({
               ...c,
               mt: v[1],
             }));
           }
-          if (c.includes("mb-")) {
+          if (c.indexOf("mb-") === 0) {
             const v = c.split("mb-");
             setSelectedOption((c) => ({
               ...c,
               mb: v[1],
             }));
           }
-          if (c.includes("ml-")) {
+          if (c.indexOf("ml-") === 0) {
             const v = c.split("ml-");
             setSelectedOption((c) => ({
               ...c,
               ml: v[1],
             }));
           }
-          if (c.includes("mr-")) {
+          if (c.indexOf("mr-") === 0) {
             const v = c.split("mr-");
             setSelectedOption((c) => ({
               ...c,
               mr: v[1],
             }));
           }
-          if (c.includes("p-")) {
+          if (c.indexOf("p-") === 0) {
             const v = c.split("p-");
             setSelectedOption((c) => ({
               ...c,
@@ -141,7 +141,7 @@ const SpacingSelector = () => {
             }));
           }
 
-          if (c.includes("m-")) {
+          if (c.indexOf("m-") === 0) {
             const v = c.split("m-");
             setSelectedOption((c) => ({
               ...c,
@@ -152,7 +152,7 @@ const SpacingSelector = () => {
             }));
           }
 
-          if (c.includes("py-")) {
+          if (c.indexOf("py-") === 0) {
             const v = c.split("py-");
             setSelectedOption((c) => ({
               ...c,
@@ -161,7 +161,7 @@ const SpacingSelector = () => {
             }));
           }
 
-          if (c.includes("my-")) {
+          if (c.indexOf("my-") === 0) {
             const v = c.split("my-");
             setSelectedOption((c) => ({
               ...c,
@@ -170,7 +170,7 @@ const SpacingSelector = () => {
             }));
           }
 
-          if (c.includes("px-")) {
+          if (c.indexOf("px-") === 0) {
             const v = c.split("px-");
             setSelectedOption((c) => ({
               ...c,
@@ -179,7 +179,7 @@ const SpacingSelector = () => {
             }));
           }
 
-          if (c.includes("mx-")) {
+          if (c.indexOf("mx-") === 0) {
             const v = c.split("mx-");
             setSelectedOption((c) => ({
               ...c,
