@@ -133,4 +133,17 @@ export const addStyle = (css) => {
   style.appendChild(document.createTextNode(css));
 
   head.appendChild(style);
-}
+};
+
+export const getClassByPartOfName = (className, partOfName) => {
+  let result = null;
+
+  className?.split(" ").map((c) => {
+    if (c.includes(partOfName)) result = c;
+  });
+
+  return result;
+};
+
+export const clearClassNamesByPartOfName = (className, partOfName) =>
+  className?.split(" ").filter((c) => !c.includes(partOfName)).join(" ");

@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setAttribute } from "../../redux/data-reducer";
 import { useSelectedNode } from "../../helpers";
-import { clearClassNames } from "../../utils";
+import {
+  clearClassNames,
+  getClassByPartOfName,
+  clearClassNamesByPartOfName,
+} from "../../utils";
 import { classes } from "../../configs/tailwind";
 import styles from "./SpacingSelector.module.scss";
 import Select from "../../components/Inputs/Select";
@@ -18,18 +22,15 @@ const SpacingSelector = () => {
   const selectedNode = useSelectedNode();
   const [active, setActive] = useState(null);
   const [selectedOption, setSelectedOption] = useState({
-    pt: 0,
-    pb: 0,
-    pl: 0,
-    pr: 0,
-    mt: 0,
-    mb: 0,
-    ml: 0,
-    mr: 0,
+    pt: null,
+    pb: null,
+    pl: null,
+    pr: null,
+    mt: null,
+    mb: null,
+    ml: null,
+    mr: null,
   });
-  const [selectedY, setSelectedY] = useState(null);
-  const [selectedAll, setSelectedAll] = useState(null);
-  const [isDefault, setIsDefault] = useState(true);
 
   const options1 = active
     ? classes[active].map((c) => ({
@@ -198,28 +199,60 @@ const SpacingSelector = () => {
 
   const clear = () =>
     setSelectedOption({
-      pt: 0,
-      pb: 0,
-      pl: 0,
-      pr: 0,
-      mt: 0,
-      mb: 0,
-      ml: 0,
-      mr: 0,
+      pt: null,
+      pb: null,
+      pl: null,
+      pr: null,
+      mt: null,
+      mb: null,
+      ml: null,
+      mr: null,
     });
 
-  const onChange = (e) => {};
+  const onChange = (e, partOfName) => {
+    if (selectedNode) {
+      let className = clearClassNamesByPartOfName(
+        selectedNode.className,
+        partOfName
+      );
+
+      className = `${
+        className?.length ? `${className} ${e.value}` : e.value
+      }`;
+
+      dispatch(setAttribute("className", className));
+    }
+  };
+
+  const isMargin = () => active?.includes("margin");
+  const removeName = () => active?.replace("margin", "").replace("padding", "");
+
+  const getOption = (name) => {
+    const className = getClassByPartOfName(selectedNode.className, name);
+    return className
+      ? {
+          value: className,
+          label: className,
+        }
+      : null;
+  };
 
   const getSelected = (type) => {
-    // if (selectedNode) {
-    //   if (selectedNode?.className) {
-    //     let option = null;
-    //     selectedNode?.className?.split(" ").map((c) => {
-    //       const index = options1.map((c) => c.value).indexOf(c);
-    //       if (index !== -1) option = options[index];
-    //     });
-    //   }
-    // }
+    switch (type) {
+      case "Top":
+        return getOption(isMargin() ? "mt-" : "pt-");
+      case "Bottom":
+        return getOption(isMargin() ? "mb-" : "pb-");
+      case "Left":
+        return getOption(isMargin() ? "ml-" : "pl-");
+      case "Right":
+        return getOption(isMargin() ? "mr-" : "pr-");
+      case "Y":
+        return getOption(isMargin() ? "my-" : "py-");
+      case "all":
+        return getOption(isMargin() ? "m-" : "p-");
+    }
+
     return null;
   };
 
@@ -229,46 +262,46 @@ const SpacingSelector = () => {
     >
       <SidebarModal active={active} onClose={() => setActive(null)}>
         <div className="flex items-center w-full mb-2">
-          <span className="uppercase text-stone-400 text-sm font-medium w-2/4 shrink-0">
-            {active?.includes("margin") ? "Margin" : "Padding"}-
-            {active?.replace("margin", "").replace("padding", "")}
+          <span className="uppercase text-stone-400 text-xs font-medium w-2/4 shrink-0">
+            {active?.includes("margin") ? "Margin" : "Padding"}-{removeName()}
           </span>
           <Select
             isDisabled={!selectedNode}
-            value={
-              selectedNode
-                ? getSelected(
-                    active?.replace("margin", "").replace("padding", "")
-                  )
-                : null
+            value={selectedNode ? getSelected(removeName()) : null}
+            onChange={(e) =>
+              onChange(
+                e,
+                isMargin()
+                  ? `m${removeName().toLowerCase()}-`
+                  : `p${removeName().toLowerCase()}-`
+              )
             }
-            onChange={onChange}
             options={options1}
             className="w-full"
             placeholder={"Select"}
           />
         </div>
         <div className="flex items-center w-full mb-2">
-          <span className="uppercase text-stone-400 text-sm font-medium w-2/4 shrink-0">
+          <span className="uppercase text-stone-400 text-xs font-medium w-2/4 shrink-0">
             {active?.includes("margin") ? "Margin" : "Padding"} Y-axis
           </span>
           <Select
             isDisabled={!selectedNode}
             value={selectedNode ? getSelected("Y") : null}
-            onChange={onChange}
+            onChange={(e) => onChange(e, isMargin() ? `my-` : `py-`)}
             options={options2}
             className="w-full"
             placeholder={"Select"}
           />
         </div>
         <div className="flex items-center w-full">
-          <span className="uppercase text-stone-400 text-sm font-medium w-2/4 shrink-0">
+          <span className="uppercase text-stone-400 text-xs font-medium w-2/4 shrink-0">
             {active?.includes("margin") ? "Margin" : "Padding"} All
           </span>
           <Select
             isDisabled={!selectedNode}
             value={selectedNode ? getSelected("all") : null}
-            onChange={onChange}
+            onChange={(e) => onChange(e, isMargin() ? `m-` : `p-`)}
             options={options3}
             className="w-full"
             placeholder={"Select"}
@@ -283,25 +316,25 @@ const SpacingSelector = () => {
         </div>
         <input
           className={`${styles.button} ${cls.button} tr-left left-1/2 top-1`}
-          value={selectedOption.mt}
+          value={selectedOption.mt ? selectedOption.mt : 0}
           onFocus={() => setActive("marginTop")}
           type="text"
         />
         <input
           className={`${styles.button} ${cls.button} tr-top left-1 top-1/2`}
-          value={selectedOption.ml}
+          value={selectedOption.ml ? selectedOption.ml : 0}
           onFocus={() => setActive("marginLeft")}
           type="text"
         />
         <input
           className={`${styles.button} ${cls.button} tr-top right-1 top-1/2`}
-          value={selectedOption.mr}
+          value={selectedOption.mr ? selectedOption.mr : 0}
           onFocus={() => setActive("marginRight")}
           type="text"
         />
         <input
           className={`${styles.button} ${cls.button} tr-left bottom-1 left-1/2`}
-          value={selectedOption.mb}
+          value={selectedOption.mb ? selectedOption.mb : 0}
           onFocus={() => setActive("marginBottom")}
           type="text"
         />
@@ -314,25 +347,25 @@ const SpacingSelector = () => {
           </div>
           <input
             className={`${styles.button} ${cls.button} tr-left left-1/2 top-1`}
-            value={selectedOption.pt}
+            value={selectedOption.pt ? selectedOption.pt : 0}
             onFocus={() => setActive("paddingTop")}
             type="text"
           />
           <input
             className={`${styles.button} ${cls.button} tr-top left-1 top-1/2`}
-            value={selectedOption.pl}
+            value={selectedOption.pl ? selectedOption.pl : 0}
             onFocus={() => setActive("paddingLeft")}
             type="text"
           />
           <input
             className={`${styles.button} ${cls.button} tr-top right-1 top-1/2`}
-            value={selectedOption.pr}
+            value={selectedOption.pr ? selectedOption.pr : 0}
             onFocus={() => setActive("paddingRight")}
             type="text"
           />
           <input
             className={`${styles.button} ${cls.button} tr-left bottom-1 left-1/2`}
-            value={selectedOption.pb}
+            value={selectedOption.pb ? selectedOption.pb : 0}
             onFocus={() => setActive("paddingBottom")}
             type="text"
           />
