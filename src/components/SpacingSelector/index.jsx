@@ -210,6 +210,7 @@ const SpacingSelector = () => {
     });
 
   const onChange = (e, partOfName) => {
+    console.log(partOfName)
     if (selectedNode) {
       let className = clearClassNamesByPartOfName(
         selectedNode.className,
@@ -272,8 +273,8 @@ const SpacingSelector = () => {
               onChange(
                 e,
                 isMargin()
-                  ? `m${removeName().toLowerCase()}-`
-                  : `p${removeName().toLowerCase()}-`
+                  ? `m${removeName().toLowerCase()[0]}-`
+                  : `p${removeName().toLowerCase()[0]}-`
               )
             }
             options={options1}
