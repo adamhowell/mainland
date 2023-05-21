@@ -21,5 +21,16 @@
 }
 
 .canvas {
+  width: 100%;
+  height: calc(100% - #{$breadcrumb-height});
+  overflow-y: auto;
+}
+
+.canvasContainer {
   width: calc(100% - #{$sidebar-width});
+}
+
+.breadcrumb {
+  height: $breadcrumb-height;
+  width: 100%;
 }

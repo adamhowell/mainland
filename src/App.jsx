@@ -4,6 +4,7 @@ import Layout from "./components/Layout";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import Canvas from "./components/Canvas";
+import Breadcrumb from "./components/Breadcrumb";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import { useDispatch } from "react-redux";
@@ -38,6 +39,7 @@ const App = ({ userConfig }) => {
           slotHeader={<Header />}
           slotSidebar={<Sidebar />}
           slotCanvas={<Canvas />}
+          slotBreadcrumb={<Breadcrumb />}
         />
       </DndProvider>
     </Provider>
