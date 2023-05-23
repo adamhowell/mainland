@@ -10,6 +10,7 @@ import Typography from "./Typography";
 import Background from "./Background";
 import Effects from "./Effects";
 import BoxShadow from "./BoxShadow";
+import Borders from "./Borders";
 
 const StyleManager = () => {
   return (
@@ -34,6 +35,9 @@ const StyleManager = () => {
       </CollapseMenu>
       <CollapseMenu title={`Background`}>
         <Background />
+      </CollapseMenu>
+      <CollapseMenu title={`Borders`}>
+        <Borders />
       </CollapseMenu>
       <CollapseMenu title={`Effects`}>
         <Effects />

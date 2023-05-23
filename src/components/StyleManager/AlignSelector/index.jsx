@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setAttribute } from "../../redux/data-reducer";
-import { useSelectedNode } from "../../helpers";
-import { clearClassNames } from "../../utils";
-import { classes } from "../../configs/tailwind";
+import { setAttribute } from "../../../redux/data-reducer";
+import { useSelectedNode } from "../../../helpers";
+import { clearClassNames } from "../../../utils";
+import { classes } from "../../../configs/tailwind";
 import {
   IconTextLeft,
   IconTextRight,
   IconTextCenter,
   IconTextJustify,
-} from "../Icons";
+} from "../../Icons";
 
 const buttons = [
   {

@@ -1,0 +1,54 @@
+$shape-size: 2rem;
+
+.root {
+  display: flex;
+  align-items: center;
+}
+
+.buttonsContainer {
+  width: calc(#{$shape-size} * 3 - 2px);
+  height: calc(#{$shape-size} * 3 - 2px);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.button {
+  width: 2rem;
+  height: 2rem;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  &:global(.top) {
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
+  }
+  &:global(.bottom) {
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+  }
+  &:global(.left) {
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  &:global(.right) {
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  &:global(.center) {
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  }
+}
+
+.buttonShape {
+  width: calc(100% - 6px);
+  height: calc(100% - 6px);
+}

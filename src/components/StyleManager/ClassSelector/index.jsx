@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import Select from "../Inputs/Select";
-import { setAttribute } from "../../redux/data-reducer";
-import { useSelectedNode } from "../../helpers";
-import { clearClassNames } from "../../utils";
-import { classes, combinedColors } from "../../configs/tailwind";
+import Select from "../../Inputs/Select";
+import { setAttribute } from "../../../redux/data-reducer";
+import { useSelectedNode } from "../../../helpers";
+import { clearClassNames } from "../../../utils";
+import { classes, combinedColors } from "../../../configs/tailwind";
 
 const ClassSelector = ({ title, name, defaultValue, isColor }) => {
   const [selectedOption, setSelectedOption] = useState({

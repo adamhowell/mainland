@@ -1,5 +1,5 @@
 import React from "react";
-import ClassSelector from "../../../ClassSelector";
+import ClassSelector from "../../../StyleManager/ClassSelector";
 
 const Effects = () => {
   return (

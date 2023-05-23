@@ -1,6 +1,6 @@
 import React from "react";
-import ClassSelector from "../../../ClassSelector";
-import AlignSelector from "../../../AlignSelector";
+import ClassSelector from "../../../StyleManager/ClassSelector";
+import AlignSelector from "../../../StyleManager/AlignSelector";
 
 const Typography = () => {
   return (

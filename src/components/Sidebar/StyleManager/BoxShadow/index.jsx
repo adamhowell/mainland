@@ -39,15 +39,6 @@ Object.keys(combinedColors).map((c) => {
   }
 });
 
-console.log(
-  console.log(
-    "Clear",
-    clearShadowClassNames(
-      "shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)]"
-    )
-  )
-);
-
 const BoxShadow = () => {
   const selectedNode = useSelectedNode();
   const [isDefault, setIsDefault] = useState(false);
