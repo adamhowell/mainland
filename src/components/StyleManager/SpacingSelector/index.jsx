@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setAttribute } from "../../redux/data-reducer";
-import { useSelectedNode } from "../../helpers";
+import { setAttribute } from "../../../redux/data-reducer";
+import { useSelectedNode } from "../../../helpers";
 import {
   clearClassNames,
   getClassByPartOfName,
   clearClassNamesByPartOfName,
-} from "../../utils";
-import { classes } from "../../configs/tailwind";
+} from "../../../utils";
+import { classes } from "../../../configs/tailwind";
 import styles from "./SpacingSelector.module.scss";
-import Select from "../../components/Inputs/Select";
-import SidebarModal from "../Modals/SidebarModal";
+import Select from "../../../components/Inputs/Select";
+import SidebarModal from "../../Modals/SidebarModal";
 
 const cls = {
   button:

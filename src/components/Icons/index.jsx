@@ -187,3 +187,22 @@ export const IconTextJustify = (props) => (
     />
   </svg>
 );
+
+export const IconPlus = (props) => (
+  <svg
+    {...props}
+    fill="currentColor"
+    width="1em"
+    height="1em"
+    xmlns="http://www.w3.org/2000/svg"
+    x="0px"
+    y="0px"
+    viewBox="0 0 12 12"
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M6,0c0.3,0,0.5,0.2,0.5,0.5v5h5C11.8,5.5,12,5.7,12,6c0,0.3-0.2,0.5-0.5,0.5h-5v5C6.5,11.8,6.3,12,6,12c-0.3,0-0.5-0.2-0.5-0.5v-5h-5C0.2,6.5,0,6.3,0,6c0-0.3,0.2-0.5,0.5-0.5h5v-5C5.5,0.2,5.7,0,6,0z"
+    />
+  </svg>
+);

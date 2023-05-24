@@ -1,7 +1,13 @@
 import React from "react";
 import styles from "./Layout.module.scss";
 
-const Layout = ({ slotHeader, slotSidebar, slotCanvas, slotBreadcrumb }) => {
+const Layout = ({
+  slotHeader,
+  slotSidebar,
+  slotCanvas,
+  slotBreadcrumb,
+  slotModals,
+}) => {
   return (
     <div className={`${styles.root}`}>
       <div className={`${styles.header}`}>{slotHeader}</div>
@@ -12,6 +18,7 @@ const Layout = ({ slotHeader, slotSidebar, slotCanvas, slotBreadcrumb }) => {
         </div>
         <div className={`${styles.sidebar}`}>{slotSidebar}</div>
       </div>
+      {slotModals}
     </div>
   );
 };

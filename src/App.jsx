@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { setConfig } from "./redux/data-reducer";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import Modals from "./components/Modals";
 
 import "./styles/index.css";
 
@@ -40,6 +41,7 @@ const App = ({ userConfig }) => {
           slotSidebar={<Sidebar />}
           slotCanvas={<Canvas />}
           slotBreadcrumb={<Breadcrumb />}
+          slotModals={<Modals />}
         />
       </DndProvider>
     </Provider>

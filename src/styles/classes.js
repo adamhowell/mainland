@@ -1,0 +1,1 @@
+export const button = "bg-stone-600 rounded text-stone-300 hover:bg-stone-700 hover:text-stone-200 transition flex justify-center p-2"

@@ -1,5 +1,5 @@
 import React from "react";
-import SpacingSelector from "../../../SpacingSelector";
+import SpacingSelector from "../../../StyleManager/SpacingSelector";
 
 const Spacing = () => {
   return (
