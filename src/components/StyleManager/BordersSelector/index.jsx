@@ -8,6 +8,7 @@ import styles from "./BordersSelector.module.scss";
 import Select from "../../Inputs/Select";
 import Button from "./Button";
 import { combinedColors } from "../../../configs/tailwind";
+import { useBordersProps } from "../../../helpers";
 
 const buttons = [
   { position: "top" },
@@ -24,6 +25,26 @@ const BordersSelector = () => {
   const [color, setColor] = useState(null);
   const [width, setWidth] = useState(null);
   const [active, setActive] = useState("center");
+  const { borderWidth, borderStyle, borderColor } = useBordersProps();
+
+  useEffect(() => {
+    setWidth(borderWidth ? { value: borderWidth, label: borderWidth } : null);
+    setStyle(borderStyle ? { value: borderStyle, label: borderStyle } : null);
+    setColor(
+      borderColor
+        ? {
+            value: borderColor,
+            label: borderColor,
+            color: getColor(borderColor),
+          }
+        : null
+    );
+    if (borderColor) setActive(getPosition(borderColor));
+  }, [borderWidth, borderStyle, borderColor]);
+
+  useEffect(() => {
+    if (!selectedNode) setActive("center");
+  }, [selectedNode, borderColor]);
 
   useEffect(() => {
     if (selectedNode && style) {
@@ -70,8 +91,12 @@ const BordersSelector = () => {
     }
   }, [color]);
 
-  const isActive = (name) => {
-    return selectedNode?.className?.includes(name);
+  const getPosition = (name) => {
+    if (name.includes("border-r")) return "right";
+    if (name.includes("border-l")) return "left";
+    if (name.includes("border-t")) return "top";
+    if (name.includes("border-b")) return "bottom";
+    return "center";
   };
 
   const getColorClass = () => {
@@ -103,7 +128,10 @@ const BordersSelector = () => {
         .replace("border-", "")
         .split("-");
 
-      c = colorParts.length > 1 ? combinedColors[colorParts[0]][colorParts[1]] : combinedColors[colorParts[0]];
+      c =
+        colorParts.length > 1
+          ? combinedColors[colorParts[0]][colorParts[1]]
+          : combinedColors[colorParts[0]];
     }
 
     return c;
