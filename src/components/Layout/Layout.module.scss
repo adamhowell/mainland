@@ -1,7 +1,7 @@
 @import "../../../src/styles/variables.scss";
 
 .root {
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   overflow: hidden;
 
@@ -21,29 +21,88 @@
 
 .header {
   height: $header-height;
+  transition: transform $transition ease;
+
+  &:global(.hide) {
+    transform: translateY(-100%);
+  }
 }
 
 .inner {
-  height: calc(100% - #{$header-height});
+  height: 100%;
+  padding-top: $header-height;
   display: flex;
   align-items: stretch;
+  transition: padding $transition ease;
+
+  &:global(.expand) {
+    padding-top: 0;
+  }
 }
 
 .sidebar {
+  position: absolute;
+  top: $header-height;
+  right: 0;
   width: $sidebar-width;
+  height: calc(100vh - #{$header-height});
+  transition: transform $transition ease;
+
+  &:global(.hide) {
+    transform: translateX($sidebar-width);
+  }
 }
 
 .canvas {
   width: 100%;
-  height: calc(100% - #{$breadcrumb-height});
+  height: 100%;
   overflow-y: auto;
+  padding-bottom: $breadcrumb-height;
+  transition: padding $transition ease;
+
+  &:global(.expand) {
+    padding-bottom: 0;
+  }
 }
 
 .canvasContainer {
-  width: calc(100% - #{$sidebar-width});
+  width: 100%;
+  padding-right: $sidebar-width;
+  transition: padding $transition ease;
+
+  &:global(.expand) {
+    padding-right: 0;
+  }
 }
 
 .breadcrumb {
   height: $breadcrumb-height;
   width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transition: transform $transition ease;
+
+  &:global(.hide) {
+    transform: translateY(100%);
+  }
+}
+
+.previewToggler {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: rgba($white, 0.8);
+  transform: translateY(-3rem);
+  transition: all $transition ease;
+
+  &:global(.show) {
+    transform: translateY(0);
+  }
+
+  &:hover {
+    color: rgba($white, 0.5);
+  }
 }

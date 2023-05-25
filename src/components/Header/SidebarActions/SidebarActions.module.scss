@@ -11,5 +11,8 @@
 
 .plus {
   font-size: 0.875rem;
-  transform: rotate(-45deg);
+
+  svg {
+    transform: rotate(-45deg);
+  }
 }

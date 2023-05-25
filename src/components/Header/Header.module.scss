@@ -11,3 +11,11 @@
   width: $sidebar-width;
   height: 100%;
 }
+
+.mainActions {
+  width: calc(100% - #{$sidebar-width});
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 1rem;
+}

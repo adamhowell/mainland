@@ -29,6 +29,7 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
     (state) => state.data
   );
   const [isCanEdit, setIsCanEdit] = useState(0);
+  const { isPreview } = useSelector((state) => state.layout);
 
   useEffect(() => {
     if (!hoveredSection) clearHightLight();
@@ -116,7 +117,7 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
   const [dragTargetProps, drag] = useDrag(
     {
       type: "card",
-      canDrag: hoveredSection?.id === id,
+      canDrag: !isPreview && hoveredSection?.id === id,
       item: () => {
         return { id, index };
       },
@@ -125,7 +126,7 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
         id: id,
       }),
     },
-    [hoveredSection, id]
+    [hoveredSection, id, isPreview]
   );
 
   const opacity = dragTargetProps.isDragging ? 0 : 1;
@@ -227,22 +228,24 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
       ref={ref}
       style={{
         ...style,
-        cursor: hoveredSection?.id === id ? "move" : "default",
+        cursor: !isPreview && hoveredSection?.id === id ? "move" : "default",
         opacity,
-        ...borderStyles,
-        ...(backgroundImage ? { backgroundImage: `url(${backgroundImage})` } : {}),
+        ...!isPreview ? borderStyles : {},
+        ...(backgroundImage
+          ? { backgroundImage: `url(${backgroundImage})` }
+          : {}),
         ...(backgroundImage ? { backgroundSize: "cover" } : {}),
       }}
       data-handler-id={handlerId}
     >
-      <Actions node={node} />
+      {!isPreview && <Actions node={node} />}
       <ContentEditable
         html={node.content}
         onBlur={() => setIsCanEdit(false)}
         onClick={() => {
           setIsCanEdit(true);
         }}
-        disabled={!isCanEdit}
+        disabled={!isCanEdit || isPreview}
         className="w-full block"
         onChange={(e) => dispatch(updateText(id, e.target.value))}
         tagName={node.tagName}
@@ -261,15 +264,17 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
       ref={ref}
       style={{
         ...style,
-        cursor: hoveredSection?.id === id ? "move" : "default",
+        cursor: !isPreview && hoveredSection?.id === id ? "move" : "default",
         opacity,
-        ...borderStyles,
-        ...(backgroundImage ? { backgroundImage: `url(${backgroundImage})` } : {}),
+        ...!isPreview ? borderStyles : {},
+        ...(backgroundImage
+          ? { backgroundImage: `url(${backgroundImage})` }
+          : {}),
         ...(backgroundImage ? { backgroundSize: "cover" } : {}),
       }}
       data-handler-id={handlerId}
     >
-      <Actions node={node} />
+      {!isPreview && <Actions node={node} />}
       {children}
     </node.tagName>
   );

@@ -20,6 +20,7 @@ const Header = () => {
     <div className={`${styles.root}`}>
       {sidebarTabs.map((tab, i) => (
         <Button
+          isUnderline
           onClick={() => dispatch(setActiveTab(tab.id))}
           key={`sa-${i}`}
           active={activeTab === tab.id}

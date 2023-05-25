@@ -2,7 +2,6 @@
 
 .root {
   background-color: transparent;
-  border: transparent;
   outline: none;
   display: inline-flex;
   align-items: center;
@@ -34,16 +33,4 @@
 
 .active {
   opacity: 1;
-}
-
-.md {
-  height: $button-md;
-}
-
-.sm {
-  height: $button-sm;
-}
-
-.lg {
-  height: $button-lg;
 }

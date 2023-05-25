@@ -1,5 +1,8 @@
 import React from "react";
 import styles from "./Layout.module.scss";
+import { useSelector, useDispatch } from "react-redux";
+import { IconEyeSlash } from "../Icons";
+import { setIsPreview } from "../../redux/layout-reducer";
 
 const Layout = ({
   slotHeader,
@@ -8,15 +11,34 @@ const Layout = ({
   slotBreadcrumb,
   slotModals,
 }) => {
+  const { isPreview } = useSelector((state) => state.layout);
+  const dispatch = useDispatch();
+
   return (
     <div className={`${styles.root}`}>
-      <div className={`${styles.header}`}>{slotHeader}</div>
-      <div className={`${styles.inner}`}>
-        <div className={`${styles.canvasContainer}`}>
-          <div className={`${styles.canvas}`}>{slotCanvas}</div>
-          <div className={`${styles.breadcrumb}`}>{slotBreadcrumb}</div>
+      <div
+        onClick={() => dispatch(setIsPreview(false))}
+        className={`${styles.previewToggler} ${isPreview ? "show" : ""}`}
+      >
+        <IconEyeSlash />
+      </div>
+      <div className={`${styles.header} ${isPreview ? "hide" : ""}`}>
+        {slotHeader}
+      </div>
+      <div className={`${styles.inner} ${isPreview ? "expand" : ""}`}>
+        <div
+          className={`${styles.canvasContainer} ${isPreview ? "expand" : ""}`}
+        >
+          <div className={`${styles.canvas} ${isPreview ? "expand" : ""}`}>
+            {slotCanvas}
+          </div>
+          <div className={`${styles.breadcrumb} ${isPreview ? "hide" : ""}`}>
+            {slotBreadcrumb}
+          </div>
         </div>
-        <div className={`${styles.sidebar}`}>{slotSidebar}</div>
+        <div className={`${styles.sidebar} ${isPreview ? "hide" : ""}`}>
+          {slotSidebar}
+        </div>
       </div>
       {slotModals}
     </div>
