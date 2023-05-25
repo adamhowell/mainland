@@ -1,7 +1,9 @@
 import React, { useMemo, useState } from "react";
 import Select, { components } from "react-select";
-const colors = require("tailwindcss/colors");
 import { IconTriangle } from "../../Icons";
+import Label from "../Label";
+
+const colors = require("tailwindcss/colors");
 
 const SelectComp = (props) => {
   const { label, isDefault, isColor, isSimpleColor, ...rest } = props;
@@ -138,9 +140,7 @@ const SelectComp = (props) => {
   return (
     <div className="flex items-center w-full">
       {label ? (
-        <span className="uppercase text-stone-400 text-sm font-medium w-2/5 shrink-0">
-          {label}
-        </span>
+        <Label>{label}</Label>
       ) : (
         <></>
       )}

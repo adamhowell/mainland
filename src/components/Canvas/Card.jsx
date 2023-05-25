@@ -22,7 +22,7 @@ const style = {
 };
 
 export const Card = ({ index, moveCard, children, node, isEditable }) => {
-  const { id, className } = node;
+  const { id, backgroundImage, className } = node;
   const ref = useRef(null);
   const dispatch = useDispatch();
   const { hoveredSection, selectedSection, dropHighlight } = useSelector(
@@ -66,7 +66,9 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
 
       greater.value > 0
         ? dispatch(setHighlight({ id: id, position: greater.position }))
-        : !node.isClosed ? dispatch(setHighlight({ id: id, position: "all" })) : dispatch(setHighlight(null));
+        : !node.isClosed
+        ? dispatch(setHighlight({ id: id, position: "all" }))
+        : dispatch(setHighlight(null));
     }
   };
 
@@ -153,49 +155,59 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
     () => ({
       borderWidth: "1px",
       borderTopColor:
-        dropHighlight?.id === id && (dropHighlight.position === "top" || dropHighlight.position === "all")
+        dropHighlight?.id === id &&
+        (dropHighlight.position === "top" || dropHighlight.position === "all")
           ? "white"
           : selectedSection?.id === id || hoveredSection?.id === id
           ? colorBright
           : colorDark,
       borderTopStyle:
-        dropHighlight?.id === id && (dropHighlight.position === "top" || dropHighlight.position === "all")
+        dropHighlight?.id === id &&
+        (dropHighlight.position === "top" || dropHighlight.position === "all")
           ? "solid"
           : selectedSection?.id === id || hoveredSection?.id === id
           ? "solid"
           : "dashed",
       borderBottomColor:
-        dropHighlight?.id === id && (dropHighlight.position === "bottom" || dropHighlight.position === "all")
+        dropHighlight?.id === id &&
+        (dropHighlight.position === "bottom" ||
+          dropHighlight.position === "all")
           ? "white"
           : selectedSection?.id === id || hoveredSection?.id === id
           ? colorBright
           : colorDark,
       borderBottomStyle:
-        dropHighlight?.id === id && (dropHighlight.position === "bottom" || dropHighlight.position === "all")
+        dropHighlight?.id === id &&
+        (dropHighlight.position === "bottom" ||
+          dropHighlight.position === "all")
           ? "solid"
           : selectedSection?.id === id || hoveredSection?.id === id
           ? "solid"
           : "dashed",
       borderLeftColor:
-        dropHighlight?.id === id && (dropHighlight.position === "left" || dropHighlight.position === "all")
+        dropHighlight?.id === id &&
+        (dropHighlight.position === "left" || dropHighlight.position === "all")
           ? "white"
           : selectedSection?.id === id || hoveredSection?.id === id
           ? colorBright
           : colorDark,
       borderLeftStyle:
-        dropHighlight?.id === id && (dropHighlight.position === "left" || dropHighlight.position === "all")
+        dropHighlight?.id === id &&
+        (dropHighlight.position === "left" || dropHighlight.position === "all")
           ? "solid"
           : selectedSection?.id === id || hoveredSection?.id === id
           ? "solid"
           : "dashed",
       borderRightColor:
-        dropHighlight?.id === id && (dropHighlight.position === "right" || dropHighlight.position === "all")
+        dropHighlight?.id === id &&
+        (dropHighlight.position === "right" || dropHighlight.position === "all")
           ? "white"
           : selectedSection?.id === id || hoveredSection?.id === id
           ? colorBright
           : colorDark,
       borderRightStyle:
-        dropHighlight?.id === id && (dropHighlight.position === "right" || dropHighlight.position === "all")
+        dropHighlight?.id === id &&
+        (dropHighlight.position === "right" || dropHighlight.position === "all")
           ? "solid"
           : selectedSection?.id === id || hoveredSection?.id === id
           ? "solid"
@@ -218,6 +230,8 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
         cursor: hoveredSection?.id === id ? "move" : "default",
         opacity,
         ...borderStyles,
+        ...(backgroundImage ? { backgroundImage: `url(${backgroundImage})` } : {}),
+        ...(backgroundImage ? { backgroundSize: "cover" } : {}),
       }}
       data-handler-id={handlerId}
     >
@@ -250,6 +264,8 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
         cursor: hoveredSection?.id === id ? "move" : "default",
         opacity,
         ...borderStyles,
+        ...(backgroundImage ? { backgroundImage: `url(${backgroundImage})` } : {}),
+        ...(backgroundImage ? { backgroundSize: "cover" } : {}),
       }}
       data-handler-id={handlerId}
     >

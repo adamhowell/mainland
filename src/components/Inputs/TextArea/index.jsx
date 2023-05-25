@@ -1,10 +1,10 @@
 import React from "react";
 
-const TextArea = (props) => {
+const TextArea = ({className, ...rest}) => {
   return (
     <textarea
-      {...props}
-      className={`p-4 bg-stone-600 rounded-lg w-full text-stone-300 outline-0`}
+      {...rest}
+      className={`p-4 bg-stone-600 rounded-lg w-full text-stone-300 outline-0 ${className ? className : ""}`}
       rows="3"
     />
   );
