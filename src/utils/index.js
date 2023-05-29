@@ -12,12 +12,12 @@ export const closedTags = [
   "h6",
 ];
 
-export const htmlToJson = (node, attributes) => {
+export const htmlToJson = (node, attributes, label) => {
   const id = shortid.generate();
-
   let tag = {};
   tag["id"] = id;
   tag["tagName"] = node.tagName;
+  if (label) tag["label"] = label;
   tag["children"] = [];
 
   if (attributes) {
@@ -146,4 +146,7 @@ export const getClassByPartOfName = (className, partOfName) => {
 };
 
 export const clearClassNamesByPartOfName = (className, partOfName) =>
-  className?.split(" ").filter((c) => !c.includes(partOfName)).join(" ");
+  className
+    ?.split(" ")
+    .filter((c) => !c.includes(partOfName))
+    .join(" ");

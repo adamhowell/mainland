@@ -117,7 +117,8 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
   const [dragTargetProps, drag] = useDrag(
     {
       type: "card",
-      canDrag: !isPreview && hoveredSection?.id === id,
+      canDrag:
+        !isPreview && hoveredSection?.id === id && node.tagName !== "body",
       item: () => {
         return { id, index };
       },
@@ -228,9 +229,9 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
       ref={ref}
       style={{
         ...style,
-        cursor: !isPreview && hoveredSection?.id === id ? "move" : "default",
+        cursor: !isPreview && hoveredSection?.id === id && node.tagName !== "body" ? "move" : "default",
         opacity,
-        ...!isPreview ? borderStyles : {},
+        ...(!isPreview ? borderStyles : {}),
         ...(backgroundImage
           ? { backgroundImage: `url(${backgroundImage})` }
           : {}),
@@ -264,9 +265,9 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
       ref={ref}
       style={{
         ...style,
-        cursor: !isPreview && hoveredSection?.id === id ? "move" : "default",
+        cursor: !isPreview && hoveredSection?.id === id && node.tagName !== "body" ? "move" : "default",
         opacity,
-        ...!isPreview ? borderStyles : {},
+        ...(!isPreview ? borderStyles : {}),
         ...(backgroundImage
           ? { backgroundImage: `url(${backgroundImage})` }
           : {}),

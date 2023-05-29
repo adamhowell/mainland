@@ -2,7 +2,10 @@ import React from "react";
 import { useSelectedNode } from "../../helpers";
 import styles from "./Breadcrumb.module.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { setSelectedSection, setHoveredSection } from "../../redux/data-reducer";
+import {
+  setSelectedSection,
+  setHoveredSection,
+} from "../../redux/data-reducer";
 
 const Breadcrumb = () => {
   const selectedNode = useSelectedNode();
@@ -51,21 +54,18 @@ const Breadcrumb = () => {
     <div className={`${styles.root} bg-primary text-stone-200`}>
       {selectedNode && (
         <>
-          <div>
-            <span className="p-1 rounded transition hover:bg-stone-600 cursor-pointer leading-none">
-              body
-            </span>
-          </div>
           {generate().map((node, i) => (
             <div key={`brn-${i}`}>
-              <span>&nbsp;&#62;&nbsp;</span>
+              {i !== 0 && <span>&nbsp;&#62;&nbsp;</span>}
               <span
                 onClick={() => dispatch(setSelectedSection(node))}
                 onMouseEnter={() => dispatch(setHoveredSection(node))}
                 onMouseLeave={() => dispatch(setHoveredSection(null))}
                 className="p-1 rounded transition hover:bg-stone-600 cursor-pointer leading-none"
               >
-                {node?.tagName}
+                {node?.label
+                  ? `${node?.label} (${node?.tagName})`
+                  : node?.tagName}
               </span>
             </div>
           ))}

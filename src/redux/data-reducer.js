@@ -16,64 +16,76 @@ const initialState = {
   config: null,
   dom: [
     {
-      id: "C2BOHNi-z",
-      tagName: "div",
-      className: "mld-div",
-      position: 1,
-    },
-    {
-      id: "i0g1N0-f3",
-      tagName: "section",
-      children: [],
-      className: "mld-section",
-      position: 0,
-    },
-    {
-      id: "WA0tV0TP4",
-      tagName: "div",
+      id: "C2BsOHNi-z",
+      tagName: "body",
+      label: "Body",
       children: [
         {
-          id: "lCWQLK7tX0",
+          id: "i0gs1N0-f3",
           tagName: "div",
-          className: "p-3 mt-4",
+          className: "container mx-auto mt-7",
+          label: "Container",
           children: [
             {
-              id: "AFxhldq2O2",
-              tagName: "span",
-              isClosed: true,
-              content: "1",
+              id: "C2BOHNi-z",
+              tagName: "div",
+              className: "mld-div",
             },
-          ],
-        },
-        {
-          id: "UNQNaXsjPl",
-          tagName: "div",
-          className: "p-3",
-          children: [
             {
-              id: "IMzpPdaPh8",
-              tagName: "span",
-              isClosed: true,
-              content: "2",
+              id: "i0g1N0-f3",
+              tagName: "section",
+              children: [],
+              className: "mld-section",
             },
-          ],
-        },
-        {
-          id: "FnDTXhKNLM",
-          tagName: "div",
-          className: "p-3",
-          children: [
             {
-              id: "LX2vTs_Q7R",
-              tagName: "span",
-              isClosed: true,
-              content: "3",
+              id: "WA0tV0TP4",
+              tagName: "div",
+              children: [
+                {
+                  id: "lCWQLK7tX0",
+                  tagName: "div",
+                  className: "p-3 mt-4",
+                  children: [
+                    {
+                      id: "AFxhldq2O2",
+                      tagName: "span",
+                      isClosed: true,
+                      content: "1",
+                    },
+                  ],
+                },
+                {
+                  id: "UNQNaXsjPl",
+                  tagName: "div",
+                  className: "p-3",
+                  children: [
+                    {
+                      id: "IMzpPdaPh8",
+                      tagName: "span",
+                      isClosed: true,
+                      content: "2",
+                    },
+                  ],
+                },
+                {
+                  id: "FnDTXhKNLM",
+                  tagName: "div",
+                  className: "p-3",
+                  children: [
+                    {
+                      id: "LX2vTs_Q7R",
+                      tagName: "span",
+                      isClosed: true,
+                      content: "3",
+                    },
+                  ],
+                },
+              ],
+              className: "grid gap-x-4 gap-y-4 grid-cols-3",
             },
           ],
         },
       ],
-      className: "grid gap-x-4 gap-y-4 grid-cols-3",
-      position: 2,
     },
   ],
   selectedSection: null,
@@ -94,9 +106,15 @@ const dataReducer = (state = initialState, action) => {
       return { ...state, dom: action.data };
     }
     case ADD_TO_DOM: {
+      console.log(action.data)
       return {
         ...state,
-        dom: [...state.dom, { ...action.data, position: state.dom.length }],
+        dom: [
+          {
+            ...state.dom[0],
+            children: [...state.dom[0].children, action.data],
+          },
+        ],
       };
     }
     case SET_SELECTED_SECTION: {
@@ -277,7 +295,9 @@ export const setHoveredSection = (data) => (dispatch) => {
 export const addToDom = (data) => (dispatch) => {
   const doc = new DOMParser().parseFromString(data.content, "text/xml");
 
-  dispatch(actions.addToDom(htmlToJson(doc.firstChild, data.attributes)));
+  dispatch(
+    actions.addToDom(htmlToJson(doc.firstChild, data.attributes, data.label))
+  );
 };
 
 export const addToNode = (data, id) => (dispatch, getState) => {

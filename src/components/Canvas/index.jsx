@@ -57,7 +57,7 @@ const Canvas = () => {
       id="canvas"
       className={`${styles.root} bg-secondary text-white`}
     >
-      <div className={`${styles.container} container mx-auto`}>
+      <div className={`${styles.container}`}>
         {dom?.map((item, i) => renderCard(item, i))}
       </div>
     </div>
