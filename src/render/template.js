@@ -19,15 +19,8 @@ export const htmlTemplate = `<!DOCTYPE html>
 
 </head>
 
-<body>
-  <div class="container">
-    <div class="row">
-      <div class="col">
-        {Body}
-      </div>
-    </div>
-  </div>
-</body>
+{Body}
+
 
 </html>
 `
