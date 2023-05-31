@@ -106,7 +106,6 @@ const dataReducer = (state = initialState, action) => {
       return { ...state, dom: action.data };
     }
     case ADD_TO_DOM: {
-      console.log(action.data)
       return {
         ...state,
         dom: [
@@ -303,6 +302,8 @@ export const addToDom = (data) => (dispatch) => {
 export const addToNode = (data, id) => (dispatch, getState) => {
   console.log("ADD");
   let added = false;
+
+  console.log(data)
 
   const {
     data: { dom, dropHighlight },

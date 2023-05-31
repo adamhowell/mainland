@@ -5,28 +5,57 @@ import { closeModal } from "../../redux/modals-reducer";
 import { htmlTemplate } from "../../render/template";
 import styles from "./Modals.module.scss";
 import ReactDOMServer from "react-dom/server";
-import TextArea from "../Inputs/TextArea"
+import TextArea from "../Inputs/TextArea";
 
 const Export = () => {
   const { dom } = useSelector((state) => state.data);
   const { isExport } = useSelector((state) => state.modals);
   const dispatch = useDispatch();
-  const [html, setHtml] = useState("")
+  const [html, setHtml] = useState("");
+
+  const getNodes = () => {
+    let reactNodes = [];
+
+    const checkEndReturnNode = (node) => {
+      if (node.children) {
+        return (
+          <node.tagName
+            {...(node.className ? { className: node.className } : {})}
+            key={node.id}
+          >
+            {node.children.map((n) => checkEndReturnNode(n))}
+          </node.tagName>
+        );
+      } else {
+        return (
+          <node.tagName key={node.id}>
+            {node.content && node.content}
+          </node.tagName>
+        );
+      }
+    };
+
+    dom.forEach((node) => {
+      reactNodes.push(checkEndReturnNode(node));
+    });
+
+    return reactNodes;
+  };
 
   useEffect(() => {
-    const body = ReactDOMServer.renderToStaticMarkup(dom.map((node) => <node.tagName key={node.id}></node.tagName>));
+    const body = ReactDOMServer.renderToStaticMarkup(getNodes());
     //const styles = createStyles(clientStyles.rootBr).replaceAll("& ", "")
 
     //let result = htmlTemplate.replace(`{Body}`, body).replace(`{Styles}`, styles).replace("{Title}", "MainlandJs app").replace("{Dom}", JSON.stringify(dom))
-    let result = htmlTemplate.replace(`{Body}`, body).replace("{Title}", "MainlandJs app").replace("{Dom}", JSON.stringify(dom))
-    setHtml(result)
-  }, [dom])
+    let result = htmlTemplate
+      .replace(`{Body}`, body)
+      .replace("{Title}", "MainlandJs app")
+      .replace("{Dom}", JSON.stringify(dom));
+    setHtml(result);
+  }, [dom]);
 
   return (
-    <Modal
-      onClose={() => dispatch(closeModal("export"))}
-      active={isExport}
-    >
+    <Modal onClose={() => dispatch(closeModal("export"))} active={isExport}>
       <TextArea defaultValue={html} rows={16} />
     </Modal>
   );
