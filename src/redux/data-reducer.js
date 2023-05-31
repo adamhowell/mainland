@@ -92,6 +92,7 @@ const initialState = {
   hoveredSection: null,
   dropHighlight: null,
   error: null,
+  history: []
 };
 
 const dataReducer = (state = initialState, action) => {
