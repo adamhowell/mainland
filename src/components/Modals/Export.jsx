@@ -3,9 +3,9 @@ import Modal from "./Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "../../redux/modals-reducer";
 import { htmlTemplate } from "../../render/template";
-import styles from "./Modals.module.scss";
 import ReactDOMServer from "react-dom/server";
 import TextArea from "../Inputs/TextArea";
+import { checkAndReturnStyles } from "../../utils";
 
 const Export = () => {
   const { dom } = useSelector((state) => state.data);
@@ -20,6 +20,7 @@ const Export = () => {
       if (node.children) {
         return (
           <node.tagName
+            {...(node.style ? { style: checkAndReturnStyles(node) } : {})}
             {...(node.className ? { className: node.className } : {})}
             key={node.id}
           >
@@ -28,7 +29,11 @@ const Export = () => {
         );
       } else {
         return (
-          <node.tagName key={node.id}>
+          <node.tagName
+            {...(node.style ? { style: checkAndReturnStyles(node) } : {})}
+            {...(node.className ? { className: node.className } : {})}
+            key={node.id}
+          >
             {node.content && node.content}
           </node.tagName>
         );

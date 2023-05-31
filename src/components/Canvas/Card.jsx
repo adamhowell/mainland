@@ -10,8 +10,9 @@ import {
 } from "../../redux/data-reducer";
 import { useDispatch, useSelector } from "react-redux";
 import Actions from "./Actions";
-import { htmlToJson } from "../../utils";
+import { htmlToJson, checkAndReturnStyles } from "../../utils";
 import ContentEditable from "react-contenteditable";
+
 
 const colorBright = "#adadad";
 const colorDark = "#696969";
@@ -229,7 +230,11 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
       ref={ref}
       style={{
         ...style,
-        cursor: !isPreview && hoveredSection?.id === id && node.tagName !== "body" ? "move" : "default",
+        ...(node.style ? checkAndReturnStyles(node) : {}),
+        cursor:
+          !isPreview && hoveredSection?.id === id && node.tagName !== "body"
+            ? "move"
+            : "default",
         opacity,
         ...(!isPreview ? borderStyles : {}),
         ...(backgroundImage
@@ -265,7 +270,11 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
       ref={ref}
       style={{
         ...style,
-        cursor: !isPreview && hoveredSection?.id === id && node.tagName !== "body" ? "move" : "default",
+        ...(node.style ? checkAndReturnStyles(node) : {}),
+        cursor:
+          !isPreview && hoveredSection?.id === id && node.tagName !== "body"
+            ? "move"
+            : "default",
         opacity,
         ...(!isPreview ? borderStyles : {}),
         ...(backgroundImage

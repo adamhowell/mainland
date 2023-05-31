@@ -150,3 +150,13 @@ export const clearClassNamesByPartOfName = (className, partOfName) =>
     ?.split(" ")
     .filter((c) => !c.includes(partOfName))
     .join(" ");
+
+export const checkAndReturnStyles = (node) => {
+  const regex = /([\w-]*)\s*:\s*([^;]*)/g;
+  let match,
+    properties = {};
+  while ((match = regex.exec(node.style)))
+    properties[match[1]] = match[2].trim();
+
+  return properties;
+};
