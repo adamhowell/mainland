@@ -27,7 +27,7 @@ const PropertySelector = ({ property, isTextArea, label }) => {
 
             dispatch(setAttribute(property, e.target.value));
           }}
-          value={selectedNode ? selectedNode[property] : ""}
+          value={selectedNode ? selectedNode[property] ? selectedNode[property] : "" : ""}
         />
       ) : (
         <Input
@@ -43,7 +43,7 @@ const PropertySelector = ({ property, isTextArea, label }) => {
 
             dispatch(setAttribute(property, e.target.value));
           }}
-          value={selectedNode ? selectedNode[property] : ""}
+          value={selectedNode ? selectedNode[property] ? selectedNode[property] : "" : ""}
         />
       )}
     </div>
