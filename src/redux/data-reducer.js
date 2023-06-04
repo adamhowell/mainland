@@ -11,6 +11,8 @@ const REMOVE_NODE = "data-reducer/REMOVE_NODE";
 const UPDATE_TEXT = "data-reducer/UPDATE_TEXT";
 const SET_HIGHLIGHT = "data-reducer/SET_HIGHLIGHT";
 const SET_ATTRIBUTE = "data-reducer/SET_ATTRIBUTE";
+const SET_BACKWARD = "data-reducer/SET_BACKWARD";
+const SET_FORWARD = "data-reducer/SET_FORWARD";
 
 const initialState = {
   config: null,
@@ -92,7 +94,8 @@ const initialState = {
   hoveredSection: null,
   dropHighlight: null,
   error: null,
-  history: []
+  past: [],
+  future: [],
 };
 
 const dataReducer = (state = initialState, action) => {
@@ -101,10 +104,19 @@ const dataReducer = (state = initialState, action) => {
       return { ...state, config: action.data };
     }
     case SET_DOM: {
-      return { ...state, dom: action.data };
+      console.log(state.dom)
+      return {
+        ...state,
+        dom: action.data,
+        past: [...state.past, state.dom],
+      };
     }
     case MOVE_NODE: {
-      return { ...state, dom: action.data };
+      return {
+        ...state,
+        dom: action.data,
+        past: [...state.past, state.dom],
+      };
     }
     case ADD_TO_DOM: {
       return {
@@ -115,6 +127,7 @@ const dataReducer = (state = initialState, action) => {
             children: [...state.dom[0].children, action.data],
           },
         ],
+        past: [...state.past, state.dom],
       };
     }
     case SET_SELECTED_SECTION: {
@@ -127,16 +140,56 @@ const dataReducer = (state = initialState, action) => {
       return { ...state, hoveredSection: action.data };
     }
     case REMOVE_NODE: {
-      return { ...state, dom: action.data };
+      return {
+        ...state,
+        dom: action.data,
+        past: [...state.past, state.dom],
+      };
     }
     case UPDATE_TEXT: {
-      return { ...state, dom: action.data };
+      return {
+        ...state,
+        dom: action.data,
+        past: [...state.past, state.dom],
+      };
     }
     case SET_HIGHLIGHT: {
       return { ...state, dropHighlight: action.data };
     }
     case SET_ATTRIBUTE: {
-      return { ...state, dom: action.data };
+      return {
+        ...state,
+        dom: action.data,
+        past: [...state.past, state.dom],
+      };
+    }
+    case SET_BACKWARD: {
+      const previous = state.past[state.past.length - 1];
+      const newPast = state.past.slice(0, state.past.length - 1);
+      return {
+        ...state,
+        ...(previous
+          ? {
+              past: newPast,
+              dom: previous,
+              future: [state.dom, ...state.future],
+            }
+          : {}),
+      };
+    }
+    case SET_FORWARD: {
+      const next = state.future[0];
+      const newFuture = state.future.slice(1);
+      return {
+        ...state,
+        ...(next
+          ? {
+              past: [...state.past, state.dom],
+              dom: next,
+              future: newFuture,
+            }
+          : {}),
+      };
     }
     default:
       return state;
@@ -188,6 +241,14 @@ const actions = {
     type: SET_ERROR,
     data: data,
   }),
+  setBackward: (data) => ({
+    type: SET_BACKWARD,
+    data: data,
+  }),
+  setForward: (data) => ({
+    type: SET_FORWARD,
+    data: data,
+  }),
 };
 
 export const setError = (err) => (dispatch) => {
@@ -214,7 +275,7 @@ export const moveNode = (dragId, hoverId) => (dispatch, getState) => {
     if (nx.children) {
       nx.children.forEach((n, i) => {
         if (n.id === hoverId) {
-          if (n.id === dropHighlight.id) {
+          if (n.id === dropHighlight?.id) {
             if (dropHighlight.position === "all")
               newNode.children[i].children.push(hoveredSection);
             if (
@@ -301,10 +362,7 @@ export const addToDom = (data) => (dispatch) => {
 };
 
 export const addToNode = (data, id) => (dispatch, getState) => {
-  console.log("ADD");
   let added = false;
-
-  console.log(data)
 
   const {
     data: { dom, dropHighlight },
@@ -504,6 +562,14 @@ const checkIfChild = (dom, id) => {
   });
 
   return isContains;
+};
+
+export const setBackward = (data) => (dispatch) => {
+  dispatch(actions.setBackward(data));
+};
+
+export const setForward = (data) => (dispatch) => {
+  dispatch(actions.setForward(data));
 };
 
 export default dataReducer;
