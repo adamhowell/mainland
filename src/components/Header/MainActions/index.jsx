@@ -10,17 +10,29 @@ import { Button } from "../../Buttons";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsPreview } from "../../../redux/layout-reducer";
 import { openModal } from "../../../redux/modals-reducer";
+import { setBackward, setForward } from "../../../redux/data-reducer";
 
 const MainActions = () => {
   const { isPreview } = useSelector((state) => state.layout);
+  const { past, future } = useSelector((state) => state.data);
   const dispatch = useDispatch();
 
   return (
     <div className="flex align-center">
-      <Button onClick={() => {}} className={`text-lg h-full`}>
+      <Button
+        onClick={() => dispatch(setBackward())}
+        className={`text-lg h-full ${
+          past.length > 0 ? "" : "opacity-20 pointer-events-none"
+        }`}
+      >
         <IconArrowRight />
       </Button>
-      <Button onClick={() => {}} className={`text-lg h-full`}>
+      <Button
+        onClick={() => dispatch(setForward())}
+        className={`text-lg h-full ${
+          future.length > 0 ? "" : "opacity-20 pointer-events-none"
+        }`}
+      >
         <IconArrowLeft />
       </Button>
       <Button

@@ -104,7 +104,6 @@ const dataReducer = (state = initialState, action) => {
       return { ...state, config: action.data };
     }
     case SET_DOM: {
-      console.log(state.dom)
       return {
         ...state,
         dom: action.data,
