@@ -27,10 +27,19 @@ export const useSelectedNode = () => {
 
 export const useShadowProps = () => {
   const { dom, selectedSection } = useSelector((state) => state.data);
+  const { responsiveView } = useSelector((state) => state.layout);
   let resultNode = getNode(dom, selectedSection?.id);
+  let isFound = false;
 
-  if (resultNode?.className?.includes("shadow-[")) {
-    let shadowPropsString = resultNode?.className.split("shadow-[");
+  resultNode?.className.split(" ").forEach((elm) => {
+    if (elm.indexOf(`${getResponsivePrefix(responsiveView)}shadow-[`) === 0)
+      isFound = true;
+  });
+
+  if (isFound) {
+    let shadowPropsString = resultNode?.className.split(
+      `${getResponsivePrefix(responsiveView)}shadow-[`
+    );
     shadowPropsString = shadowPropsString[1].split("]");
     shadowPropsString = shadowPropsString[0].split("_");
 

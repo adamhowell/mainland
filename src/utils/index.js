@@ -59,13 +59,13 @@ export const clearClassNames = (current, exclude) => {
   return result;
 };
 
-export const clearShadowClassNames = (current) => {
+export const clearShadowClassNames = (current, prefix) => {
   let result = current;
 
   if (result) {
     result = result
       .split(" ")
-      .filter((c) => c.indexOf("shadow-[") === -1)
+      .filter((c) => c.indexOf(`${prefix}shadow-[`) !== 0)
       .join(" ");
   }
 

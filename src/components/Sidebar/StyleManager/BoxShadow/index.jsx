@@ -8,13 +8,13 @@ import {
   shadowBlurValues,
 } from "../../../../configs/tailwind";
 import hexToRgba from "hex-to-rgba";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAttribute } from "../../../../redux/data-reducer";
 import {
   clearShadowClassNames,
   rgba2hex,
   getColorNameByValue,
-  addStyle
+  getResponsivePrefix,
 } from "../../../../utils";
 
 const values = shadowLengthValues.map((c) => ({ value: c, label: c }));
@@ -56,6 +56,7 @@ const BoxShadow = () => {
     shadowSpread,
     shadowColor,
   } = useShadowProps();
+  const { responsiveView } = useSelector((state) => state.layout);
 
   useEffect(() => {
     if (shadowHorizontalLength) {
@@ -89,53 +90,59 @@ const BoxShadow = () => {
     shadowBlur,
     shadowSpread,
     shadowColor,
+    responsiveView,
   ]);
 
   useEffect(() => {
-    if (color && opacity && spread && blur && lengthV && lengthH) {
-      const className = `shadow-[${lengthH.value}_${lengthV.value}_${
-        blur.value
-      }_${spread.value}_${hexToRgba(color.value, opacity.value).replaceAll(
-        " ",
-        ``
-      )}]`;
+      const c = shadowColor ? rgba2hex(shadowColor) : {};
 
-      if (!selectedNode?.className?.includes(className)) {
-        const classNameSelector = `shadow-\\[${lengthH.value}_${
-          lengthV.value
-        }_${blur.value}_${spread.value}_${hexToRgba(color.value, opacity.value)
-          .replaceAll(",", `\\2c`)
-          .replace("(", `\\(`)
-          .replaceAll(".", `\\.`)
-          .replace(")", `\\)`)}\\]`;
-
-        const css = `.${classNameSelector}{box-shadow:${lengthH.value} ${
-          lengthV.value
-        } ${blur.value} ${spread.value} ${hexToRgba(
+      if (
+        color &&
+        opacity &&
+        spread &&
+        blur &&
+        lengthV &&
+        lengthH &&
+        spread.value != shadowSpread &&
+        blur.value != shadowBlur &&
+        lengthV.value != shadowVerticalLength &&
+        lengthH.value != shadowHorizontalLength &&
+        color.value != c.color &&
+        opacity.value != c.opacity
+      ) {
+        const className = `${getResponsivePrefix(responsiveView)}shadow-[${
+          lengthH.value
+        }_${lengthV.value}_${blur.value}_${spread.value}_${hexToRgba(
           color.value,
           opacity.value
-        )}}`;
+        ).replaceAll(" ", ``)}]`;
 
-        addStyle(css)
-
-        const clearClassNames = clearShadowClassNames(selectedNode?.className);
-
-        dispatch(
-          setAttribute(
-            "className",
-            `${
-              selectedNode?.className
-                ? `${
-                    clearClassNames
-                      ? `${clearClassNames} ${className}`
-                      : `${className}`
-                  }`
-                : className
-            }`
+        if (
+          !selectedNode?.className?.includes(
+            `${getResponsivePrefix(responsiveView)}${className}`
           )
-        );
+        ) {
+          const clearClassNames = clearShadowClassNames(
+            selectedNode?.className,
+            getResponsivePrefix(responsiveView)
+          );
+
+          dispatch(
+            setAttribute(
+              "className",
+              `${
+                selectedNode?.className
+                  ? `${
+                      clearClassNames
+                        ? `${clearClassNames} ${className}`
+                        : `${className}`
+                    }`
+                  : className
+              }`
+            )
+          );
+        }
       }
-    }
   }, [color, opacity, spread, blur, lengthV, lengthH]);
 
   return (
