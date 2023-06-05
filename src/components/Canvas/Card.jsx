@@ -14,14 +14,6 @@ import { htmlToJson, checkAndReturnStyles } from "../../utils";
 import ContentEditable from "react-contenteditable";
 import { screens } from "../../configs/tailwind";
 
-const colorBright = "#adadad";
-const colorDark = "#696969";
-
-const style = {
-  position: "relative",
-  border: `1px dashed ${colorDark}`,
-};
-
 export const Card = ({ index, moveCard, children, node, isEditable }) => {
   const { id, backgroundImage, className } = node;
   const ref = useRef(null);
@@ -32,6 +24,20 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
   const [isCanEdit, setIsCanEdit] = useState(0);
   const { isPreview } = useSelector((state) => state.layout);
   const { responsiveView } = useSelector((state) => state.layout);
+
+  const colorBright = useMemo(
+    () => (node.tagName === "body" ? "#696969" : "#adadad"),
+    [node]
+  );
+  const colorDark = useMemo(() => "#696969", [node]);
+
+  const style = useMemo(
+    () => ({
+      position: "relative",
+      border: `1px dashed ${colorDark}`,
+    }),
+    [colorDark]
+  );
 
   useEffect(() => {
     if (!hoveredSection) clearHightLight();
@@ -227,7 +233,32 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
 
     return className
       .split(" ")
-      .filter((item) => screensTemp.indexOf(item.split(":")[0]) === -1)
+      .filter((item) => {
+        const name = item.split(":");
+        const isBreakNotFound = screensTemp.indexOf(name[0]) === -1;
+        // let isAvailableSimilar = false;
+        // let group = "";
+
+        // Object.keys(classes).forEach((key) => {
+        //   if (classes[key].indexOf(name[1]) > 0) group = key;
+        // });
+
+        // if (group) {
+        //   classes[group].forEach((gc) => {
+        //     if (className.replaceAll(item, "").includes(` ${gc} `))
+        //       isAvailableSimilar = true;
+        //     screensTemp.forEach((sc) => {
+        //       if (className.replaceAll(item, "").includes(` ${sc}:${gc} `))
+        //         isAvailableSimilar = true;
+        //     });
+        //   });
+        // }
+
+        //if(!isBreakNotFound) console.log(item, isAvailableSimilar)
+
+        //return isBreakNotFound ? true : !isBreakNotFound ? !isAvailableSimilar : true;
+        return isBreakNotFound;
+      })
       .join(" ");
   };
 

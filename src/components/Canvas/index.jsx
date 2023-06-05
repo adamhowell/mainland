@@ -71,11 +71,11 @@ const Canvas = () => {
       onClick={onCanvasClick}
       onMouseEnter={onCanvasEnter}
       id="canvas"
-      className={`${styles.root} bg-stone-900 text-white`}
+      className={`${styles.root} bg-stone-950 text-white`}
     >
       <div
         style={{ maxWidth: responsiveView !== "lg" ? screens[responsiveView] : "100%"}}
-        className={`${styles.container}`}
+        className={`${styles.container} bg-stone-900`}
       >
         {dom?.map((item, i) => renderCard(item, i))}
       </div>

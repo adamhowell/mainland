@@ -21,17 +21,15 @@ const MainActions = () => {
     <div className="flex align-center">
       <Button
         onClick={() => dispatch(setBackward())}
-        className={`text-lg h-full ${
-          past.length > 0 ? "" : "opacity-20 pointer-events-none"
-        }`}
+        disabled={past.length <= 0}
+        className={`text-lg h-full`}
       >
         <IconArrowRight />
       </Button>
       <Button
         onClick={() => dispatch(setForward())}
-        className={`text-lg h-full ${
-          future.length > 0 ? "" : "opacity-20 pointer-events-none"
-        }`}
+        disabled={future.length <= 0}
+        className={`text-lg h-full`}
       >
         <IconArrowLeft />
       </Button>

@@ -7,8 +7,6 @@ export const screens = {
 };
 
 export const combinedColors = {
-  primary: "#333333",
-  secondary: "#222222",
   ...colors,
 };
 
@@ -39,6 +37,21 @@ export const shadowBlurValues = ["0px", "5px", "10px", "20px"];
 
 export const classes = {
   display: ["block", "flex", "grid", "inline-block", "inline", "hidden"],
+  gridCols: [
+    "grid-cols-1",
+    "grid-cols-2",
+    "grid-cols-3",
+    "grid-cols-4",
+    "grid-cols-5",
+    "grid-cols-6",
+    "grid-cols-7",
+    "grid-cols-8",
+    "grid-cols-9",
+    "grid-cols-10",
+    "grid-cols-11",
+    "grid-cols-12",
+    "grid-cols-none",
+  ],
   width: [
     "w-0",
     "w-px",
@@ -298,8 +311,6 @@ export const classes = {
   textTransform: ["uppercase", "lowercase", "capitalize", "normal-case"],
   fontFamily: ["font-sans", "font-serif", "font-mono"],
   textColor: [
-    "text-primary",
-    "text-secondary",
     "text-inherit",
     "text-current",
     "text-transparent",
@@ -604,8 +615,6 @@ export const classes = {
     "text-slate-950",
   ],
   backgroundColor: [
-    "bg-primary",
-    "bg-secondary",
     "bg-inherit",
     "bg-current",
     "bg-transparent",
@@ -1574,8 +1583,6 @@ export const classes = {
     "border-none",
   ],
   borderColor: [
-    "border-primary",
-    "border-secondary",
     "border-inherit",
     "border-current",
     "border-transparent",
@@ -1880,8 +1887,6 @@ export const classes = {
     "border-slate-950",
   ],
   borderXColor: [
-    "border-x-primary",
-    "border-x-secondary",
     "border-x-inherit",
     "border-x-current",
     "border-x-transparent",
@@ -2186,8 +2191,6 @@ export const classes = {
     "border-x-slate-950",
   ],
   borderYColor: [
-    "border-y-primary",
-    "border-y-secondary",
     "border-y-inherit",
     "border-y-current",
     "border-y-transparent",
@@ -2492,8 +2495,6 @@ export const classes = {
     "border-y-slate-950",
   ],
   borderTColor: [
-    "border-t-primary",
-    "border-t-secondary",
     "border-t-inherit",
     "border-t-current",
     "border-t-transparent",
@@ -2798,8 +2799,6 @@ export const classes = {
     "border-t-slate-950",
   ],
   borderBColor: [
-    "border-b-primary",
-    "border-b-secondary",
     "border-b-inherit",
     "border-b-current",
     "border-b-transparent",
@@ -3104,8 +3103,6 @@ export const classes = {
     "border-b-slate-950",
   ],
   borderLColor: [
-    "border-l-primary",
-    "border-l-secondary",
     "border-l-inherit",
     "border-l-current",
     "border-l-transparent",
@@ -3410,8 +3407,6 @@ export const classes = {
     "border-l-slate-950",
   ],
   borderRColor: [
-    "border-r-primary",
-    "border-r-secondary",
     "border-r-inherit",
     "border-r-current",
     "border-r-transparent",

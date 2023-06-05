@@ -42,13 +42,14 @@ const initialState = {
             {
               id: "WA0tV0TP4",
               tagName: "div",
-              className: "grid gap-x-4 gap-y-4 grid-cols-1 lg:grid-cols-3 md:grid-cols-2",
+              className:
+                "grid gap-x-4 gap-y-4 grid-cols-1 lg:grid-cols-3 md:grid-cols-2",
               label: "Columns 3",
               children: [
                 {
                   id: "lCWQLK7tX0",
                   tagName: "div",
-                  className: "p-3 mt-4",
+                  className: "p-3 lg:mt-0 md:mt-10",
                   children: [
                     {
                       id: "AFxhldq2O2",
@@ -247,6 +248,10 @@ const actions = {
   }),
   setForward: (data) => ({
     type: SET_FORWARD,
+    data: data,
+  }),
+  setPreviousClassNames: (data) => ({
+    type: SET_PREVIOUS_CLASSNAMES,
     data: data,
   }),
 };

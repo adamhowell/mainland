@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { setAttribute } from "../../../redux/data-reducer";
 import { useSelectedNode } from "../../../helpers";
 import {
   clearClassNames,
   getClassByPartOfName,
   clearClassNamesByPartOfName,
+  getResponsivePrefix,
 } from "../../../utils";
 import { classes } from "../../../configs/tailwind";
 import styles from "./SpacingSelector.module.scss";
@@ -31,108 +32,111 @@ const SpacingSelector = () => {
     ml: null,
     mr: null,
   });
+  const { responsiveView } = useSelector((state) => state.layout);
 
-  const options1 = active
-    ? classes[active].map((c) => ({
-        value: c,
-        label: c,
-      }))
-    : [];
+  const options1 = useMemo(
+    () => [
+      ...(active
+        ? classes[active].map((c) => ({
+            value: `${getResponsivePrefix(responsiveView)}${c}`,
+            label: `${getResponsivePrefix(responsiveView)}${c}`,
+          }))
+        : []),
+    ],
+    [responsiveView, active, classes]
+  );
 
-  const options2 = active
-    ? classes[active?.includes("margin") ? "marginY" : "paddingY"].map((c) => ({
-        value: c,
-        label: c,
-      }))
-    : [];
+  const options2 = useMemo(
+    () => [
+      ...(active
+        ? classes[active?.includes("margin") ? "marginY" : "paddingY"].map(
+            (c) => ({
+              value: `${getResponsivePrefix(responsiveView)}${c}`,
+              label: `${getResponsivePrefix(responsiveView)}${c}`,
+            })
+          )
+        : []),
+    ],
+    [responsiveView, active, classes]
+  );
 
-  const options3 = active
-    ? classes[active?.includes("margin") ? "margin" : "padding"].map((c) => ({
-        value: c,
-        label: c,
-      }))
-    : [];
-
-  const isActive = (name) => {
-    return selectedNode?.className?.includes(name);
-  };
-
-  const onClick = (type) => {
-    if (selectedNode) {
-      let className = `${clearClassNames(
-        selectedNode.className ? selectedNode.className : "",
-        options.map((c) => c.value)
-      )}`;
-
-      className = `${className?.length ? `${className} ${type}` : type}`;
-
-      dispatch(setAttribute("className", className));
-    }
-  };
+  const options3 = useMemo(
+    () => [
+      ...(active
+        ? classes[active?.includes("margin") ? "margin" : "padding"].map(
+            (c) => ({
+              value: `${getResponsivePrefix(responsiveView)}${c}`,
+              label: `${getResponsivePrefix(responsiveView)}${c}`,
+            })
+          )
+        : []),
+    ],
+    [responsiveView, active, classes]
+  );
 
   useEffect(() => {
     if (selectedNode) {
       clear();
       if (selectedNode?.className) {
         selectedNode?.className?.split(" ").map((c) => {
-          if (c.indexOf("pt-") === 0) {
-            const v = c.split("pt-");
+          if (c.indexOf(`${getResponsivePrefix(responsiveView)}pt-`) === 0) {
+            const v = c.split(`${getResponsivePrefix(responsiveView)}pt-`);
             setSelectedOption((c) => ({
               ...c,
               pt: v[1],
             }));
           }
-          if (c.indexOf("pb-") === 0) {
-            const v = c.split("pb-");
+          if (c.indexOf(`${getResponsivePrefix(responsiveView)}pb-`) === 0) {
+            const v = c.split(`${getResponsivePrefix(responsiveView)}pb-`);
             setSelectedOption((c) => ({
               ...c,
               pb: v[1],
             }));
           }
-          if (c.indexOf("pl-") === 0) {
-            const v = c.split("pl-");
+          if (c.indexOf(`${getResponsivePrefix(responsiveView)}pl-`) === 0) {
+            const v = c.split(`${getResponsivePrefix(responsiveView)}pl-`);
             setSelectedOption((c) => ({
               ...c,
               pl: v[1],
             }));
           }
-          if (c.indexOf("pr-") === 0) {
-            const v = c.split("pr-");
+          if (c.indexOf(`${getResponsivePrefix(responsiveView)}pr-`) === 0) {
+            const v = c.split(`${getResponsivePrefix(responsiveView)}pr-`);
             setSelectedOption((c) => ({
               ...c,
               pr: v[1],
             }));
           }
-          if (c.indexOf("mt-") === 0) {
-            const v = c.split("mt-");
+          if (c.indexOf(`${getResponsivePrefix(responsiveView)}mt-`) === 0) {
+            const v = c.split(`${getResponsivePrefix(responsiveView)}mt-`);
             setSelectedOption((c) => ({
               ...c,
               mt: v[1],
             }));
           }
-          if (c.indexOf("mb-") === 0) {
-            const v = c.split("mb-");
+          if (c.indexOf(`${getResponsivePrefix(responsiveView)}mb-`) === 0) {
+            const v = c.split(`${getResponsivePrefix(responsiveView)}mb-`);
             setSelectedOption((c) => ({
               ...c,
               mb: v[1],
             }));
           }
-          if (c.indexOf("ml-") === 0) {
-            const v = c.split("ml-");
+          if (c.indexOf(`${getResponsivePrefix(responsiveView)}ml-`) === 0) {
+            const v = c.split(`${getResponsivePrefix(responsiveView)}ml-`);
             setSelectedOption((c) => ({
               ...c,
               ml: v[1],
             }));
           }
-          if (c.indexOf("mr-") === 0) {
-            const v = c.split("mr-");
+          if (c.indexOf(`${getResponsivePrefix(responsiveView)}mr-`) === 0) {
+            const v = c.split(`${getResponsivePrefix(responsiveView)}mr-`);
             setSelectedOption((c) => ({
               ...c,
               mr: v[1],
             }));
           }
-          if (c.indexOf("p-") === 0) {
-            const v = c.split("p-");
+          if (c.indexOf(`${getResponsivePrefix(responsiveView)}p-`) === 0) {
+            const v = c.split(`${getResponsivePrefix(responsiveView)}p-`);
             setSelectedOption((c) => ({
               ...c,
               pt: v[1],
@@ -142,8 +146,8 @@ const SpacingSelector = () => {
             }));
           }
 
-          if (c.indexOf("m-") === 0) {
-            const v = c.split("m-");
+          if (c.indexOf(`${getResponsivePrefix(responsiveView)}m-`) === 0) {
+            const v = c.split(`${getResponsivePrefix(responsiveView)}m-`);
             setSelectedOption((c) => ({
               ...c,
               mt: v[1],
@@ -153,8 +157,8 @@ const SpacingSelector = () => {
             }));
           }
 
-          if (c.indexOf("py-") === 0) {
-            const v = c.split("py-");
+          if (c.indexOf(`${getResponsivePrefix(responsiveView)}py-`) === 0) {
+            const v = c.split(`${getResponsivePrefix(responsiveView)}py-`);
             setSelectedOption((c) => ({
               ...c,
               pt: v[1],
@@ -162,8 +166,8 @@ const SpacingSelector = () => {
             }));
           }
 
-          if (c.indexOf("my-") === 0) {
-            const v = c.split("my-");
+          if (c.indexOf(`${getResponsivePrefix(responsiveView)}my-`) === 0) {
+            const v = c.split(`${getResponsivePrefix(responsiveView)}my-`);
             setSelectedOption((c) => ({
               ...c,
               mt: v[1],
@@ -171,8 +175,8 @@ const SpacingSelector = () => {
             }));
           }
 
-          if (c.indexOf("px-") === 0) {
-            const v = c.split("px-");
+          if (c.indexOf(`${getResponsivePrefix(responsiveView)}px-`) === 0) {
+            const v = c.split(`${getResponsivePrefix(responsiveView)}px-`);
             setSelectedOption((c) => ({
               ...c,
               pl: v[1],
@@ -180,8 +184,8 @@ const SpacingSelector = () => {
             }));
           }
 
-          if (c.indexOf("mx-") === 0) {
-            const v = c.split("mx-");
+          if (c.indexOf(`${getResponsivePrefix(responsiveView)}mx-`) === 0) {
+            const v = c.split(`${getResponsivePrefix(responsiveView)}mx-`);
             setSelectedOption((c) => ({
               ...c,
               ml: v[1],
@@ -195,7 +199,7 @@ const SpacingSelector = () => {
     } else {
       clear();
     }
-  }, [selectedNode]);
+  }, [selectedNode, responsiveView]);
 
   const clear = () =>
     setSelectedOption({
@@ -210,16 +214,13 @@ const SpacingSelector = () => {
     });
 
   const onChange = (e, partOfName) => {
-    console.log(partOfName)
     if (selectedNode) {
       let className = clearClassNamesByPartOfName(
         selectedNode.className,
         partOfName
       );
 
-      className = `${
-        className?.length ? `${className} ${e.value}` : e.value
-      }`;
+      className = `${className?.length ? `${className} ${e.value}` : e.value}`;
 
       dispatch(setAttribute("className", className));
     }
@@ -229,7 +230,7 @@ const SpacingSelector = () => {
   const removeName = () => active?.replace("margin", "").replace("padding", "");
 
   const getOption = (name) => {
-    const className = getClassByPartOfName(selectedNode.className, name);
+    const className = getClassByPartOfName(`${selectedNode.className}`, `${getResponsivePrefix(responsiveView)}${name}`);
     return className
       ? {
           value: className,
@@ -273,8 +274,8 @@ const SpacingSelector = () => {
               onChange(
                 e,
                 isMargin()
-                  ? `m${removeName().toLowerCase()[0]}-`
-                  : `p${removeName().toLowerCase()[0]}-`
+                  ? `${getResponsivePrefix(responsiveView)}m${removeName().toLowerCase()[0]}-`
+                  : `${getResponsivePrefix(responsiveView)}p${removeName().toLowerCase()[0]}-`
               )
             }
             options={options1}
@@ -289,7 +290,7 @@ const SpacingSelector = () => {
           <Select
             isDisabled={!selectedNode}
             value={selectedNode ? getSelected("Y") : null}
-            onChange={(e) => onChange(e, isMargin() ? `my-` : `py-`)}
+            onChange={(e) => onChange(e, isMargin() ? `${getResponsivePrefix(responsiveView)}my-` : `${getResponsivePrefix(responsiveView)}py-`)}
             options={options2}
             className="w-full"
             placeholder={"Select"}
@@ -302,7 +303,7 @@ const SpacingSelector = () => {
           <Select
             isDisabled={!selectedNode}
             value={selectedNode ? getSelected("all") : null}
-            onChange={(e) => onChange(e, isMargin() ? `m-` : `p-`)}
+            onChange={(e) => onChange(e, isMargin() ? `${getResponsivePrefix(responsiveView)}m-` : `${getResponsivePrefix(responsiveView)}p-`)}
             options={options3}
             className="w-full"
             placeholder={"Select"}
@@ -340,7 +341,7 @@ const SpacingSelector = () => {
           type="text"
         />
 
-        <div className={`${styles.padding} rounded-lg border-4 border-primary`}>
+        <div className={`${styles.padding} rounded-lg border-4 border-stone-800`}>
           <div className="ps-4">
             <span className="uppercase text-stone-400 text-xs font-medium">
               Padding
@@ -370,7 +371,7 @@ const SpacingSelector = () => {
             onFocus={() => setActive("paddingBottom")}
             type="text"
           />
-          <div className={`${styles.shape} bg-primary`}></div>
+          <div className={`${styles.shape} bg-stone-800`}></div>
         </div>
       </div>
     </div>

@@ -7,16 +7,29 @@ import Canvas from "./components/Canvas";
 import Breadcrumb from "./components/Breadcrumb";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setConfig } from "./redux/data-reducer";
+import { setPreviousClassNames } from "./redux/classes-reducer";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import Modals from "./components/Modals";
+import { useClassNames } from "./helpers";
 
 import "./styles/index.css";
 
 const Init = ({ userConfig }) => {
   const dispatch = useDispatch();
+  const { classNames } = useClassNames();
+
+  useEffect(() => {
+    if (classNames) {
+      dispatch(setPreviousClassNames(classNames));
+
+      tailwind.config = {
+        safelist: classNames,
+      };
+    }
+  }, [classNames]);
 
   useEffect(() => {
     dispatch(

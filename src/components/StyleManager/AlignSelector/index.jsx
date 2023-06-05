@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { setAttribute } from "../../../redux/data-reducer";
 import { useSelectedNode } from "../../../helpers";
-import { clearClassNames } from "../../../utils";
+import { clearClassNames, getResponsivePrefix } from "../../../utils";
 import { classes } from "../../../configs/tailwind";
 import {
   IconTextLeft,
@@ -11,39 +11,46 @@ import {
   IconTextJustify,
 } from "../../Icons";
 
-const buttons = [
-  {
-    name: "text-left",
-    icon: <IconTextLeft />,
-  },
-  {
-    name: "text-center",
-    icon: <IconTextCenter />,
-  },
-  {
-    name: "text-right",
-    icon: <IconTextRight />,
-  },
-  {
-    name: "text-justify",
-    icon: <IconTextJustify />,
-  },
-];
-
 const AlignSelector = ({ title, name, isColor }) => {
   const dispatch = useDispatch();
   const selectedNode = useSelectedNode();
+  const { responsiveView } = useSelector((state) => state.layout);
+
+  const buttons = useMemo(()=>[
+    {
+      name: `${getResponsivePrefix(responsiveView)}text-left`,
+      icon: <IconTextLeft />,
+    },
+    {
+      name: `${getResponsivePrefix(responsiveView)}text-center`,
+      icon: <IconTextCenter />,
+    },
+    {
+      name: `${getResponsivePrefix(responsiveView)}text-right`,
+      icon: <IconTextRight />,
+    },
+    {
+      name: `${getResponsivePrefix(responsiveView)}text-justify`,
+      icon: <IconTextJustify />,
+    },
+  ], [responsiveView]);
 
   const options = classes[name]
     ? classes[name].map((c) => ({
-        value: c,
-        label: c,
+        value: `${getResponsivePrefix(responsiveView)}${c}`,
+        label: `${getResponsivePrefix(responsiveView)}${c}`,
         ...(isColor ? { color: getColor(c) } : {}),
       }))
     : [];
 
   const isActive = (name) => {
-    return selectedNode?.className?.includes(name);
+    let isActive = false;
+
+    selectedNode?.className?.split(" ").forEach(elm => {
+      if(elm === name) isActive = true
+    })
+
+    return isActive
   };
 
   const onClick = (type) => {

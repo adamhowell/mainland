@@ -7,12 +7,7 @@
   align-items: center;
   padding: 0 1rem;
   cursor: pointer;
-  opacity: 0.6;
   transition: all $transition ease;
-
-  &:hover {
-    opacity: 1;
-  }
 }
 
 .active {

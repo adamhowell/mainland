@@ -1,11 +1,11 @@
 import React from "react";
-import Display from "./Display";
+import ClassSelector from "../../../StyleManager/ClassSelector";
 
 const Layout = () => {
 
   return (
     <div className={`pt-2`}>
-      <Display />
+      <ClassSelector name="display" title="Layout" defaultValue="none" />
     </div>
   );
 };

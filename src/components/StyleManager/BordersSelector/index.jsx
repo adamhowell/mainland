@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAttribute } from "../../../redux/data-reducer";
 import { useSelectedNode } from "../../../helpers";
-import { clearClassNames } from "../../../utils";
+import { clearClassNames, getResponsivePrefix } from "../../../utils";
 import { classes } from "../../../configs/tailwind";
 import styles from "./BordersSelector.module.scss";
 import Select from "../../Inputs/Select";
@@ -26,6 +26,7 @@ const BordersSelector = () => {
   const [width, setWidth] = useState(null);
   const [active, setActive] = useState("center");
   const { borderWidth, borderStyle, borderColor } = useBordersProps();
+  const { responsiveView } = useSelector((state) => state.layout);
 
   useEffect(() => {
     setWidth(borderWidth ? { value: borderWidth, label: borderWidth } : null);
@@ -50,7 +51,9 @@ const BordersSelector = () => {
     if (selectedNode && style) {
       let className = `${clearClassNames(
         selectedNode.className ? selectedNode.className : "",
-        classes.borderStyle
+        classes.borderStyle.map(
+          (c) => `${getResponsivePrefix(responsiveView)}${c}`
+        )
       )}`;
 
       className = `${
@@ -65,7 +68,9 @@ const BordersSelector = () => {
     if (selectedNode && width) {
       let className = `${clearClassNames(
         selectedNode.className ? selectedNode.className : "",
-        classes.borderWidth
+        classes.borderWidth.map(
+          (c) => `${getResponsivePrefix(responsiveView)}${c}`
+        )
       )}`;
 
       className = `${
@@ -80,7 +85,9 @@ const BordersSelector = () => {
     if (selectedNode && color) {
       let className = `${clearClassNames(
         selectedNode.className ? selectedNode.className : "",
-        classes[getColorClass()]
+        classes[getColorClass()].map(
+          (c) => `${getResponsivePrefix(responsiveView)}${c}`
+        )
       )}`;
 
       className = `${
@@ -119,13 +126,13 @@ const BordersSelector = () => {
 
     if (item) {
       const colorParts = item
-        .replace("border-t-", "")
-        .replace("border-b-", "")
-        .replace("border-l-", "")
-        .replace("border-r-", "")
-        .replace("border-x-", "")
-        .replace("border-y-", "")
-        .replace("border-", "")
+        .replace(`${getResponsivePrefix(responsiveView)}border-t-`, "")
+        .replace(`${getResponsivePrefix(responsiveView)}border-b-`, "")
+        .replace(`${getResponsivePrefix(responsiveView)}border-l-`, "")
+        .replace(`${getResponsivePrefix(responsiveView)}border-r-`, "")
+        .replace(`${getResponsivePrefix(responsiveView)}border-x-`, "")
+        .replace(`${getResponsivePrefix(responsiveView)}border-y-`, "")
+        .replace(`${getResponsivePrefix(responsiveView)}border-`, "")
         .split("-");
 
       c =
@@ -157,8 +164,8 @@ const BordersSelector = () => {
           value={selectedNode ? style : null}
           onChange={setStyle}
           options={classes.borderStyle.map((item) => ({
-            value: item,
-            label: item,
+            value: `${getResponsivePrefix(responsiveView)}${item}`,
+            label: `${getResponsivePrefix(responsiveView)}${item}`,
           }))}
           placeholder={selectedNode ? "none" : "Select"}
           className="mb-2"
@@ -169,9 +176,9 @@ const BordersSelector = () => {
           value={selectedNode ? color : null}
           onChange={setColor}
           options={classes[getColorClass()].map((item) => ({
-            value: item,
-            label: item,
-            color: getColor(item),
+            value: `${getResponsivePrefix(responsiveView)}${item}`,
+            label: `${getResponsivePrefix(responsiveView)}${item}`,
+            color: getColor(`${getResponsivePrefix(responsiveView)}${item}`),
           }))}
           placeholder={selectedNode ? "none" : "Select"}
           className="mb-2"
@@ -184,8 +191,8 @@ const BordersSelector = () => {
           value={selectedNode ? width : null}
           onChange={setWidth}
           options={classes.borderWidth.map((item) => ({
-            value: item,
-            label: item,
+            value: `${getResponsivePrefix(responsiveView)}${item}`,
+            label: `${getResponsivePrefix(responsiveView)}${item}`,
           }))}
           placeholder={selectedNode ? "none" : "Select"}
           className="mb-2"

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Select from "../../Inputs/Select";
 import { setAttribute } from "../../../redux/data-reducer";
 import { useSelectedNode } from "../../../helpers";
-import { clearClassNames } from "../../../utils";
+import { clearClassNames, getResponsivePrefix } from "../../../utils";
 import { classes, combinedColors } from "../../../configs/tailwind";
 
 const ClassSelector = ({ title, name, defaultValue, isColor }) => {
@@ -14,21 +14,29 @@ const ClassSelector = ({ title, name, defaultValue, isColor }) => {
   const [isDefault, setIsDefault] = useState(true);
   const dispatch = useDispatch();
   const selectedNode = useSelectedNode();
+  const { responsiveView } = useSelector((state) => state.layout);
 
   const getColor = (name) => {
     if (name) {
       const parts = name.split("-");
-      return parts.length > 2 ? combinedColors[parts[1]][parts[2]] : combinedColors[parts[1]];
+      return parts.length > 2
+        ? combinedColors[parts[1]][parts[2]]
+        : combinedColors[parts[1]];
     }
   };
 
-  const options = classes[name]
-    ? classes[name].map((c) => ({
-        value: c,
-        label: c,
-        ...(isColor ? { color: getColor(c) } : {}),
-      }))
-    : [];
+  const options = useMemo(
+    () => [
+      ...(classes[name]
+        ? classes[name].map((c) => ({
+            value: `${getResponsivePrefix(responsiveView)}${c}`,
+            label: `${getResponsivePrefix(responsiveView)}${c}`,
+            ...(isColor ? { color: getColor(c) } : {}),
+          }))
+        : []),
+    ],
+    [responsiveView, classes, name]
+  );
 
   useEffect(() => {
     if (selectedNode) {
@@ -51,7 +59,7 @@ const ClassSelector = ({ title, name, defaultValue, isColor }) => {
         setIsDefault(true);
       }
     }
-  }, [selectedNode]);
+  }, [selectedNode, responsiveView]);
 
   const onChange = (e) => {
     setSelectedOption(e);

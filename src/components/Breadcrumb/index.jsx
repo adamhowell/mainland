@@ -51,7 +51,7 @@ const Breadcrumb = () => {
   };
 
   return (
-    <div className={`${styles.root} bg-primary text-stone-200`}>
+    <div className={`${styles.root} bg-stone-800 text-stone-200`}>
       {selectedNode && (
         <>
           {generate().map((node, i) => (

@@ -139,7 +139,7 @@ export const getClassByPartOfName = (className, partOfName) => {
   let result = null;
 
   className?.split(" ").map((c) => {
-    if (c.includes(partOfName)) result = c;
+    if (c.indexOf(partOfName) === 0) result = c;
   });
 
   return result;
@@ -148,7 +148,7 @@ export const getClassByPartOfName = (className, partOfName) => {
 export const clearClassNamesByPartOfName = (className, partOfName) =>
   className
     ?.split(" ")
-    .filter((c) => !c.includes(partOfName))
+    .filter((c) => c.indexOf(partOfName) !== 0)
     .join(" ");
 
 export const checkAndReturnStyles = (node) => {
@@ -160,3 +160,14 @@ export const checkAndReturnStyles = (node) => {
 
   return properties;
 };
+
+export const getResponsivePrefix = (view) => {
+    switch (view) {
+      case "lg":
+        return "lg:";
+      case "md":
+        return "md:";
+      case "sm":
+        return "";
+    }
+}

@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { classes } from "../configs/tailwind";
+import { getResponsivePrefix } from "../utils";
 
 const getNode = (dom, id) => {
   let resultNode = null;
@@ -47,35 +48,51 @@ export const useShadowProps = () => {
 
 export const useBordersProps = () => {
   const { dom, selectedSection } = useSelector((state) => state.data);
+  const { responsiveView } = useSelector((state) => state.layout);
   let resultNode = getNode(dom, selectedSection?.id);
+  let isBorder = false;
 
   const getClassName = (name) => {
-    if (name.includes("border-r-")) return "borderRColor";
-    if (name.includes("border-l-")) return "borderLColor";
-    if (name.includes("border-t-")) return "borderTColor";
-    if (name.includes("border-b-")) return "borderBColor";
+    if (name.includes(`${getResponsivePrefix(responsiveView)}border-r-`))
+      return "borderRColor";
+    if (name.includes(`${getResponsivePrefix(responsiveView)}border-l-`))
+      return "borderLColor";
+    if (name.includes(`${getResponsivePrefix(responsiveView)}border-t-`))
+      return "borderTColor";
+    if (name.includes(`${getResponsivePrefix(responsiveView)}border-b-`))
+      return "borderBColor";
     return "borderColor";
   };
 
-  if (resultNode?.className?.includes("border-")) {
+  resultNode?.className?.split(" ").forEach((c) => {
+    if (c.indexOf(`${getResponsivePrefix(responsiveView)}border-`) === 0)
+      isBorder = true;
+  });
+
+  if (isBorder) {
     let borderWidth = null;
     let borderStyle = null;
     let borderColor = null;
 
     const cls = resultNode.className
       .split(" ")
-      .filter((item) => item.includes("border-"));
+      .filter((item) =>
+        item.includes(`${getResponsivePrefix(responsiveView)}border-`)
+      );
 
     classes.borderWidth.forEach((bW) => {
-      if (cls.indexOf(bW) !== -1) borderWidth = bW;
+      if (cls.indexOf(`${getResponsivePrefix(responsiveView)}${bW}`) !== -1)
+        borderWidth = `${getResponsivePrefix(responsiveView)}${bW}`;
     });
 
     classes.borderStyle.forEach((bS) => {
-      if (cls.indexOf(bS) !== -1) borderStyle = bS;
+      if (cls.indexOf(`${getResponsivePrefix(responsiveView)}${bS}`) !== -1)
+        borderStyle = `${getResponsivePrefix(responsiveView)}${bS}`;
     });
 
     classes[getClassName(resultNode?.className)].forEach((bC) => {
-      if (cls.indexOf(bC) !== -1) borderColor = bC;
+      if (cls.indexOf(`${getResponsivePrefix(responsiveView)}${bC}`) !== -1)
+        borderColor = `${getResponsivePrefix(responsiveView)}${bC}`;
     });
 
     return {
@@ -83,6 +100,32 @@ export const useBordersProps = () => {
       borderStyle: borderStyle,
       borderColor: borderColor,
     };
+  } else {
+    return {};
+  }
+};
+
+export const useClassNames = () => {
+  const { dom } = useSelector((state) => state.data);
+  const { previousClassNames } = useSelector((state) => state.classes);
+  let classNames = [];
+
+  const checkEndReturnNode = (node) => {
+    node.className?.split(" ").forEach((elm) => {
+      if (classNames.indexOf(elm) === -1) classNames.push(elm);
+    });
+
+    if (node.children) {
+      node.children.forEach((n) => {
+        checkEndReturnNode(n);
+      });
+    }
+  };
+
+  checkEndReturnNode(dom[0]);
+
+  if (JSON.stringify(classNames) !== JSON.stringify(previousClassNames)) {
+    return { classNames };
   } else {
     return {};
   }
