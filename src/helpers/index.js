@@ -31,7 +31,7 @@ export const useShadowProps = () => {
   let resultNode = getNode(dom, selectedSection?.id);
   let isFound = false;
 
-  resultNode?.className.split(" ").forEach((elm) => {
+  resultNode?.className?.split(" ").forEach((elm) => {
     if (elm.indexOf(`${getResponsivePrefix(responsiveView)}shadow-[`) === 0)
       isFound = true;
   });
