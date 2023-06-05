@@ -10,21 +10,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
 
-  <body>
+  <body class="bg-stone-900">
     <div id="mainland-widget"></div>
     <noscript> You need to enable JavaScript to run this app. </noscript>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              primary: "#333333",
-              secondary: "#222222",
-            },
-          },
-        },
-      };
-    </script>
     <script src="mainlandJs.js"></script>
     <script>
       mainlandJs.init({
