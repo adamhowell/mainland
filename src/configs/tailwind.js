@@ -1,5 +1,11 @@
 const colors = require("tailwindcss/colors");
 
+export const screens = {
+  sm: "576px",
+  md: "960px",
+  lg: "1440px",
+};
+
 export const combinedColors = {
   primary: "#333333",
   secondary: "#222222",

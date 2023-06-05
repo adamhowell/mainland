@@ -9,10 +9,12 @@ import {
 } from "../../redux/data-reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { Card } from "./Card";
+import { screens } from "../../configs/tailwind";
 
 const Canvas = () => {
   const dispatch = useDispatch();
   const { dom, selectedSection } = useSelector((state) => state.data);
+  const { responsiveView } = useSelector((state) => state.layout);
 
   console.log("DOM", dom);
 
@@ -69,9 +71,12 @@ const Canvas = () => {
       onClick={onCanvasClick}
       onMouseEnter={onCanvasEnter}
       id="canvas"
-      className={`${styles.root} bg-secondary text-white`}
+      className={`${styles.root} bg-stone-900 text-white`}
     >
-      <div className={`${styles.container}`}>
+      <div
+        style={{ maxWidth: responsiveView !== "lg" ? screens[responsiveView] : "100%"}}
+        className={`${styles.container}`}
+      >
         {dom?.map((item, i) => renderCard(item, i))}
       </div>
     </div>

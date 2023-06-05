@@ -1,4 +1,4 @@
-import { combinedColors } from "./src/configs/tailwind";
+import { combinedColors, screens } from "./src/configs/tailwind";
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -6,6 +6,7 @@ module.exports = {
   theme: {
     colors: combinedColors,
     extend: {},
+    screens: screens,
   },
   plugins: [],
   // safelist: [

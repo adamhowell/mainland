@@ -6,6 +6,9 @@
 }
 
 .container {
+  margin: 0 auto;
+  transition: max-width $transition ease;
+  
   *:empty{
     height: 100px;
   }

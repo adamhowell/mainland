@@ -42,6 +42,8 @@ const initialState = {
             {
               id: "WA0tV0TP4",
               tagName: "div",
+              className: "grid gap-x-4 gap-y-4 grid-cols-1 lg:grid-cols-3 md:grid-cols-2",
+              label: "Columns 3",
               children: [
                 {
                   id: "lCWQLK7tX0",
@@ -83,7 +85,6 @@ const initialState = {
                   ],
                 },
               ],
-              className: "grid gap-x-4 gap-y-4 grid-cols-3",
             },
           ],
         },

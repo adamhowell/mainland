@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Actions from "./Actions";
 import { htmlToJson, checkAndReturnStyles } from "../../utils";
 import ContentEditable from "react-contenteditable";
-
+import { screens } from "../../configs/tailwind";
 
 const colorBright = "#adadad";
 const colorDark = "#696969";
@@ -31,6 +31,7 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
   );
   const [isCanEdit, setIsCanEdit] = useState(0);
   const { isPreview } = useSelector((state) => state.layout);
+  const { responsiveView } = useSelector((state) => state.layout);
 
   useEffect(() => {
     if (!hoveredSection) clearHightLight();
@@ -219,9 +220,20 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
     [selectedSection, hoveredSection, dropHighlight]
   );
 
+  const renderClassName = () => {
+    let screensTemp = Object.keys(screens).filter(
+      (elm) => elm !== responsiveView
+    );
+
+    return className
+      .split(" ")
+      .filter((item) => screensTemp.indexOf(item.split(":")[0]) === -1)
+      .join(" ");
+  };
+
   return isEditable && node.content ? (
     <div
-      className={`${styles.card} p-1 ${className ? className : ""}`}
+      className={`${styles.card} p-1 ${className ? renderClassName() : ""}`}
       id={id}
       onClick={onClick}
       onMouseEnter={onMouseEnter}
@@ -260,7 +272,7 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
   ) : (
     <node.tagName
       className={`${styles.card} ${node.children?.length ? "" : "empty"} ${
-        className ? className : ""
+        className ? renderClassName() : ""
       }`}
       id={id}
       onClick={onClick}

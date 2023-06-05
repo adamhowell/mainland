@@ -4,7 +4,7 @@ const SET_IS_PREVIEW = "layout-reducer/SET_IS_PREVIEW";
 
 const initialState = {
   activeTab: "style-manager",
-  responsiveView: "desktop",
+  responsiveView: "lg",
   isPreview: false,
 };
 

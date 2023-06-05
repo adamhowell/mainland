@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { setResponsiveView } from "../../../redux/layout-reducer";
 
 const responsiveButtons = [
-  { name: "desktop", icon: <IconDisplay /> },
-  { name: "tablet", icon: <IconTablet /> },
-  { name: "phone", icon: <IconPhone /> },
+  { name: "lg", icon: <IconDisplay /> },
+  { name: "md", icon: <IconTablet /> },
+  { name: "sm", icon: <IconPhone /> },
 ];
 
 const ResponsiveActions = () => {
