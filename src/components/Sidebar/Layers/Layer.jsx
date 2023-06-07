@@ -42,7 +42,10 @@ const Layer = (props) => {
           )}
           {data.label ? `${data.label} (${data.tagName})` : data.tagName}
         </div>
-        <IconMove />
+        <div className="flex items-center">
+          {data.children?.length > 0 && <span className="text-xs mr-2">{data.children?.length}</span>}
+          <IconMove />
+        </div>
       </div>
       {children && (
         <div className="pl-2" {...getCollapseProps()}>
