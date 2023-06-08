@@ -13,6 +13,8 @@ const SET_HIGHLIGHT = "data-reducer/SET_HIGHLIGHT";
 const SET_ATTRIBUTE = "data-reducer/SET_ATTRIBUTE";
 const SET_BACKWARD = "data-reducer/SET_BACKWARD";
 const SET_FORWARD = "data-reducer/SET_FORWARD";
+const SET_HIGHLIGHT_LAYER = "data-reducer/SET_HIGHLIGHT_LAYER";
+const SET_HOVERED_LAYER = "data-reducer/SET_HOVERED_LAYER";
 
 const initialState = {
   config: null,
@@ -98,6 +100,8 @@ const initialState = {
   error: null,
   past: [],
   future: [],
+  dropHighlightLayer: null,
+  hoveredLayer: null,
 };
 
 const dataReducer = (state = initialState, action) => {
@@ -192,6 +196,12 @@ const dataReducer = (state = initialState, action) => {
           : {}),
       };
     }
+    case SET_HIGHLIGHT_LAYER: {
+      return { ...state, dropHighlightLayer: action.data };
+    }
+    case SET_HOVERED_LAYER: {
+      return { ...state, hoveredLayer: action.data };
+    }
     default:
       return state;
   }
@@ -254,6 +264,14 @@ const actions = {
     type: SET_PREVIOUS_CLASSNAMES,
     data: data,
   }),
+  setHighlightLayer: (data) => ({
+    type: SET_HIGHLIGHT_LAYER,
+    data: data,
+  }),
+  setHoveredLayer: (data) => ({
+    type: SET_HOVERED_LAYER,
+    data: data,
+  }),
 };
 
 export const setError = (err) => (dispatch) => {
@@ -264,46 +282,56 @@ export const setHighlight = (err) => (dispatch) => {
   dispatch(actions.setHighlight(err));
 };
 
-export const moveNode = (dragId, hoverId) => (dispatch, getState) => {
+export const setHighlightLayer = (err) => (dispatch) => {
+  dispatch(actions.setHighlightLayer(err));
+};
+
+export const setHoveredLayer = (err) => (dispatch) => {
+  dispatch(actions.setHoveredLayer(err));
+};
+
+export const moveNode = (dragId, hoverId, type) => (dispatch, getState) => {
   const {
-    data: { dom, hoveredSection, dropHighlight },
+    data: {
+      dom,
+      hoveredSection,
+      hoveredLayer,
+      dropHighlight,
+      dropHighlightLayer,
+    },
   } = getState();
 
-  let newDom = [...removeNodeInternal(dom, hoveredSection.id)];
+  const section = type === "layer" ? hoveredLayer : hoveredSection;
+  const highlight = type === "layer" ? dropHighlightLayer : dropHighlight;
+  let newDom = [...removeNodeInternal(dom, section.id)];
   let added = false;
-
-  console.log(dragId, hoverId, hoveredSection);
 
   const checkEndReturnNode = (nx) => {
     let newNode = { ...nx };
 
     if (nx.children) {
       nx.children.forEach((n, i) => {
+        console.log(n.id, hoverId);
         if (n.id === hoverId) {
-          if (n.id === dropHighlight?.id) {
-            if (dropHighlight.position === "all")
-              newNode.children[i].children.push(hoveredSection);
-            if (
-              dropHighlight.position === "top" ||
-              dropHighlight.position === "left"
-            ) {
+          if (n.id === highlight?.id) {
+            if (highlight.position === "all")
+              newNode.children[i].children.push(section);
+            if (highlight.position === "top" || highlight.position === "left") {
               const index = newNode.children.findIndex(
-                (c) => c.id === dropHighlight.id
+                (c) => c.id === highlight.id
               );
-              if (!added)
-                newNode.children.splice(index, 0, hoveredSection).join();
+              if (!added) newNode.children.splice(index, 0, section).join();
               added = true;
             }
 
             if (
-              dropHighlight.position === "bottom" ||
-              dropHighlight.position === "right"
+              highlight.position === "bottom" ||
+              highlight.position === "right"
             ) {
               const index = newNode.children.findIndex(
-                (c) => c.id === dropHighlight.id
+                (c) => c.id === highlight.id
               );
-              if (!added)
-                newNode.children.splice(index + 1, 0, hoveredSection).join();
+              if (!added) newNode.children.splice(index + 1, 0, section).join();
               added = true;
             }
           }
@@ -316,28 +344,25 @@ export const moveNode = (dragId, hoverId) => (dispatch, getState) => {
     return newNode;
   };
 
-  if (!checkIfChild(hoveredSection.children, hoverId)) {
+  if (!checkIfChild(section.children, hoverId)) {
     newDom.forEach((ny, i) => {
       if (ny.id === hoverId) {
-        if (ny.id === dropHighlight.id) {
-          if (dropHighlight.position === "all") {
-            newDom[i].children.push(hoveredSection);
+        if (ny.id === highlight.id) {
+          if (highlight.position === "all") {
+            newDom[i].children.push(section);
           }
-          if (
-            dropHighlight.position === "top" ||
-            dropHighlight.position === "left"
-          ) {
-            const index = newDom.findIndex((c) => c.id === dropHighlight.id);
-            if (!added) newDom.splice(index, 0, hoveredSection).join();
+          if (highlight.position === "top" || highlight.position === "left") {
+            const index = newDom.findIndex((c) => c.id === highlight.id);
+            if (!added) newDom.splice(index, 0, section).join();
             added = true;
           }
 
           if (
-            dropHighlight.position === "bottom" ||
-            dropHighlight.position === "right"
+            highlight.position === "bottom" ||
+            highlight.position === "right"
           ) {
-            const index = newDom.findIndex((c) => c.id === dropHighlight.id);
-            if (!added) newDom.splice(index + 1, 0, hoveredSection).join();
+            const index = newDom.findIndex((c) => c.id === highlight.id);
+            if (!added) newDom.splice(index + 1, 0, section).join();
             added = true;
           }
         }
@@ -524,6 +549,37 @@ export const setAttribute = (attributeName, value) => (dispatch, getState) => {
   dom.forEach((node) => {
     node.id === id
       ? newDom.push({ ...node, [attributeName]: value })
+      : newDom.push(checkEndReturnNode(node));
+  });
+
+  dispatch(actions.setAttribute(newDom));
+};
+
+export const setIsHiden = (id, value) => (dispatch, getState) => {
+  let newDom = [];
+  const {
+    data: { dom },
+  } = getState();
+
+  const checkEndReturnNode = (node) => {
+    let newNode = { ...node };
+
+    if (node.children) {
+      newNode.children = [];
+
+      node.children.forEach((n) => {
+        n.id === id
+          ? newNode.children.push({ ...n, isHidden: value })
+          : newNode.children.push(checkEndReturnNode(n));
+      });
+    }
+
+    return newNode;
+  };
+
+  dom.forEach((node) => {
+    node.id === id
+      ? newDom.push({ ...node, isHidden: value })
       : newDom.push(checkEndReturnNode(node));
   });
 

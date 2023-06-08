@@ -36,7 +36,7 @@ const Canvas = () => {
 
   const renderCard = useCallback(
     (node, index) => {
-      return node.children?.length && node.tagName !== "span" ? (
+      return !node.isHidden && node.children?.length && node.tagName !== "span" ? (
         <Card
           key={`sd-s${index}`}
           index={index}
@@ -45,7 +45,7 @@ const Canvas = () => {
         >
           {node.children.map((n, i) => renderCard(n, i))}
         </Card>
-      ) : (
+      ) : !node.isHidden && (
         <Card
           key={`sd-si${index}`}
           index={index}

@@ -104,16 +104,18 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
       const dragId = item.id;
       const hoverId = id;
 
-      if (item.data) {
-        const doc = new DOMParser().parseFromString(
-          item.data.content,
-          "text/xml"
-        );
-        dispatch(
-          addToNode(htmlToJson(doc.firstChild, item.data.attributes), hoverId)
-        );
-      } else {
-        moveCard(dragId, hoverId, node);
+      if(!node.isClosed) {
+        if (item.data) {
+          const doc = new DOMParser().parseFromString(
+            item.data.content,
+            "text/xml"
+          );
+          dispatch(
+            addToNode(htmlToJson(doc.firstChild, item.data.attributes), hoverId)
+          );
+        } else {
+          moveCard(dragId, hoverId, node);
+        }
       }
     },
     hover(item, monitor) {
@@ -236,27 +238,6 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
       .filter((item) => {
         const name = item.split(":");
         const isBreakNotFound = screensTemp.indexOf(name[0]) === -1;
-        // let isAvailableSimilar = false;
-        // let group = "";
-
-        // Object.keys(classes).forEach((key) => {
-        //   if (classes[key].indexOf(name[1]) > 0) group = key;
-        // });
-
-        // if (group) {
-        //   classes[group].forEach((gc) => {
-        //     if (className.replaceAll(item, "").includes(` ${gc} `))
-        //       isAvailableSimilar = true;
-        //     screensTemp.forEach((sc) => {
-        //       if (className.replaceAll(item, "").includes(` ${sc}:${gc} `))
-        //         isAvailableSimilar = true;
-        //     });
-        //   });
-        // }
-
-        //if(!isBreakNotFound) console.log(item, isAvailableSimilar)
-
-        //return isBreakNotFound ? true : !isBreakNotFound ? !isAvailableSimilar : true;
         return isBreakNotFound;
       })
       .join(" ");
