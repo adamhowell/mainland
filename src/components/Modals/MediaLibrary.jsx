@@ -58,7 +58,7 @@ const MediaLibrary = () => {
       active={isMediaLibrary}
     >
       <div className={`${styles.mediaLibrary}`}>
-        <div className="flex align-center">
+        <div className="flex items-center">
           {tabs.map((t, i) => (
             <button
               onClick={() => setActive(i)}

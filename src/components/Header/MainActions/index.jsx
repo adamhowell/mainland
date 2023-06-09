@@ -18,7 +18,7 @@ const MainActions = () => {
   const dispatch = useDispatch();
 
   return (
-    <div className="flex align-center">
+    <div className="flex items-center">
       <Button
         onClick={() => dispatch(setBackward())}
         disabled={past.length <= 0}

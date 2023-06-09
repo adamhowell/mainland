@@ -163,6 +163,8 @@ export const checkAndReturnStyles = (node) => {
 
 export const getResponsivePrefix = (view) => {
     switch (view) {
+      case "xl":
+        return "xl:";
       case "lg":
         return "lg:";
       case "md":

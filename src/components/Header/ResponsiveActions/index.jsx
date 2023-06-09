@@ -1,13 +1,14 @@
 import React from "react";
-import { IconDisplay, IconPhone, IconTablet } from "../../Icons";
+import { IconDisplay, IconLaptop, IconPhone, IconTablet } from "../../Icons";
 import { Button } from "../../Buttons";
 import { useDispatch, useSelector } from "react-redux";
 import { setResponsiveView } from "../../../redux/layout-reducer";
 
 const responsiveButtons = [
-  { name: "lg", icon: <IconDisplay /> },
-  { name: "md", icon: <IconTablet /> },
   { name: "sm", icon: <IconPhone /> },
+  { name: "md", icon: <IconTablet /> },
+  { name: "lg", icon: <IconLaptop /> },
+  { name: "xl", icon: <IconDisplay /> },
 ];
 
 const ResponsiveActions = () => {
@@ -15,7 +16,7 @@ const ResponsiveActions = () => {
   const dispatch = useDispatch();
 
   return (
-    <div className="flex align-center h-full">
+    <div className="flex items-center h-full">
       {responsiveButtons.map((button, i) => (
         <Button
           key={`rbi-${i}`}
