@@ -74,7 +74,7 @@ const Canvas = () => {
       className={`${styles.root} bg-stone-950 text-white`}
     >
       <div
-        style={{ maxWidth: responsiveView !== "lg" ? screens[responsiveView] : "100%"}}
+        style={{ maxWidth: responsiveView !== Object.keys(screens).pop() ? screens[responsiveView] : "100%"}}
         className={`${styles.container} bg-stone-900`}
       >
         {dom?.map((item, i) => renderCard(item, i))}
