@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import styles from "./Canvas.module.scss";
 import { IconClose, IconChevronDown, IconChevronUp } from "../Icons";
 import { useDispatch, useSelector } from "react-redux";
-import { setDom, removeNode } from "../../redux/data-reducer";
+import { setDom, removeNode, setSelectedParent, setSelectedChild } from "../../redux/data-reducer";
 
 const Actions = ({ node }) => {
   const dispatch = useDispatch();
@@ -11,22 +11,12 @@ const Actions = ({ node }) => {
     (state) => state.data
   );
 
-  const onUp = (i) => {
-    const t = [...dom];
-    if (i != 0) {
-      const element = t.splice(i, 1)[0];
-      t.splice(i - 1, 0, element);
-      dispatch(setDom(t));
-    }
+  const onUp = () => {
+    dispatch(setSelectedParent(id))
   };
 
-  const onDown = (i) => {
-    const t = [...dom];
-    if (i < dom.length) {
-      const element = t.splice(i, 1)[0];
-      t.splice(i + 1, 0, element);
-      dispatch(setDom(t));
-    }
+  const onDown = () => {
+    dispatch(setSelectedChild(id));
   };
   const onRemove = () => {
     dispatch(removeNode(id));

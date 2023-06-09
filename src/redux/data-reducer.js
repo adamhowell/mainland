@@ -15,6 +15,8 @@ const SET_BACKWARD = "data-reducer/SET_BACKWARD";
 const SET_FORWARD = "data-reducer/SET_FORWARD";
 const SET_HIGHLIGHT_LAYER = "data-reducer/SET_HIGHLIGHT_LAYER";
 const SET_HOVERED_LAYER = "data-reducer/SET_HOVERED_LAYER";
+const SET_SELECTED_PARENT = "data-reducer/SET_SELECTED_PARENT";
+const SET_SELECTED_CHILD = "data-reducer/SET_SELECTED_CHILD";
 
 const initialState = {
   config: null,
@@ -202,6 +204,12 @@ const dataReducer = (state = initialState, action) => {
     case SET_HOVERED_LAYER: {
       return { ...state, hoveredLayer: action.data };
     }
+    case SET_SELECTED_PARENT: {
+      return { ...state, selectedSection: action.data };
+    }
+    case SET_SELECTED_CHILD: {
+      return { ...state, selectedSection: action.data };
+    }
     default:
       return state;
   }
@@ -270,6 +278,14 @@ const actions = {
   }),
   setHoveredLayer: (data) => ({
     type: SET_HOVERED_LAYER,
+    data: data,
+  }),
+  setSelectedParent: (data) => ({
+    type: SET_SELECTED_PARENT,
+    data: data,
+  }),
+  setSelectedChild: (data) => ({
+    type: SET_SELECTED_CHILD,
     data: data,
   }),
 };
@@ -583,6 +599,39 @@ export const setIsHiden = (id, value) => (dispatch, getState) => {
   });
 
   dispatch(actions.setAttribute(newDom));
+};
+
+export const setSelectedParent = (id) => (dispatch, getState) => {
+  const {
+    data: { dom },
+  } = getState();
+
+  const checkNode = (node) => {
+    if (node.children) {
+      node.children.forEach((n) => {
+        if(n.id === id ) console.log(node)
+        n.id === id ? dispatch(actions.setSelectedParent(node)) : checkNode(n);
+      });
+    }
+  };
+
+  dom.forEach((node) => checkNode(node));
+};
+
+export const setSelectedChild = (id) => (dispatch, getState) => {
+  const {
+    data: { dom },
+  } = getState();
+
+  const checkNode = (node) => {
+    if (node.children) {
+      node.children.forEach((n) => {
+        n.id === id ? dispatch(actions.setSelectedParent(n.children?.length > 0 ? n.children[0] : n)) : checkNode(n);
+      });
+    }
+  };
+
+  dom.forEach((node) => checkNode(node));
 };
 
 const removeNodeInternal = (dom, id) => {
