@@ -11,9 +11,9 @@ const ImageSelector = () => {
 
   return (
     <div
-      className={`mb-2 text-stone-800 flex items-center justify-between w-full`}
+      className={`mb-2 text-slate-800 flex items-center justify-between w-full`}
     >
-      <span className="uppercase text-stone-400 text-sm font-medium w-2/5 shrink-0">
+      <span className="uppercase text-slate-400 text-sm font-medium w-2/5 shrink-0">
         Image
       </span>
       <button

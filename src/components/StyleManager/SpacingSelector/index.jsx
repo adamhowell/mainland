@@ -15,7 +15,7 @@ import SidebarModal from "../../Modals/SidebarModal";
 
 const cls = {
   button:
-    "focus:bg-stone-500 hover:bg-stone-500 rounded transition text-stone-200 text-sm",
+    "focus:bg-slate-500 hover:bg-slate-500 rounded transition text-slate-200 text-sm",
 };
 
 const SpacingSelector = () => {
@@ -260,11 +260,11 @@ const SpacingSelector = () => {
 
   return (
     <div
-      className={`${styles.root} mb-2 text-stone-800 h-36 relative rounded-lg bg-stone-600`}
+      className={`${styles.root} mb-2 text-slate-800 h-36 relative rounded-lg bg-slate-600`}
     >
       <SidebarModal active={active} onClose={() => setActive(null)}>
         <div className="flex items-center w-full mb-2">
-          <span className="uppercase text-stone-400 text-xs font-medium w-2/4 shrink-0">
+          <span className="uppercase text-slate-400 text-xs font-medium w-2/4 shrink-0">
             {active?.includes("margin") ? "Margin" : "Padding"}-{removeName()}
           </span>
           <Select
@@ -284,7 +284,7 @@ const SpacingSelector = () => {
           />
         </div>
         <div className="flex items-center w-full mb-2">
-          <span className="uppercase text-stone-400 text-xs font-medium w-2/4 shrink-0">
+          <span className="uppercase text-slate-400 text-xs font-medium w-2/4 shrink-0">
             {active?.includes("margin") ? "Margin" : "Padding"} Y-axis
           </span>
           <Select
@@ -297,7 +297,7 @@ const SpacingSelector = () => {
           />
         </div>
         <div className="flex items-center w-full">
-          <span className="uppercase text-stone-400 text-xs font-medium w-2/4 shrink-0">
+          <span className="uppercase text-slate-400 text-xs font-medium w-2/4 shrink-0">
             {active?.includes("margin") ? "Margin" : "Padding"} All
           </span>
           <Select
@@ -312,7 +312,7 @@ const SpacingSelector = () => {
       </SidebarModal>
       <div className={`w-full h-full absolute top-0 left-0`}>
         <div className="ps-4">
-          <span className="uppercase text-stone-400 text-xs font-medium">
+          <span className="uppercase text-slate-400 text-xs font-medium">
             Margin
           </span>
         </div>
@@ -341,9 +341,9 @@ const SpacingSelector = () => {
           type="text"
         />
 
-        <div className={`${styles.padding} rounded-lg border-4 border-stone-800`}>
+        <div className={`${styles.padding} rounded-lg border-4 border-slate-800`}>
           <div className="ps-4">
-            <span className="uppercase text-stone-400 text-xs font-medium">
+            <span className="uppercase text-slate-400 text-xs font-medium">
               Padding
             </span>
           </div>
@@ -371,7 +371,7 @@ const SpacingSelector = () => {
             onFocus={() => setActive("paddingBottom")}
             type="text"
           />
-          <div className={`${styles.shape} bg-stone-800`}></div>
+          <div className={`${styles.shape} bg-slate-800`}></div>
         </div>
       </div>
     </div>

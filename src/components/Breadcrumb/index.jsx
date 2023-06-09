@@ -51,7 +51,7 @@ const Breadcrumb = () => {
   };
 
   return (
-    <div className={`${styles.root} bg-stone-800 text-stone-200`}>
+    <div className={`${styles.root} bg-slate-800 text-slate-200`}>
       {selectedNode && (
         <>
           {generate().map((node, i) => (
@@ -61,7 +61,7 @@ const Breadcrumb = () => {
                 onClick={() => dispatch(setSelectedSection(node))}
                 onMouseEnter={() => dispatch(setHoveredSection(node))}
                 onMouseLeave={() => dispatch(setHoveredSection(null))}
-                className="p-1 rounded transition hover:bg-stone-600 cursor-pointer leading-none"
+                className="p-1 rounded transition hover:bg-slate-600 cursor-pointer leading-none"
               >
                 {node?.label
                   ? `${node?.label} (${node?.tagName})`

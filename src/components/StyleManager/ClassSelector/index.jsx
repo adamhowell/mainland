@@ -75,7 +75,7 @@ const ClassSelector = ({ title, name, defaultValue, isColor }) => {
   };
 
   return (
-    <div className={`mb-2 text-stone-800`}>
+    <div className={`mb-2 text-slate-800`}>
       <Select
         isDisabled={!selectedNode}
         value={selectedNode ? selectedOption : null}

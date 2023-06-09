@@ -20,10 +20,10 @@ const Modal = ({ children, active, onClose }) => {
     >
       <div
         onClick={onClose}
-        className={`w-full absolute top-0 left-0	h-full bg-stone-900 opacity-60`}
+        className={`w-full absolute top-0 left-0	h-full bg-slate-900 opacity-60`}
       ></div>
       <div
-        className={`${styles.modal} bg-stone-600 rounded-lg p-4 text-stone-300`}
+        className={`${styles.modal} bg-slate-600 rounded-lg p-4 text-slate-300`}
       >
         {children}
       </div>

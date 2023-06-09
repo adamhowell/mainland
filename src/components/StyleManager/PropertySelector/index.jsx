@@ -11,7 +11,7 @@ const PropertySelector = ({ property, isTextArea, label }) => {
   const selectedNode = useSelectedNode();
 
   return (
-    <div className={`mb-2 ${!isTextArea ? "flex items-center" : ""} text-stone-800`}>
+    <div className={`mb-2 ${!isTextArea ? "flex items-center" : ""} text-slate-800`}>
       <Label className={`${isTextArea ? "mt-2 mb-2 block" : ""}`}>{label ? label : property}</Label>
       {isTextArea ? (
         <TextArea

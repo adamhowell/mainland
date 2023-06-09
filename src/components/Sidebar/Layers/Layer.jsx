@@ -196,7 +196,7 @@ const Layer = (props) => {
         onDragLeave={onDragLeave}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
-        className={`flex text-sm items-center justify-between border-b border-stone-600 bg-stone-700 p-2 border-solid text-white select-none ${
+        className={`flex text-sm items-center justify-between border-b border-slate-600 bg-slate-700 p-2 border-solid text-white select-none ${
           active ? styles.active : ""
         } ${className ? className : ""}`}
       >

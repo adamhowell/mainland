@@ -67,17 +67,17 @@ const AlignSelector = ({ title, name, isColor }) => {
   };
 
   return (
-    <div className={`mb-2 text-stone-800`}>
+    <div className={`mb-2 text-slate-800`}>
       <div className="flex items-center w-full">
         {title ? (
-          <span className="uppercase text-stone-400 text-sm font-medium w-2/5 shrink-0">
+          <span className="uppercase text-slate-400 text-sm font-medium w-2/5 shrink-0">
             {title}
           </span>
         ) : (
           <></>
         )}
         <div
-          className={`flex items-center rounded-lg bg-stone-600 overflow-hidden text-xl w-3/5 shrink-0 ${
+          className={`flex items-center rounded-lg bg-slate-600 overflow-hidden text-xl w-3/5 shrink-0 ${
             !selectedNode ? "pointer-events-none" : ""
           }`}
         >
@@ -86,8 +86,8 @@ const AlignSelector = ({ title, name, isColor }) => {
               key={`ba-${i}`}
               onClick={() => onClick(button.name)}
               className={`w-full ${
-                isActive(button.name) ? "bg-stone-700" : ""
-              } hover:bg-stone-700 hover:text-stone-200 transition flex justify-center p-2 text-stone-${
+                isActive(button.name) ? "bg-slate-700" : ""
+              } hover:bg-slate-700 hover:text-slate-200 transition flex justify-center p-2 text-slate-${
                 isActive(button.name) ? "200" : "800"
               }`}
             >

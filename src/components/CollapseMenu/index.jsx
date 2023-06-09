@@ -11,7 +11,7 @@ const CollapseMenu = ({ children, title }) => {
   );
 
   return (
-    <div className={`${styles.root} border-b p-4 border-stone-600`}>
+    <div className={`${styles.root} border-b p-4 border-slate-600`}>
       <button className={`${styles.toggler}`} {...getToggleProps()}>
         <IconTriangle
           className={`${styles.icon} me-2 transition-transform ${

@@ -23,7 +23,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className={`${styles.root} bg-stone-800 text-white`}>{renderTab()}</div>
+    <div className={`${styles.root} bg-slate-800 text-white`}>{renderTab()}</div>
   );
 };
 

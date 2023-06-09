@@ -4,7 +4,7 @@ const Input = ({className, ...rest}) => {
   return (
     <input
       {...rest}
-      className={`px-4 py-2 placeholder:text-stone-400 bg-stone-600 rounded-lg w-full text-stone-300 outline-0 ${className ? className : ""} `}
+      className={`px-4 py-2 placeholder:text-slate-400 bg-slate-600 rounded-lg w-full text-slate-300 outline-0 ${className ? className : ""} `}
     />
   );
 };

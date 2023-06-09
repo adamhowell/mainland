@@ -36,10 +36,10 @@ const MediaLibrary = () => {
                 dispatch(setAttribute("backgroundImage", e.target.value))
               }
               placeholder="https://example.com/images/img.png"
-              className={`mt-3 mb-3 bg-stone-700`}
+              className={`mt-3 mb-3 bg-slate-700`}
             />
             <h5>Preview</h5>
-            <div className="border border-stone-500 w-full h-96 mt-3">
+            <div className="border border-slate-500 w-full h-96 mt-3">
               {selectedNode?.backgroundImage && (
                 <img
                   className="w-full h-full object-cover"
@@ -63,9 +63,9 @@ const MediaLibrary = () => {
             <button
               onClick={() => setActive(i)}
               key={`tbi-${i}`}
-              className={`${tab} text-stone-${
+              className={`${tab} text-slate-${
                 active === i ? "200" : "400"
-              } border-${active === i ? "stone-200" : "transparent"}`}
+              } border-${active === i ? "slate-200" : "transparent"}`}
             >
               {t.name}
             </button>

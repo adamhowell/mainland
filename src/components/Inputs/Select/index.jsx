@@ -12,13 +12,13 @@ const SelectComp = (props) => {
     () => ({
       control: (base, state) => ({
         ...base,
-        background: colors.stone[600],
+        background: colors.slate[600],
         borderRadius: state.isFocused ? "8px 8px 0 0" : 8,
         borderColor: "transparent",
         boxShadow: state.isFocused ? null : null,
-        color: colors.stone[200],
+        color: colors.slate[200],
         "&:hover": {
-          borderColor: state.isFocused ? colors.stone[400] : colors.stone[500],
+          borderColor: state.isFocused ? colors.slate[400] : colors.slate[500],
         },
       }),
       menu: (base) => ({
@@ -28,24 +28,24 @@ const SelectComp = (props) => {
       }),
       input: (base) => ({
         ...base,
-        color: colors.stone[200],
+        color: colors.slate[200],
         paddingLeft: "0.5rem",
       }),
       singleValue: (base, { data }) => ({
         ...base,
-        color: isDefault ? colors.stone[400] : colors.stone[200],
+        color: isDefault ? colors.slate[400] : colors.slate[200],
         paddingLeft: isColor && data.value !== "none" ? 0 : "0.5rem",
         paddingRight: "0.5rem",
         fontSize: "0.875rem"
       }),
       placeholder: (base) => ({
         ...base,
-        color: colors.stone[400],
+        color: colors.slate[400],
         paddingLeft: "0.5rem",
       }),
       multiValue: (base) => ({
         ...base,
-        color: isDefault ? colors.stone[400] : colors.stone[200],
+        color: isDefault ? colors.slate[400] : colors.slate[200],
         paddingLeft: "0.5rem",
         paddingRight: "0.5rem",
         fontSize: "0.875rem"
@@ -53,18 +53,18 @@ const SelectComp = (props) => {
       menuList: (base) => ({
         ...base,
         padding: 0,
-        background: colors.stone[600],
+        background: colors.slate[600],
         fontSize: "0.875rem",
         overflowX: "hidden"
       }),
       option: (base, { isFocused, isSelected, data }) => ({
         ...base,
         background: isFocused
-          ? colors.stone[500]
+          ? colors.slate[500]
           : isSelected
-          ? colors.stone[500]
+          ? colors.slate[500]
           : undefined,
-        color: colors.stone[200],
+        color: colors.slate[200],
         zIndex: 1,
         padding: isSimpleColor ? "8px 9px" : "8px 12px",
         width: isSimpleColor ? "26px" : "100%"

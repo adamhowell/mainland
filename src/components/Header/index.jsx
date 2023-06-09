@@ -12,7 +12,7 @@ const Header = () => {
   const dispatch = useDispatch();
 
   return (
-    <div className={`${styles.root} bg-stone-800 text-white`}>
+    <div className={`${styles.root} bg-slate-800 text-white`}>
       <div className={`${styles.mainActions} h-full`}>
         <ResponsiveActions />
         <MainActions />

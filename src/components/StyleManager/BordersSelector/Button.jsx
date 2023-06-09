@@ -20,14 +20,14 @@ const Button = ({ position, active, ...rest }) => {
   return (
     <div
       {...rest}
-      className={`${styles.button} border border-stone-${
+      className={`${styles.button} border border-slate-${
         active ? "300" : "500"
       } z-${
         active ? "10" : "0"
-      } hover:z-index-20 transition hover:border-stone-400 ${position}`}
+      } hover:z-index-20 transition hover:border-slate-400 ${position}`}
     >
       <div
-        className={`bg-stone-600 ${styles.buttonShape} ${getBorderStyle()} border-stone-${
+        className={`bg-slate-600 ${styles.buttonShape} ${getBorderStyle()} border-slate-${
           active ? "300" : "500"
         }`}
       ></div>
