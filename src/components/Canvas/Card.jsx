@@ -89,6 +89,9 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
         id: id,
       };
     },
+    canDrop() {
+      return dropHighlight;
+    },
     drop(item, monitor) {
       if (
         (!item.data && !node) ||
@@ -103,8 +106,8 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
 
       const dragId = item.id;
       const hoverId = id;
-
-      if(!node.isClosed) {
+      
+      if(!(node.isClosed && !dropHighlight)) {
         if (item.data) {
           const doc = new DOMParser().parseFromString(
             item.data.content,
@@ -117,13 +120,16 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
           moveCard(dragId, hoverId, node);
         }
       }
+
+      dispatch(setHighlight(null));
     },
     hover(item, monitor) {
       if (monitor.isOver({ shallow: true })) {
         highlight(monitor);
       }
     },
-  });
+  }, [node, dropHighlight]);
+
   const [dragTargetProps, drag] = useDrag(
     {
       type: "card",
@@ -144,7 +150,7 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
   drag(drop(ref));
 
   const onMouseEnter = (e) => {
-    if (e.target.id === id) dispatch(setHoveredSection(node));
+    if (e.target.id === id && (hoveredSection?.id !== id)) dispatch(setHoveredSection(node));
   };
 
   const onMouseLeave = () => {
@@ -248,7 +254,7 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
       className={`${styles.card} p-1 ${className ? renderClassName() : ""}`}
       id={id}
       onClick={onClick}
-      onMouseEnter={onMouseEnter}
+      onMouseMove={onMouseEnter}
       onMouseLeave={onMouseLeave}
       onDragLeave={onDragLeave}
       ref={ref}
@@ -288,7 +294,7 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
       }`}
       id={id}
       onClick={onClick}
-      onMouseEnter={onMouseEnter}
+      onMouseMove={onMouseEnter}
       onMouseLeave={onMouseLeave}
       onDragLeave={onDragLeave}
       ref={ref}

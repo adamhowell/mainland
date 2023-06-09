@@ -311,7 +311,6 @@ export const moveNode = (dragId, hoverId, type) => (dispatch, getState) => {
 
     if (nx.children) {
       nx.children.forEach((n, i) => {
-        console.log(n.id, hoverId);
         if (n.id === hoverId) {
           if (n.id === highlight?.id) {
             if (highlight.position === "all")

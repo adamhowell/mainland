@@ -15,7 +15,7 @@ import {
 const Layer = (props) => {
   const { children, data, active, className, ...rest } = props;
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse({
-    defaultExpanded: false,
+    defaultExpanded: true,
   });
   const dispatch = useDispatch();
   const { dropHighlightLayer, hoveredLayer, selectedSection } = useSelector(
@@ -30,6 +30,9 @@ const Layer = (props) => {
         handlerId: monitor.getHandlerId(),
         id: data.id,
       };
+    },
+    canDrop() {
+      return !(data.isClosed && !dropHighlightLayer);
     },
     drop(item, monitor) {
       if (
@@ -46,7 +49,7 @@ const Layer = (props) => {
       const dragId = item.id;
       const hoverId = data.id;
 
-      if (!data.isClosed) {
+      if (!(data.isClosed && !dropHighlightLayer)) {
         if (item.data) {
           const doc = new DOMParser().parseFromString(
             item.data.content,
@@ -224,7 +227,10 @@ const Layer = (props) => {
         </div>
       </div>
       {children && (
-        <div className={`${data.isHidden ? "opacity-50" : "opacity-100"} pl-2`} {...getCollapseProps()}>
+        <div
+          className={`${data.isHidden ? "opacity-50" : "opacity-100"} pl-2`}
+          {...getCollapseProps()}
+        >
           {children}
         </div>
       )}
