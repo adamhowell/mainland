@@ -25,6 +25,7 @@ const initialState = {
       id: "C2BsOHNi-z",
       tagName: "body",
       label: "Body",
+      className: "h-full",
       children: [
         {
           id: "i0gs1N0-f3",
@@ -47,7 +48,7 @@ const initialState = {
               id: "WA0tV0TP4",
               tagName: "div",
               className:
-                "grid gap-x-4 gap-y-4 grid-cols-1 lg:grid-cols-3 md:grid-cols-2",
+                "grid gap-x-4 gap-y-4 grid-cols-1 md:grid-cols-2",
               label: "Columns 3",
               children: [
                 {

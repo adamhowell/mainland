@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect } from "react";
-import styles from "./Canvas.module.scss";
 import {
   moveNode,
   setSelectedSection,
@@ -14,7 +13,6 @@ import { screens } from "../../configs/tailwind";
 const Canvas = () => {
   const dispatch = useDispatch();
   const { dom, selectedSection } = useSelector((state) => state.data);
-  const { responsiveView } = useSelector((state) => state.layout);
 
   console.log("DOM", dom);
 
@@ -71,11 +69,10 @@ const Canvas = () => {
       onClick={onCanvasClick}
       onMouseEnter={onCanvasEnter}
       id="canvas"
-      className={`${styles.root} bg-slate-950 text-white`}
+      className={`w-screen h-screen text-white`}
     >
       <div
-        style={{ maxWidth: responsiveView !== Object.keys(screens).pop() ? screens[responsiveView] : "100%"}}
-        className={`${styles.container} bg-slate-900`}
+        className={`mx-auto h-full bg-slate-900`}
       >
         {dom?.map((item, i) => renderCard(item, i))}
       </div>

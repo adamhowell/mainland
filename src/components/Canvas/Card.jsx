@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect, useMemo } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import styles from "./Canvas.module.scss";
 import {
   setSelectedSection,
   setHoveredSection,
@@ -81,54 +80,60 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
     }
   };
 
-  const [{ handlerId }, drop] = useDrop({
-    accept: ["card", "block"],
-    collect(monitor) {
-      return {
-        handlerId: monitor.getHandlerId(),
-        id: id,
-      };
-    },
-    canDrop() {
-      return dropHighlight;
-    },
-    drop(item, monitor) {
-      if (
-        (!item.data && !node) ||
-        (!item.data && !hoveredSection) ||
-        monitor.didDrop() ||
-        (!item.data && item.id === id)
-      )
-        return;
-      if (!ref.current) {
-        return;
-      }
-
-      const dragId = item.id;
-      const hoverId = id;
-      
-      if(!(node.isClosed && !dropHighlight)) {
-        if (item.data) {
-          const doc = new DOMParser().parseFromString(
-            item.data.content,
-            "text/xml"
-          );
-          dispatch(
-            addToNode(htmlToJson(doc.firstChild, item.data.attributes), hoverId)
-          );
-        } else {
-          moveCard(dragId, hoverId, node);
+  const [{ handlerId }, drop] = useDrop(
+    {
+      accept: ["card", "block"],
+      collect(monitor) {
+        return {
+          handlerId: monitor.getHandlerId(),
+          id: id,
+        };
+      },
+      canDrop() {
+        return dropHighlight;
+      },
+      drop(item, monitor) {
+        if (
+          (!item.data && !node) ||
+          (!item.data && !hoveredSection) ||
+          monitor.didDrop() ||
+          (!item.data && item.id === id)
+        )
+          return;
+        if (!ref.current) {
+          return;
         }
-      }
 
-      dispatch(setHighlight(null));
+        const dragId = item.id;
+        const hoverId = id;
+
+        if (!(node.isClosed && !dropHighlight)) {
+          if (item.data) {
+            const doc = new DOMParser().parseFromString(
+              item.data.content,
+              "text/xml"
+            );
+            dispatch(
+              addToNode(
+                htmlToJson(doc.firstChild, item.data.attributes),
+                hoverId
+              )
+            );
+          } else {
+            moveCard(dragId, hoverId, node);
+          }
+        }
+
+        dispatch(setHighlight(null));
+      },
+      hover(item, monitor) {
+        if (monitor.isOver({ shallow: true })) {
+          highlight(monitor);
+        }
+      },
     },
-    hover(item, monitor) {
-      if (monitor.isOver({ shallow: true })) {
-        highlight(monitor);
-      }
-    },
-  }, [node, dropHighlight]);
+    [node, dropHighlight]
+  );
 
   const [dragTargetProps, drag] = useDrag(
     {
@@ -149,8 +154,9 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
   const opacity = dragTargetProps.isDragging ? 0 : 1;
   drag(drop(ref));
 
-  const onMouseEnter = (e) => {
-    if (e.target.id === id && (hoveredSection?.id !== id)) dispatch(setHoveredSection(node));
+  const onMouseMove = (e) => {
+    if (e.target.id === id && hoveredSection?.id !== id)
+      dispatch(setHoveredSection(node));
   };
 
   const onMouseLeave = () => {
@@ -243,18 +249,17 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
       .split(" ")
       .filter((item) => {
         const name = item.split(":");
-        const isBreakNotFound = screensTemp.indexOf(name[0]) === -1;
-        return isBreakNotFound;
+        return screensTemp.indexOf(name[0]) === -1;
       })
       .join(" ");
   };
 
   return isEditable && node.content ? (
     <div
-      className={`${styles.card} p-1 ${className ? renderClassName() : ""}`}
+      className={`w-full relative p-1 ${className ? className : ""}`}
       id={id}
       onClick={onClick}
-      onMouseMove={onMouseEnter}
+      onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
       onDragLeave={onDragLeave}
       ref={ref}
@@ -289,12 +294,12 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
     </div>
   ) : (
     <node.tagName
-      className={`${styles.card} ${node.children?.length ? "" : "empty"} ${
-        className ? renderClassName() : ""
+      className={`w-full relative ${node.children?.length ? "" : "empty"} ${
+        className ? className : ""
       }`}
       id={id}
       onClick={onClick}
-      onMouseMove={onMouseEnter}
+      onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
       onDragLeave={onDragLeave}
       ref={ref}
@@ -311,6 +316,7 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
           ? { backgroundImage: `url(${backgroundImage})` }
           : {}),
         ...(backgroundImage ? { backgroundSize: "cover" } : {}),
+        ...(!children ? { height: "50px" } : {}),
       }}
       data-handler-id={handlerId}
     >

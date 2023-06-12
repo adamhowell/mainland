@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { defaultConfig } from "./configs";
 import Layout from "./components/Layout";
 import Header from "./components/Header";
@@ -7,13 +7,13 @@ import Canvas from "./components/Canvas";
 import Breadcrumb from "./components/Breadcrumb";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setConfig } from "./redux/data-reducer";
 import { setPreviousClassNames } from "./redux/classes-reducer";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import Modals from "./components/Modals";
 import { useClassNames } from "./helpers";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 import "./styles/index.css";
 
@@ -45,6 +45,7 @@ const Init = ({ userConfig }) => {
 };
 
 const App = ({ userConfig }) => {
+
   return (
     <Provider store={store}>
       <Init userConfig={userConfig} />
