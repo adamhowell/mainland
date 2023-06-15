@@ -162,14 +162,25 @@ export const checkAndReturnStyles = (node) => {
 };
 
 export const getResponsivePrefix = (view) => {
-    switch (view) {
-      case "xl":
-        return "xl:";
-      case "lg":
-        return "lg:";
-      case "md":
-        return "md:";
-      case "sm":
-        return "";
-    }
-}
+  switch (view) {
+    case "xl":
+      return "xl:";
+    case "lg":
+      return "lg:";
+    case "md":
+      return "md:";
+    case "sm":
+      return "";
+  }
+};
+
+export const isCanContainsChildren = (name) => {
+  switch (name) {
+    case "hr":
+    case "img":
+    case "input":
+      return false;
+    default:
+      return true;
+  }
+};

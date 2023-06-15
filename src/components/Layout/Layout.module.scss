@@ -29,7 +29,7 @@
 }
 
 .inner {
-  height: 100%;
+  height: calc(100% - #{$header-height});
   display: flex;
   align-items: stretch;
   transition: padding $transition ease;

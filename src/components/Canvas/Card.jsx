@@ -9,7 +9,11 @@ import {
 } from "../../redux/data-reducer";
 import { useDispatch, useSelector } from "react-redux";
 import Actions from "./Actions";
-import { htmlToJson, checkAndReturnStyles } from "../../utils";
+import {
+  htmlToJson,
+  checkAndReturnStyles,
+  isCanContainsChildren,
+} from "../../utils";
 import ContentEditable from "react-contenteditable";
 import { screens } from "../../configs/tailwind";
 
@@ -32,10 +36,13 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
 
   const style = useMemo(
     () => ({
-      position: "relative",
-      border: `1px dashed ${colorDark}`,
+      ...(!isPreview
+        ? {
+            border: `1px dashed ${colorDark}`,
+          }
+        : {}),
     }),
-    [colorDark]
+    [colorDark, isPreview]
   );
 
   useEffect(() => {
@@ -240,20 +247,6 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
     [selectedSection, hoveredSection, dropHighlight]
   );
 
-  const renderClassName = () => {
-    let screensTemp = Object.keys(screens).filter(
-      (elm) => elm !== responsiveView
-    );
-
-    return className
-      .split(" ")
-      .filter((item) => {
-        const name = item.split(":");
-        return screensTemp.indexOf(name[0]) === -1;
-      })
-      .join(" ");
-  };
-
   return isEditable && node.content ? (
     <div
       className={`relative p-1 ${className ? className : ""}`}
@@ -294,10 +287,10 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
       />
     </div>
   ) : (
-    <node.tagName
-      className={`relative ${node.children?.length ? "" : "empty"} ${
+    <div
+      className={`${node.children?.length ? "" : "empty"} ${
         className ? className : ""
-      }`}
+      } relative`}
       id={id}
       onClick={onClick}
       onMouseMove={onMouseMove}
@@ -317,12 +310,14 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
           ? { backgroundImage: `url(${backgroundImage})` }
           : {}),
         ...(backgroundImage ? { backgroundSize: "cover" } : {}),
-        ...(!children ? { height: "50px" } : {}),
+        ...(!children && isCanContainsChildren(node.tagName)
+          ? { height: "50px" }
+          : {}),
       }}
       data-handler-id={handlerId}
     >
       {!isPreview && <Actions node={node} />}
-      {children}
-    </node.tagName>
+      <node.tagName>{children && children}</node.tagName>
+    </div>
   );
 };

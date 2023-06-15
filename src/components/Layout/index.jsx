@@ -74,7 +74,7 @@ const Layout = ({
   };
 
   return (
-    <div className={`${styles.root}`}>
+    <div className={`${styles.root} bg-slate-950`}>
       <div
         onClick={() => dispatch(setIsPreview(false))}
         className={`${styles.previewToggler} ${isPreview ? "show" : ""}`}
