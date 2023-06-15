@@ -30,7 +30,7 @@ const Actions = ({ node }) => {
 
   return (
     <div
-      className={`absolute left-0 top-[-25px] h-5 flex bg-white items-center cursor-pointer py-1 px-1.5 text-xs transition-opacity opacity-${
+      className={`absolute left-0 top-[-25px] h-5 font-normal flex bg-white items-center cursor-pointer py-1 px-1.5 text-xs transition-opacity opacity-${
         isActive() ? "100" : "0"
       } rounded pointer-events-${isActive() ? "auto" : "none"}`}
     >

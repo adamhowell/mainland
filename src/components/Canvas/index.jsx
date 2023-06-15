@@ -34,7 +34,7 @@ const Canvas = () => {
 
   const renderCard = useCallback(
     (node, index) => {
-      return !node.isHidden && node.children?.length && node.tagName !== "span" ? (
+      return !node.isHidden && node.children?.length && !node.content ? (
         <Card
           key={`sd-s${index}`}
           index={index}

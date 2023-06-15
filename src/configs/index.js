@@ -42,6 +42,12 @@ export const defaultConfig = {
     </div>`,
       icon: '<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"width="64px" height="64px" viewBox="0 0 64 64"><path d="M12,21.9c0-1,0.9-1.8,2-1.8h36c1.1,0,2,0.8,2,1.8s-0.9,1.8-2,1.8H14C12.9,23.7,12,22.9,12,21.9z M12,31.9c0-1,0.9-1.8,2-1.8h36c1.1,0,2,0.8,2,1.8s-0.9,1.8-2,1.8H14C12.9,33.7,12,32.9,12,31.9z M12,41.9c0-1,0.9-1.8,2-1.8h24c1.1,0,2,0.8,2,1.8s-0.9,1.8-2,1.8H14C12.9,43.7,12,42.9,12,41.9z"/><path d="M58.5,11.2c1.4,0,2.5,1.1,2.5,2.5v37c0,1.4-1.1,2.5-2.5,2.5h-53C4.1,53.2,3,52,3,50.7v-37c0-1.4,1.1-2.5,2.5-2.5H58.5M58.5,8.2h-53c-3,0-5.5,2.5-5.5,5.5v37c0,3,2.5,5.5,5.5,5.5h53c3,0,5.5-2.5,5.5-5.5v-37C64,10.6,61.5,8.2,58.5,8.2L58.5,8.2z"/></svg>',
     },
+    {
+      label: "Button",
+      attributes: { class: "inline-flex bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" },
+      content: `<button>Button</button>`,
+      icon: '<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="64px" height="64px" viewBox="0 0 64 64"><path d="M0,28c0-3.3,2.7-6,6-6h52c3.3,0,6,2.7,6,6v8c0,3.3-2.7,6-6,6H6c-3.3,0-6-2.7-6-6V28z M6,26c-1.1,0-2,0.9-2,2v8c0,1.1,0.9,2,2,2h52c1.1,0,2-0.9,2-2v-8c0-1.1-0.9-2-2-2H6z"/><path d="M54,30H42h-8h-4h-8H10c-1.1,0-2,0.9-2,2s0.9,2,2,2h12h8h4h8h12c1.1,0,2-0.9,2-2S55.1,30,54,30z"/></svg>',
+    },    
     // {
     //   label: "Form",
     //   attributes: { class: "container mx-auto" },

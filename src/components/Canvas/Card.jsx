@@ -256,7 +256,7 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
 
   return isEditable && node.content ? (
     <div
-      className={`w-full relative p-1 ${className ? className : ""}`}
+      className={`relative p-1 ${className ? className : ""}`}
       id={id}
       onClick={onClick}
       onMouseMove={onMouseMove}
@@ -281,6 +281,7 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
     >
       {!isPreview && <Actions node={node} />}
       <ContentEditable
+        style={{ textAlign: "inherit" }}
         html={node.content}
         onBlur={() => setIsCanEdit(false)}
         onClick={() => {
@@ -289,12 +290,12 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
         disabled={!isCanEdit || isPreview}
         className="w-full block"
         onChange={(e) => dispatch(updateText(id, e.target.value))}
-        tagName={node.tagName}
+        tagName={"span"}
       />
     </div>
   ) : (
     <node.tagName
-      className={`w-full relative ${node.children?.length ? "" : "empty"} ${
+      className={`relative ${node.children?.length ? "" : "empty"} ${
         className ? className : ""
       }`}
       id={id}
