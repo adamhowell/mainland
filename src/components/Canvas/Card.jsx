@@ -26,7 +26,6 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
   );
   const [isCanEdit, setIsCanEdit] = useState(0);
   const { isPreview } = useSelector((state) => state.layout);
-  const { responsiveView } = useSelector((state) => state.layout);
 
   const colorBright = useMemo(
     () => (node.tagName === "body" ? "#696969" : "#adadad"),
@@ -285,6 +284,7 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
           ? { backgroundImage: `url(${backgroundImage})` }
           : {}),
         ...(backgroundImage ? { backgroundSize: "cover" } : {}),
+        ...(node.tagName === "li" ? { display: "list-item" } : {}),
       }}
       data-handler-id={handlerId}
     >
@@ -316,6 +316,7 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
       style={stylesNotEditable}
       data-handler-id={handlerId}
     >
+      {!isPreview && <Actions node={node} />}
       {children}
     </node.tagName>
   ) : (
@@ -331,9 +332,12 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
       data-handler-id={handlerId}
     >
       {!isPreview && <Actions node={node} />}
-      <node.tagName className={`${node.children?.length ? "" : "empty"} ${
-        className ? className : ""
-      } pointer-events-none`} {...(node.src ? { src: node.src } : {})}>
+      <node.tagName
+        className={`${node.children?.length ? "" : "empty"} ${
+          className ? className : ""
+        } pointer-events-none`}
+        {...(node.src ? { src: node.src } : {})}
+      >
         {children}
       </node.tagName>
     </div>

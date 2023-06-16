@@ -47,8 +47,7 @@ const initialState = {
             {
               id: "WA0tV0TP4",
               tagName: "div",
-              className:
-                "grid gap-x-4 gap-y-4 grid-cols-1 md:grid-cols-2",
+              className: "grid gap-x-4 gap-y-4 grid-cols-1 md:grid-cols-2",
               label: "Columns 3",
               children: [
                 {
@@ -502,10 +501,12 @@ export const setSelectedSection = (data) => (dispatch) => {
 
 export const removeNode = (id) => (dispatch, getState) => {
   const {
-    data: { dom },
+    data: { dom, selectedSection },
   } = getState();
 
-  dispatch(actions.removeNode(removeNodeInternal(dom, id)));
+  dispatch(
+    actions.removeNode(removeNodeInternal(dom, id ? id : selectedSection.id))
+  );
 };
 
 export const updateText = (id, text) => (dispatch, getState) => {
@@ -610,7 +611,7 @@ export const setSelectedParent = (id) => (dispatch, getState) => {
   const checkNode = (node) => {
     if (node.children) {
       node.children.forEach((n) => {
-        if(n.id === id ) console.log(node)
+        if (n.id === id) console.log(node);
         n.id === id ? dispatch(actions.setSelectedParent(node)) : checkNode(n);
       });
     }
@@ -627,7 +628,13 @@ export const setSelectedChild = (id) => (dispatch, getState) => {
   const checkNode = (node) => {
     if (node.children) {
       node.children.forEach((n) => {
-        n.id === id ? dispatch(actions.setSelectedParent(n.children?.length > 0 ? n.children[0] : n)) : checkNode(n);
+        n.id === id
+          ? dispatch(
+              actions.setSelectedParent(
+                n.children?.length > 0 ? n.children[0] : n
+              )
+            )
+          : checkNode(n);
       });
     }
   };

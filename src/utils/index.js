@@ -10,6 +10,8 @@ export const closedTags = [
   "h4",
   "h5",
   "h6",
+  "li",
+  "blockquote",
 ];
 
 export const htmlToJson = (node, attributes, label) => {
@@ -179,6 +181,7 @@ export const isCanContainsChildren = (name) => {
     case "hr":
     case "img":
     case "input":
+    case "li":
       return false;
     default:
       return true;
@@ -199,6 +202,8 @@ export const getEditableTagName = (tagName) => {
       return "h5";
     case "h6":
       return "h6";
+    case "li":
+      return "li";
     default:
       return "span";
   }

@@ -1,15 +1,16 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState, useCallback } from "react";
 import styles from "./Layout.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { IconEyeSlash } from "../Icons";
 import { setIsPreview } from "../../redux/layout-reducer";
-import { setBackward, setForward } from "../../redux/data-reducer";
+import { removeNode, setBackward, setForward } from "../../redux/data-reducer";
 import Frame, {
   FrameContextConsumer,
   FrameContext,
 } from "react-frame-component";
 import { DndContext } from "react-dnd";
 import { screens } from "../../configs/tailwind";
+import { useSelectedNode } from "../../helpers";
 
 const Layout = ({
   slotHeader,
@@ -53,6 +54,13 @@ const Layout = ({
     const tw = document.createElement("script");
     const twElm = document.querySelector("#tailwind");
 
+    const onKeyDown = (e) => {
+      const evtobj = window.event ? e : e;
+      if (evtobj.keyCode == 90 && evtobj.ctrlKey) dispatch(setBackward());
+      if (evtobj.keyCode == 89 && evtobj.ctrlKey) dispatch(setForward());
+      if (evtobj.keyCode == 46) dispatch(removeNode());
+    };
+
     useEffect(() => {
       if (!twElm) {
         tw.setAttribute("src", "https://cdn.tailwindcss.com");
@@ -65,12 +73,6 @@ const Layout = ({
     }, []);
 
     return children;
-  };
-
-  const onKeyDown = (e) => {
-    const evtobj = window.event ? e : e;
-    if (evtobj.keyCode == 90 && evtobj.ctrlKey) dispatch(setBackward());
-    if (evtobj.keyCode == 89 && evtobj.ctrlKey) dispatch(setForward());
   };
 
   return (
