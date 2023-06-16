@@ -2,16 +2,26 @@ import React from "react";
 import styles from "./Settings.module.scss";
 import CollapseMenu from "../../CollapseMenu";
 import PropertySelector from "../../StyleManager/PropertySelector";
+import TagSelector from "../../StyleManager/TagSelector";
+import { isTagVariants } from "../../../utils";
+import { useSelectedNode } from "../../../helpers";
 
 const StyleManager = () => {
+  const selectedNode = useSelectedNode();
+
   return (
     <div className={`${styles.root}`}>
       <CollapseMenu title={`Details`}>
         <PropertySelector property="id" />
       </CollapseMenu>
       <CollapseMenu title={`Advanced`}>
-        <PropertySelector isTextArea property="style" label="Custom CSS"/>
+        <PropertySelector isTextArea property="style" label="Custom CSS" />
       </CollapseMenu>
+      {isTagVariants(selectedNode.tagName) && (
+        <CollapseMenu title={`Tag`}>
+          <TagSelector />
+        </CollapseMenu>
+      )}
     </div>
   );
 };

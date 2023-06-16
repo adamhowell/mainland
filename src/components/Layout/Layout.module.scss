@@ -29,13 +29,16 @@
 }
 
 .inner {
-  height: calc(100% - #{$header-height});
+  height: 100%;
+  max-height: calc(100% - #{$header-height});
   display: flex;
   align-items: stretch;
-  transition: padding $transition ease;
+  transition: all $transition ease;
 
   &:global(.expand) {
     padding-top: 0;
+    max-height: 100%;
+    margin-top: -$header-height;
   }
 }
 

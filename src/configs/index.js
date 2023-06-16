@@ -53,6 +53,12 @@ export const defaultConfig = {
       attributes: { class: "mt-4 mb-4" },
       content: `<hr/>`,
       icon: '<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="64px" height="64px" viewBox="0 0 64 64"><path d="M62,30H50h-4h-4h-4h-4h-4h-4h-4h-4h-4H2c-1.1,0-2,0.9-2,2s0.9,2,2,2h12h4h4h4h4h4h4h4h4h4h12c1.1,0,2-0.9,2-2S63.1,30,62,30z"/></svg>'
+    },
+    {
+      label: "Headline",
+      content: `<h1>Headline</h1>`,
+      attributes: { class: "text-5xl font-bold leading-snug" },
+      icon: '<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="64px" height="64px" viewBox="0 0 64 64"><g><path d="M57.1,10.3c-6,0.6-6.6,0.9-6.6,7v28.9c0,6,0.6,6.3,6.6,6.9v2H37.8v-2c6-0.7,6.6-0.9,6.6-6.9V31.8H19.7v14.4c0,6,0.6,6.2,6.5,6.9v2H7v-2c5.8-0.6,6.5-0.9,6.5-6.9V17.3c0-6-0.6-6.4-6.5-7v-2h19.2v2c-5.8,0.5-6.5,1-6.5,7v11.4h24.6V17.3c0-6-0.8-6.5-6.6-7v-2h19.3V10.3z"/></g></svg>'
     }
     // {
     //   label: "Form",

@@ -30,7 +30,7 @@ const initialState = {
         {
           id: "i0gs1N0-f3",
           tagName: "div",
-          className: "container mx-auto mt-7",
+          className: "container mx-auto",
           label: "Container",
           children: [
             {

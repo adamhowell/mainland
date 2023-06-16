@@ -13,9 +13,9 @@ import {
   htmlToJson,
   checkAndReturnStyles,
   isCanContainsChildren,
+  getEditableTagName
 } from "../../utils";
 import ContentEditable from "react-contenteditable";
-import { screens } from "../../configs/tailwind";
 
 export const Card = ({ index, moveCard, children, node, isEditable }) => {
   const { id, backgroundImage, className } = node;
@@ -247,6 +247,22 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
     [selectedSection, hoveredSection, dropHighlight]
   );
 
+  const stylesNotEditable = {
+    ...style,
+    ...(node.style ? checkAndReturnStyles(node) : {}),
+    cursor:
+      !isPreview && hoveredSection?.id === id && node.tagName !== "body"
+        ? "move"
+        : "default",
+    opacity,
+    ...(!isPreview ? borderStyles : {}),
+    ...(backgroundImage ? { backgroundImage: `url(${backgroundImage})` } : {}),
+    ...(backgroundImage ? { backgroundSize: "cover" } : {}),
+    ...(!children && isCanContainsChildren(node.tagName)
+      ? { height: "50px" }
+      : {}),
+  };
+
   return isEditable && node.content ? (
     <div
       className={`relative p-1 ${className ? className : ""}`}
@@ -283,9 +299,25 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
         disabled={!isCanEdit || isPreview}
         className="w-full block"
         onChange={(e) => dispatch(updateText(id, e.target.value))}
-        tagName={"span"}
+        tagName={getEditableTagName(node.tagName)}
       />
     </div>
+  ) : children ? (
+    <node.tagName
+      className={`${node.children?.length ? "" : "empty"} ${
+        className ? className : ""
+      } relative`}
+      id={id}
+      onClick={onClick}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
+      onDragLeave={onDragLeave}
+      ref={ref}
+      style={stylesNotEditable}
+      data-handler-id={handlerId}
+    >
+      {children}
+    </node.tagName>
   ) : (
     <div
       className={`${node.children?.length ? "" : "empty"} ${
@@ -297,27 +329,11 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
       onMouseLeave={onMouseLeave}
       onDragLeave={onDragLeave}
       ref={ref}
-      style={{
-        ...style,
-        ...(node.style ? checkAndReturnStyles(node) : {}),
-        cursor:
-          !isPreview && hoveredSection?.id === id && node.tagName !== "body"
-            ? "move"
-            : "default",
-        opacity,
-        ...(!isPreview ? borderStyles : {}),
-        ...(backgroundImage
-          ? { backgroundImage: `url(${backgroundImage})` }
-          : {}),
-        ...(backgroundImage ? { backgroundSize: "cover" } : {}),
-        ...(!children && isCanContainsChildren(node.tagName)
-          ? { height: "50px" }
-          : {}),
-      }}
+      style={stylesNotEditable}
       data-handler-id={handlerId}
     >
       {!isPreview && <Actions node={node} />}
-      <node.tagName>{children && children}</node.tagName>
+      <node.tagName>{children}</node.tagName>
     </div>
   );
 };

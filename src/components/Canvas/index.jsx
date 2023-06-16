@@ -69,7 +69,7 @@ const Canvas = () => {
       onClick={onCanvasClick}
       onMouseEnter={onCanvasEnter}
       id="canvas"
-      className={`w-screen h-screen text-white`}
+      className={`w-full h-screen text-white`}
     >
       <div
         className={`mx-auto h-full bg-slate-900`}
