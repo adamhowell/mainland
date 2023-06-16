@@ -17,7 +17,12 @@ const StyleManager = () => {
       <CollapseMenu title={`Advanced`}>
         <PropertySelector isTextArea property="style" label="Custom CSS" />
       </CollapseMenu>
-      {isTagVariants(selectedNode.tagName) && (
+      {selectedNode?.tagName === "a" && (
+        <CollapseMenu title={`Link`}>
+          <PropertySelector property="href" />
+        </CollapseMenu>
+      )}
+      {isTagVariants(selectedNode?.tagName) && (
         <CollapseMenu title={`Tag`}>
           <TagSelector />
         </CollapseMenu>

@@ -59,6 +59,12 @@ export const defaultConfig = {
       content: `<h1>Headline</h1>`,
       attributes: { class: "text-5xl font-bold leading-snug" },
       icon: '<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="64px" height="64px" viewBox="0 0 64 64"><g><path d="M57.1,10.3c-6,0.6-6.6,0.9-6.6,7v28.9c0,6,0.6,6.3,6.6,6.9v2H37.8v-2c6-0.7,6.6-0.9,6.6-6.9V31.8H19.7v14.4c0,6,0.6,6.2,6.5,6.9v2H7v-2c5.8-0.6,6.5-0.9,6.5-6.9V17.3c0-6-0.6-6.4-6.5-7v-2h19.2v2c-5.8,0.5-6.5,1-6.5,7v11.4h24.6V17.3c0-6-0.8-6.5-6.6-7v-2h19.3V10.3z"/></g></svg>'
+    },
+    {
+      label: "Link",
+      content: `<a href="example.com">Link</a>`,
+      attributes: { class: "font-medium text-blue-600 underline dark:text-blue-500 hover:no-underline" },
+      icon: '<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="64px" height="64px" viewBox="0 0 64 64"><g><path d="M24.5,18.3H13.7C6.1,18.3,0,24.4,0,32s6.1,13.7,13.7,13.7h13.7c7.6,0,13.7-6.1,13.7-13.7c0-1.6-0.3-3.1-0.8-4.6h-3.8c-0.4,0-0.8,0-1.1,0.1c2.4,4.4,0.8,10-3.6,12.4c-1.4,0.8-2.9,1.1-4.4,1.1H13.7c-5,0-9.1-4.1-9.1-9.1s4.1-9.1,9.1-9.1h7C21.7,21.1,23,19.6,24.5,18.3L24.5,18.3z"/><path d="M36.6,18.3c-7.6,0-13.7,6.1-13.7,13.7c0,1.6,0.3,3.1,0.8,4.6h5c-2.5-4.4-1-10,3.3-12.5c1.4-0.8,3-1.2,4.6-1.2h13.7c5,0,9.1,4.1,9.1,9.1s-4.1,9.1-9.1,9.1h-7c-1,1.7-2.3,3.3-3.7,4.6h10.8C57.9,45.7,64,39.6,64,32s-6.1-13.7-13.7-13.7H36.6z"/></g></svg>'
     }
     // {
     //   label: "Form",

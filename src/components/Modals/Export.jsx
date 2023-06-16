@@ -22,6 +22,7 @@ const Export = () => {
           <node.tagName
             {...(node.style ? { style: checkAndReturnStyles(node) } : {})}
             {...(node.className ? { className: node.className } : {})}
+            {...(node.href ? { href: node.href } : {})}
             key={node.id}
           >
             {node.children.map((n) => checkEndReturnNode(n))}
@@ -32,6 +33,7 @@ const Export = () => {
           <node.tagName
             {...(node.style ? { style: checkAndReturnStyles(node) } : {})}
             {...(node.className ? { className: node.className } : {})}
+            {...(node.href ? { href: node.href } : {})}
             key={node.id}
           >
             {node.content && node.content}
