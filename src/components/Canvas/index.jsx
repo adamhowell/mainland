@@ -8,7 +8,6 @@ import {
 } from "../../redux/data-reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { Card } from "./Card";
-import { screens } from "../../configs/tailwind";
 
 const Canvas = () => {
   const dispatch = useDispatch();

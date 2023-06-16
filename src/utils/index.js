@@ -236,3 +236,37 @@ export const isTagVariants = (tagName) => {
       return false;
   }
 };
+
+export const replceSpecialCharacters = (string) => {
+  const replaceChar = [
+    { reg: "&", replace: "&amp;" },
+    { reg: "£", replace: "&pound;" },
+    { reg: "€", replace: "&euro;" },
+    { reg: "é", replace: "&eacute;" },
+    { reg: "–", replace: "&ndash;" },
+    { reg: "®", replace: "&reg;" },
+    { reg: "™", replace: "&trade;" },
+    { reg: "‘", replace: "&lsquo;" },
+    { reg: "’", replace: "&rsquo;" },
+    { reg: "“", replace: "&ldquo;" },
+    { reg: "”", replace: "&rdquo;" },
+    { reg: "#", replace: "&#35;" },
+    { reg: "©", replace: "&copy;" },
+    { reg: "@", replace: "&commat;" },
+    { reg: "$", replace: "&dollar;" },
+    { reg: "\\(", replace: "&#40;" },
+    { reg: "\\)", replace: "&#41;" },
+    { reg: "…", replace: "&hellip;" },
+    { reg: "-", replace: "&#45;" },
+    { reg: "\\*", replace: "&#42;" },
+    { reg: ",", replace: "&sbquo;" },
+    { reg: "required", replace: 'required="true"' },
+    //{ reg: new RegExp(`\\brequired\\b`, "g"), replace: 'required="true"' },
+  ];
+  let s = string;
+  replaceChar.forEach((obj) => {
+    s = s.replaceAll(obj.reg, obj.replace);
+  });
+
+  return s;
+};

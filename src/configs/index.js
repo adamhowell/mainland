@@ -89,48 +89,81 @@ export const defaultConfig = {
       icon: '<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"width="64px" height="64px" viewBox="0 0 64 64"><path d="M12,21.9c0-1,0.9-1.8,2-1.8h36c1.1,0,2,0.8,2,1.8s-0.9,1.8-2,1.8H14C12.9,23.7,12,22.9,12,21.9z M12,31.9c0-1,0.9-1.8,2-1.8h36c1.1,0,2,0.8,2,1.8s-0.9,1.8-2,1.8H14C12.9,33.7,12,32.9,12,31.9z M12,41.9c0-1,0.9-1.8,2-1.8h24c1.1,0,2,0.8,2,1.8s-0.9,1.8-2,1.8H14C12.9,43.7,12,42.9,12,41.9z"/><path d="M58.5,11.2c1.4,0,2.5,1.1,2.5,2.5v37c0,1.4-1.1,2.5-2.5,2.5h-53C4.1,53.2,3,52,3,50.7v-37c0-1.4,1.1-2.5,2.5-2.5H58.5M58.5,8.2h-53c-3,0-5.5,2.5-5.5,5.5v37c0,3,2.5,5.5,5.5,5.5h53c3,0,5.5-2.5,5.5-5.5v-37C64,10.6,61.5,8.2,58.5,8.2L58.5,8.2z"/></svg>',
     },
     
-    // {
-    //   label: "Form",
-    //   attributes: { class: "container mx-auto" },
-    //   content: `<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-    //   <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-    //     <img class="mx-auto h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company">
-    //     <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account</h2>
-    //   </div>
-    
-    //   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-    //     <form class="space-y-6" action="#" method="POST">
-    //       <div>
-    //         <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
-    //         <div class="mt-2">
-    //           <input id="email" name="email" type="email" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-    //         </div>
-    //       </div>
-    
-    //       <div>
-    //         <div class="flex items-center justify-between">
-    //           <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Password</label>
-    //           <div class="text-sm">
-    //             <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</a>
-    //           </div>
-    //         </div>
-    //         <div class="mt-2">
-    //           <input id="password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-    //         </div>
-    //       </div>
-    
-    //       <div>
-    //         <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
-    //       </div>
-    //     </form>
-    
-    //     <p class="mt-10 text-center text-sm text-gray-500">
-    //       Not a member?
-    //       <a href="#" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Start a 14 day free trial</a>
-    //     </p>
-    //   </div>
-    // </div>`,
-    // icon: '<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"width="64px" height="64px" viewBox="0 0 64 64"><path d="M12,21.9c0-1,0.9-1.8,2-1.8h36c1.1,0,2,0.8,2,1.8s-0.9,1.8-2,1.8H14C12.9,23.7,12,22.9,12,21.9z M12,31.9c0-1,0.9-1.8,2-1.8h36c1.1,0,2,0.8,2,1.8s-0.9,1.8-2,1.8H14C12.9,33.7,12,32.9,12,31.9z M12,41.9c0-1,0.9-1.8,2-1.8h24c1.1,0,2,0.8,2,1.8s-0.9,1.8-2,1.8H14C12.9,43.7,12,42.9,12,41.9z"/><path d="M58.5,11.2c1.4,0,2.5,1.1,2.5,2.5v37c0,1.4-1.1,2.5-2.5,2.5h-53C4.1,53.2,3,52,3,50.7v-37c0-1.4,1.1-2.5,2.5-2.5H58.5M58.5,8.2h-53c-3,0-5.5,2.5-5.5,5.5v37c0,3,2.5,5.5,5.5,5.5h53c3,0,5.5-2.5,5.5-5.5v-37C64,10.6,61.5,8.2,58.5,8.2L58.5,8.2z"/></svg>',
-    // }
+    {
+      label: "Form",
+      attributes: { class: "container mx-auto" },
+      content: `<div><div class="sm:mx-auto sm:w-full sm:max-w-sm">
+        <img
+          class="mx-auto h-10 w-auto"
+          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+          alt="Your Company"
+        />
+        <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight">
+          Sign in to your account
+        </h2>
+      </div>
+      <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <form class="space-y-6" action="#" method="POST">
+          <div>
+            <label
+              for="email"
+              class="block text-sm font-medium leading-6"
+              >Email address</label
+            >
+            <div class="mt-2">
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                required
+                class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 text-grey-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
+          <div>
+            <div class="flex items-center justify-between">
+              <label
+                for="password"
+                class="block text-sm font-medium leading-6"
+                >Password</label
+              >
+              <div class="text-sm">
+                <a
+                  href="#"
+                  class="font-semibold text-indigo-600 hover:text-indigo-500"
+                  >Forgot password?</a
+                >
+              </div>
+            </div>
+            <div class="mt-2">
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                required
+                class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset text-grey-600 ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
+          <div>
+            <button
+              type="submit"
+              class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
+              Sign in
+            </button>
+          </div>
+        </form>
+        <p class="mt-10 text-center text-sm text-gray-500">
+          Not a member?<a
+            href="#"
+            class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+            >Start a 14 day free trial</a>
+        </p>
+      </div></div>`,
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"width="64px" height="64px" viewBox="0 0 64 64"><path d="M12,21.9c0-1,0.9-1.8,2-1.8h36c1.1,0,2,0.8,2,1.8s-0.9,1.8-2,1.8H14C12.9,23.7,12,22.9,12,21.9z M12,31.9c0-1,0.9-1.8,2-1.8h36c1.1,0,2,0.8,2,1.8s-0.9,1.8-2,1.8H14C12.9,33.7,12,32.9,12,31.9z M12,41.9c0-1,0.9-1.8,2-1.8h24c1.1,0,2,0.8,2,1.8s-0.9,1.8-2,1.8H14C12.9,43.7,12,42.9,12,41.9z"/><path d="M58.5,11.2c1.4,0,2.5,1.1,2.5,2.5v37c0,1.4-1.1,2.5-2.5,2.5h-53C4.1,53.2,3,52,3,50.7v-37c0-1.4,1.1-2.5,2.5-2.5H58.5M58.5,8.2h-53c-3,0-5.5,2.5-5.5,5.5v37c0,3,2.5,5.5,5.5,5.5h53c3,0,5.5-2.5,5.5-5.5v-37C64,10.6,61.5,8.2,58.5,8.2L58.5,8.2z"/></svg>',
+    }
   ],
 };

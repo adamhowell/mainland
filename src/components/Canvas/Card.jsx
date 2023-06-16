@@ -14,6 +14,7 @@ import {
   checkAndReturnStyles,
   isCanContainsChildren,
   getEditableTagName,
+  replceSpecialCharacters,
 } from "../../utils";
 import ContentEditable from "react-contenteditable";
 
@@ -116,7 +117,7 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
         if (!(node.isClosed && !dropHighlight)) {
           if (item.data) {
             const doc = new DOMParser().parseFromString(
-              item.data.content,
+              replceSpecialCharacters(item.data.content),
               "text/xml"
             );
             dispatch(
@@ -334,8 +335,8 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
       {!isPreview && <Actions node={node} />}
       <node.tagName
         className={`${node.children?.length ? "" : "empty"} ${
-          className ? className : ""
-        } pointer-events-none`}
+          !isPreview ? "pointer-events-none" : ""
+        } ${className ? className : ""}`}
         {...(node.src ? { src: node.src } : {})}
       >
         {children}

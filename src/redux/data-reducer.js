@@ -1,4 +1,4 @@
-import { htmlToJson } from "../utils";
+import { htmlToJson, replceSpecialCharacters } from "../utils";
 
 const SET_CONFIG = "data-reducer/SET_CONFIG";
 const SET_DOM = "data-reducer/SET_DOM";
@@ -399,7 +399,7 @@ export const setHoveredSection = (data) => (dispatch) => {
 };
 
 export const addToDom = (data) => (dispatch) => {
-  const doc = new DOMParser().parseFromString(data.content, "text/xml");
+  const doc = new DOMParser().parseFromString(replceSpecialCharacters(data.content), "text/xml");
 
   dispatch(
     actions.addToDom(htmlToJson(doc.firstChild, data.attributes, data.label))
