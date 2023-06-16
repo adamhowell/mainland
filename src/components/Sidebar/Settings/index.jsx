@@ -22,6 +22,11 @@ const StyleManager = () => {
           <PropertySelector property="href" />
         </CollapseMenu>
       )}
+      {selectedNode?.tagName === "img" && (
+        <CollapseMenu title={`Image source`}>
+          <PropertySelector property="src" />
+        </CollapseMenu>
+      )}
       {isTagVariants(selectedNode?.tagName) && (
         <CollapseMenu title={`Tag`}>
           <TagSelector />

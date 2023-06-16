@@ -13,7 +13,7 @@ import {
   htmlToJson,
   checkAndReturnStyles,
   isCanContainsChildren,
-  getEditableTagName
+  getEditableTagName,
 } from "../../utils";
 import ContentEditable from "react-contenteditable";
 
@@ -320,9 +320,7 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
     </node.tagName>
   ) : (
     <div
-      className={`${node.children?.length ? "" : "empty"} ${
-        className ? className : ""
-      } relative`}
+      className={`relative`}
       id={id}
       onClick={onClick}
       onMouseMove={onMouseMove}
@@ -333,7 +331,11 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
       data-handler-id={handlerId}
     >
       {!isPreview && <Actions node={node} />}
-      <node.tagName>{children}</node.tagName>
+      <node.tagName className={`${node.children?.length ? "" : "empty"} ${
+        className ? className : ""
+      } pointer-events-none`} {...(node.src ? { src: node.src } : {})}>
+        {children}
+      </node.tagName>
     </div>
   );
 };

@@ -23,6 +23,7 @@ const Export = () => {
             {...(node.style ? { style: checkAndReturnStyles(node) } : {})}
             {...(node.className ? { className: node.className } : {})}
             {...(node.href ? { href: node.href } : {})}
+            {...(node.src ? { href: node.src } : {})}
             key={node.id}
           >
             {node.children.map((n) => checkEndReturnNode(n))}
@@ -34,6 +35,7 @@ const Export = () => {
             {...(node.style ? { style: checkAndReturnStyles(node) } : {})}
             {...(node.className ? { className: node.className } : {})}
             {...(node.href ? { href: node.href } : {})}
+            {...(node.src ? { href: node.src } : {})}
             key={node.id}
           >
             {node.content && node.content}
