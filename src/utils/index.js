@@ -259,7 +259,6 @@ export const replceSpecialCharacters = (string) => {
     { reg: "…", replace: "&hellip;" },
     { reg: "-", replace: "&#45;" },
     { reg: "\\*", replace: "&#42;" },
-    { reg: ",", replace: "&sbquo;" },
     { reg: "required", replace: 'required="true"' },
     //{ reg: new RegExp(`\\brequired\\b`, "g"), replace: 'required="true"' },
   ];
