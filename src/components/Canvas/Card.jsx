@@ -329,8 +329,14 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
       onMouseLeave={onMouseLeave}
       onDragLeave={onDragLeave}
       ref={ref}
-      style={stylesNotEditable}
+      style={{
+        ...stylesNotEditable,
+        ...(node.width ? { width: node.width } : {}),
+        ...(node.height ? { height: node.height } : {}),
+      }}
       data-handler-id={handlerId}
+      {...(node.width ? { width: node.width } : {})}
+      {...(node.height ? { height: node.height } : {})}
     >
       {!isPreview && <Actions node={node} />}
       <node.tagName
@@ -338,6 +344,8 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
           !isPreview ? "pointer-events-none" : ""
         } ${className ? className : ""}`}
         {...(node.src ? { src: node.src } : {})}
+        {...(node.width ? { width: node.width } : {})}
+        {...(node.height ? { height: node.height } : {})}
       >
         {children}
       </node.tagName>

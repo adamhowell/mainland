@@ -27,6 +27,13 @@ const StyleManager = () => {
           <PropertySelector property="src" />
         </CollapseMenu>
       )}
+      {selectedNode?.tagName === "iframe" && (
+        <CollapseMenu title={`Iframe settings`}>
+          <PropertySelector property="src" />
+          <PropertySelector property="width" />
+          <PropertySelector property="height" />
+        </CollapseMenu>
+      )}
       {isTagVariants(selectedNode?.tagName) && (
         <CollapseMenu title={`Tag`}>
           <TagSelector />
