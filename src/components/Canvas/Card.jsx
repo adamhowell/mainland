@@ -15,6 +15,7 @@ import {
   isCanContainsChildren,
   getEditableTagName,
   replceSpecialCharacters,
+  getDefaultDisplayClassEditable
 } from "../../utils";
 import ContentEditable from "react-contenteditable";
 
@@ -274,6 +275,7 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
       ref={ref}
       style={{
         ...style,
+        display: getDefaultDisplayClassEditable(node.tagName),
         ...(node.style ? checkAndReturnStyles(node) : {}),
         cursor:
           !isPreview && hoveredSection?.id === id && node.tagName !== "body"
@@ -330,6 +332,7 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
       onDragLeave={onDragLeave}
       ref={ref}
       style={{
+        display: getDefaultDisplayClassEditable(node.tagName),
         ...stylesNotEditable,
         ...(node.width ? { width: node.width } : {}),
         ...(node.height ? { height: node.height } : {}),

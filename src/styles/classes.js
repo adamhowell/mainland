@@ -1,2 +1,3 @@
 export const button = "bg-slate-600 rounded text-slate-300 hover:bg-slate-700 hover:text-slate-200 transition flex justify-center p-2"
 export const tab = "uppercase mr-6 border-b-4 transition-all hover:text-slate-200 transition flex justify-center py-2"
+export const buttonSimple = "inline-flex ml-3 bg-slate-500 hover:bg-slate-700 text-white transition py-2 px-4 rounded focus:outline-none focus:shadow-outline"

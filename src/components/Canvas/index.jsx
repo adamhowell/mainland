@@ -7,6 +7,7 @@ import {
   setForward,
 } from "../../redux/data-reducer";
 import { useDispatch, useSelector } from "react-redux";
+import { closeAllModals } from "../../redux/modals-reducer";
 import { Card } from "./Card";
 
 const Canvas = () => {
@@ -25,6 +26,7 @@ const Canvas = () => {
     const evtobj = window.event ? e : e;
     if (evtobj.keyCode == 90 && evtobj.ctrlKey) dispatch(setBackward());
     if (evtobj.keyCode == 89 && evtobj.ctrlKey) dispatch(setForward());
+    if (evtobj.keyCode == 27) dispatch(closeAllModals());
   };
 
   const moveCard = useCallback((dragId, hoverId, node) => {
@@ -42,14 +44,16 @@ const Canvas = () => {
         >
           {node.children.map((n, i) => renderCard(n, i))}
         </Card>
-      ) : !node.isHidden && (
-        <Card
-          key={`sd-si${index}`}
-          index={index}
-          node={node}
-          moveCard={moveCard}
-          isEditable={true}
-        ></Card>
+      ) : (
+        !node.isHidden && (
+          <Card
+            key={`sd-si${index}`}
+            index={index}
+            node={node}
+            moveCard={moveCard}
+            isEditable={true}
+          ></Card>
+        )
       );
     },
     [selectedSection]
@@ -70,9 +74,7 @@ const Canvas = () => {
       id="canvas"
       className={`w-full h-screen text-white`}
     >
-      <div
-        className={`mx-auto h-full bg-slate-900`}
-      >
+      <div className={`mx-auto h-full bg-slate-900`}>
         {dom?.map((item, i) => renderCard(item, i))}
       </div>
     </div>

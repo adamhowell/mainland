@@ -96,6 +96,18 @@ export const getDefaultDisplayClass = (tag) => {
   switch (tag) {
     case "span":
       return "inline";
+    case "button":
+      return "inline-block";
+    default:
+      return "block";
+  }
+};
+
+export const getDefaultDisplayClassEditable = (tag) => {
+  switch (tag) {
+    case "span":
+    case "button":
+      return "inline-block";
     default:
       return "block";
   }
@@ -204,6 +216,8 @@ export const getEditableTagName = (tagName) => {
       return "h6";
     case "li":
       return "li";
+    case "p":
+      return "p";
     default:
       return "span";
   }
