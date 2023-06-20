@@ -20,15 +20,15 @@ const Button = ({ position, active, ...rest }) => {
   return (
     <div
       {...rest}
-      className={`${styles.button} border border-slate-${
-        active ? "300" : "500"
-      } z-${
-        active ? "10" : "0"
+      className={`${styles.button} border ${
+        active ? "border-slate-300" : "border-slate-500"
+      } ${
+        active ? "z-10" : "z-0"
       } hover:z-index-20 transition hover:border-slate-400 ${position}`}
     >
       <div
-        className={`bg-slate-600 ${styles.buttonShape} ${getBorderStyle()} border-slate-${
-          active ? "300" : "500"
+        className={`bg-slate-600 ${styles.buttonShape} ${getBorderStyle()} ${
+          active ? "border-slate-300" : "border-slate-500"
         }`}
       ></div>
     </div>

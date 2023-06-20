@@ -135,7 +135,7 @@ const MediaLibrary = () => {
                 Apply
               </button>
             </div>
-            <div className={`opacity-${!key ? "30" : "100"}`}>
+            <div className={`${!key ? "opacity-30" : "opacity-100"}`}>
               <h4>Write prompt</h4>
               <div className="flex items-center">
                 <Input
@@ -153,7 +153,7 @@ const MediaLibrary = () => {
                   onClick={() => onGenerate()}
                   className={`${buttonSimple} whitespace-nowrap pointer-events-${
                     isLoading || !prompt ? "none" : "auto"
-                  } opacity-${isLoading || !prompt ? "30" : "100"}`}
+                  } ${isLoading || !prompt ? "opacity-30" : "opacity-100"}`}
                 >
                   {isLoading ? "Please wait" : "Generate"}
                 </button>
@@ -163,9 +163,9 @@ const MediaLibrary = () => {
                   <button
                     onClick={() => setActive(i)}
                     key={`tbi-${i}`}
-                    className={`${tab} text-slate-${
-                      active === i ? "200" : "400"
-                    } border-${active === i ? "slate-200" : "transparent"}`}
+                    className={`${tab} ${
+                      active === i ? "text-slate-200" : "text-slate-400"
+                    } ${active === i ? "border-slate-200" : "border-transparent"}`}
                   >
                     {t.name}
                   </button>
@@ -176,9 +176,9 @@ const MediaLibrary = () => {
                 <button
                   disabled={!output}
                   onClick={() => onAdd()}
-                  className={`${buttonSimple} pointer-events-${
-                    !output ? "none" : "auto"
-                  } opacity-${!output ? "30" : "100"}`}
+                  className={`${buttonSimple} ${
+                    !output ? "pointer-events-none" : "pointer-events-auto"
+                  } ${!output ? "opacity-30" : "opacity-100"}`}
                 >
                   Add to the Canvas
                 </button>

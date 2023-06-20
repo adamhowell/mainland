@@ -63,9 +63,9 @@ const MediaLibrary = () => {
             <button
               onClick={() => setActive(i)}
               key={`tbi-${i}`}
-              className={`${tab} text-slate-${
-                active === i ? "200" : "400"
-              } border-${active === i ? "slate-200" : "transparent"}`}
+              className={`${tab} ${
+                active === i ? "text-slate-200" : "text-slate-400"
+              } ${active === i ? "border-slate-200" : "border-transparent"}`}
             >
               {t.name}
             </button>

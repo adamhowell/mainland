@@ -15,10 +15,9 @@ const Modal = ({ children, active, onClose }) => {
 
   return (
     <div
-      className={`pointer-events-${
-        innerActive ? "auto" : "none"
-      } overflow-auto opacity-${
-        innerActive ? "100" : "0"
+      className={`${innerActive ? "pointer-events-auto" : "pointer-events-none"
+      } overflow-auto ${
+        innerActive ? "opacity-100" : "opacity-0"
       } transition duration-300 w-screen fixed top-0 left-0	h-screen z-50 flex ${
         modalContent?.current?.offsetHeight &&
         modalContent?.current?.offsetHeight > window.innerHeight

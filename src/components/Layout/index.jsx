@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState, useCallback } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import styles from "./Layout.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { IconEyeSlash } from "../Icons";
@@ -10,7 +10,6 @@ import Frame, {
 } from "react-frame-component";
 import { DndContext } from "react-dnd";
 import { screens } from "../../configs/tailwind";
-import { useSelectedNode } from "../../helpers";
 
 const Layout = ({
   slotHeader,
@@ -51,9 +50,6 @@ const Layout = ({
   );
 
   const Canvas = ({ children, document, window }) => {
-    const tw = document.createElement("script");
-    const twElm = document.querySelector("#tailwind");
-
     const onKeyDown = (e) => {
       const evtobj = window.event ? e : e;
       if (evtobj.keyCode == 90 && evtobj.ctrlKey) dispatch(setBackward());
@@ -62,6 +58,9 @@ const Layout = ({
     };
 
     useEffect(() => {
+      const tw = document.createElement("script");
+      const twElm = document.querySelector("#tailwind");
+
       if (!twElm) {
         tw.setAttribute("src", "https://cdn.tailwindcss.com");
         tw.setAttribute("id", "tailwind");
@@ -99,8 +98,8 @@ const Layout = ({
                   ? screens[responsiveView]
                   : "100%",
             }}
-            className={`${styles.canvas} transition-opacity opacity-${
-              isReady ? "100" : "0"
+            className={`${styles.canvas} transition-opacity ${
+              isReady ? "opacity-100" : "opacity-0"
             } mx-auto ${isPreview ? "expand" : ""}`}
           >
             <Frame style={{ width: "100%", height: "100%" }}>

@@ -268,10 +268,6 @@ const actions = {
     type: SET_FORWARD,
     data: data,
   }),
-  setPreviousClassNames: (data) => ({
-    type: SET_PREVIOUS_CLASSNAMES,
-    data: data,
-  }),
   setHighlightLayer: (data) => ({
     type: SET_HIGHLIGHT_LAYER,
     data: data,

@@ -87,8 +87,8 @@ const AlignSelector = ({ title, name, isColor }) => {
               onClick={() => onClick(button.name)}
               className={`w-full ${
                 isActive(button.name) ? "bg-slate-700" : ""
-              } hover:bg-slate-700 hover:text-slate-200 transition flex justify-center p-2 text-slate-${
-                isActive(button.name) ? "200" : "800"
+              } hover:bg-slate-700 hover:text-slate-200 transition flex justify-center p-2 ${
+                isActive(button.name) ? "text-slate-200" : "text-slate-800"
               }`}
             >
               {button.icon}

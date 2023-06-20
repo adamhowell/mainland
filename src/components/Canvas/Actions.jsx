@@ -30,9 +30,9 @@ const Actions = ({ node }) => {
 
   return (
     <div
-      className={`absolute left-0 top-[-25px] h-5 font-normal flex bg-white items-center cursor-pointer py-1 px-1.5 text-xs transition-opacity opacity-${
-        isActive() ? "100" : "0"
-      } rounded pointer-events-${isActive() ? "auto" : "none"}`}
+      className={`absolute left-0 top-[-25px] h-5 font-normal flex bg-white items-center cursor-pointer py-1 px-1.5 text-xs transition-opacity ${
+        isActive() ? "opacity-100" : "opacity-0"
+      } rounded ${isActive() ? "pointer-events-auto" : "pointer-events-none"}`}
     >
       {hoveredSection?.id === id && !(selectedSection?.id === id) ? (
         <span className="text-black text-sm capitalize">{node.tagName}</span>

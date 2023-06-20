@@ -21,8 +21,8 @@ export const Button = (props) => {
     <div
       {...rest}
       className={`${styles.root} ${disabled ? "opacity-20 pointer-events-none" : "opacity-60"} hover:opacity-100 ${getSize()} ${active ? styles.active : ""} ${
-        isUnderline && "border-b-2 border-"
-      }${active && isUnderline ? "stone-300" : "transparent"} ${
+        isUnderline && "border-b-2 "
+      }${active && isUnderline ? "border-stone-300" : "border-transparent"} ${
         className ? className : ""
       }`}
     >
