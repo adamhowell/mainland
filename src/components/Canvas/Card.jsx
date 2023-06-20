@@ -296,7 +296,8 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
         style={{ textAlign: "inherit" }}
         html={node.content}
         onBlur={() => setIsCanEdit(false)}
-        onClick={() => {
+        onClick={(e) => {
+          dispatch(setSelectedSection(node));
           setIsCanEdit(true);
         }}
         disabled={!isCanEdit || isPreview}
