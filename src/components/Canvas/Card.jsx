@@ -260,7 +260,7 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
     ...(backgroundImage ? { backgroundImage: `url(${backgroundImage})` } : {}),
     ...(backgroundImage ? { backgroundSize: "cover" } : {}),
     ...(!children && isCanContainsChildren(node.tagName)
-      ? { height: "50px" }
+      ? { height: !className?.includes("h-") && !isPreview ? "30px" : "" }
       : {}),
   };
 
