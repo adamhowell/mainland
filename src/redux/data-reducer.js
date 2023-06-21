@@ -17,6 +17,7 @@ const SET_HIGHLIGHT_LAYER = "data-reducer/SET_HIGHLIGHT_LAYER";
 const SET_HOVERED_LAYER = "data-reducer/SET_HOVERED_LAYER";
 const SET_SELECTED_PARENT = "data-reducer/SET_SELECTED_PARENT";
 const SET_SELECTED_CHILD = "data-reducer/SET_SELECTED_CHILD";
+const ADD_IMAGE = "data-reducer/ADD_IMAGE";
 
 const initialState = {
   config: null,
@@ -104,6 +105,7 @@ const initialState = {
   future: [],
   dropHighlightLayer: null,
   hoveredLayer: null,
+  mediaLibrary: [],
 };
 
 const dataReducer = (state = initialState, action) => {
@@ -210,6 +212,9 @@ const dataReducer = (state = initialState, action) => {
     case SET_SELECTED_CHILD: {
       return { ...state, selectedSection: action.data };
     }
+    case ADD_IMAGE: {
+      return { ...state, mediaLibrary: [...state.mediaLibrary, action.data] };
+    }
     default:
       return state;
   }
@@ -282,6 +287,10 @@ const actions = {
   }),
   setSelectedChild: (data) => ({
     type: SET_SELECTED_CHILD,
+    data: data,
+  }),
+  addImage: (data) => ({
+    type: ADD_IMAGE,
     data: data,
   }),
 };
@@ -395,7 +404,10 @@ export const setHoveredSection = (data) => (dispatch) => {
 };
 
 export const addToDom = (data) => (dispatch) => {
-  const doc = new DOMParser().parseFromString(replceSpecialCharacters(data.content), "text/xml");
+  const doc = new DOMParser().parseFromString(
+    replceSpecialCharacters(data.content),
+    "text/xml"
+  );
 
   dispatch(
     actions.addToDom(htmlToJson(doc.firstChild, data.attributes, data.label))
@@ -683,6 +695,10 @@ export const setBackward = (data) => (dispatch) => {
 
 export const setForward = (data) => (dispatch) => {
   dispatch(actions.setForward(data));
+};
+
+export const addImage = (data) => (dispatch) => {
+  dispatch(actions.addImage(data));
 };
 
 export default dataReducer;
