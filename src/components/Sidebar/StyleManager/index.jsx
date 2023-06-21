@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelectedLayout } from "../../../helpers";
 import styles from "./StyleManager.module.scss";
 import CollapseMenu from "../../CollapseMenu";
 import Classes from "./Classes";
@@ -11,8 +12,12 @@ import Background from "./Background";
 import Effects from "./Effects";
 import BoxShadow from "./BoxShadow";
 import Borders from "./Borders";
+import Flex from "./Flex";
+import Grid from "./Grid";
 
 const StyleManager = () => {
+  const selectedLayout = useSelectedLayout();
+
   return (
     <div className={`${styles.root}`}>
       <CollapseMenu title={`Classes`}>
@@ -21,6 +26,16 @@ const StyleManager = () => {
       <CollapseMenu title={`Layout`}>
         <Layout />
       </CollapseMenu>
+      {selectedLayout === "grid" && (
+        <CollapseMenu title={`Grid`}>
+          <Grid />
+        </CollapseMenu>
+      )}
+      {selectedLayout === "flex" && (
+        <CollapseMenu title={`Flex`}>
+          <Flex />
+        </CollapseMenu>
+      )}
       <CollapseMenu title={`Spacing`}>
         <Spacing />
       </CollapseMenu>

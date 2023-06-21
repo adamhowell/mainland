@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import Select, { components } from "react-select";
 import { IconTriangle } from "../../Icons";
 import Label from "../Label";
@@ -74,7 +74,7 @@ const SelectComp = (props) => {
         marginRight: "0.5rem",
       }),
     }),
-    [isDefault]
+    [isDefault, isSimpleColor, isColor]
   );
 
   const DropdownIndicator = (props) => {

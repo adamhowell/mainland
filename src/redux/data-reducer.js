@@ -37,13 +37,11 @@ const initialState = {
             {
               id: "C2BOHNi-z",
               tagName: "div",
-              className: "mld-div",
             },
             {
               id: "i0g1N0-f3",
               tagName: "section",
               children: [],
-              className: "mld-section",
             },
             {
               id: "WA0tV0TP4",

@@ -25,6 +25,20 @@ export const useSelectedNode = () => {
   return getNode(dom, selectedSection?.id);
 };
 
+export const useSelectedLayout = () => {
+  const { dom, selectedSection } = useSelector((state) => state.data);
+  const node = getNode(dom, selectedSection?.id)
+
+  if (node?.className) {
+    const cls = node.className.split(" ");
+    const result = classes.display.filter((d) => cls.indexOf(d) != -1)
+
+    return result.length > 0 ? result[0] : null;
+  } else {
+    return null;
+  }
+};
+
 export const useShadowProps = () => {
   const { dom, selectedSection } = useSelector((state) => state.data);
   const { responsiveView } = useSelector((state) => state.layout);
