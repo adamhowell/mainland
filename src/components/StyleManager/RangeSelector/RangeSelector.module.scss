@@ -1,0 +1,20 @@
+@import "../../../styles//variables.scss";
+
+.thumb {
+  &::-moz-range-thumb {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background: $light;
+    cursor: pointer;
+  }
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background: $light;
+    cursor: pointer;
+  }
+}

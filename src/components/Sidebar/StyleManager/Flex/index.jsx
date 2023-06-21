@@ -1,5 +1,6 @@
 import React from "react";
 import ClassSelector from "../../../StyleManager/ClassSelector";
+import RangeSelector from "../../../StyleManager/RangeSelector";
 
 const Flex = () => {
   return (
@@ -9,9 +10,9 @@ const Flex = () => {
       <ClassSelector name="justifyContent" title="Justify" defaultValue="none" />
       <ClassSelector name="flexBasis" title="Basis" defaultValue="none" />
       <ClassSelector name="flexGrowShrink" title="Size" defaultValue="none" />
-      <ClassSelector name="gap" title="Gap" defaultValue="none" />
-      <ClassSelector name="gapX" title="Gap X" defaultValue="none" />
-      <ClassSelector name="gapY" title="Gap Y" defaultValue="none" />
+      <RangeSelector name="gap" title="Gap" defaultValue="none" />
+      <RangeSelector name="gapX" title="Gap X" defaultValue="none" />
+      <RangeSelector name="gapY" title="Gap Y" defaultValue="none" />
     </div>
   );
 };
