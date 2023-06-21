@@ -20,9 +20,7 @@ const UploadImage = () => {
 
   return (
     <>
-      <h4>
-        {selectedNode?.backgroundImage ? "Replace image" : "Add base64 image"}
-      </h4>
+      <h4>Add base64 image</h4>
       <div className="flex items-center">
         <Input
           disabled={!selectedNode}
