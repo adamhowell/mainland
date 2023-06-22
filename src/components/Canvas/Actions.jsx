@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IconClose, IconChevronDown, IconChevronUp } from "../Icons";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -7,12 +7,23 @@ import {
   setSelectedChild,
 } from "../../redux/data-reducer";
 
-const Actions = ({ node }) => {
+const Actions = ({ node, isBottom, isInner }) => {
   const dispatch = useDispatch();
   const { id } = node;
   const { hoveredSection, selectedSection } = useSelector(
     (state) => state.data
   );
+  const [transition, setTransition] = useState(false);
+
+  useEffect(() => {
+    if (selectedSection?.id === id || hoveredSection?.id === id) {
+      setTimeout(() => {
+        setTransition(true);
+      }, 100);
+    } else {
+      setTransition(false);
+    }
+  }, [selectedSection, hoveredSection]);
 
   const onUp = () => {
     dispatch(setSelectedParent(id));
@@ -30,7 +41,17 @@ const Actions = ({ node }) => {
 
   return (
     <div
-      className={`absolute left-0 top-[-25px] h-5 font-normal flex bg-white items-center cursor-pointer py-1 px-1.5 text-xs transition-opacity ${
+      className={`absolute ${
+        isBottom ? (isInner ? "left-[2px]" : "left-0") : "left-0"
+      } ${
+        isBottom
+          ? isInner
+            ? "bottom-[2px]"
+            : isActive()
+            ? "bottom-[-25px]"
+            : "bottom-0"
+          : "top-[-25px]"
+      } h-5 font-normal flex bg-white items-center cursor-pointer py-1 px-1.5 text-xs transition-opacity ${
         isActive() ? "opacity-100" : "opacity-0"
       } rounded ${isActive() ? "pointer-events-auto" : "pointer-events-none"}`}
     >

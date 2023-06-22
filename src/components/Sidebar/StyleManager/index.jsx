@@ -19,8 +19,6 @@ import { getResponsivePrefix } from "../../../utils";
 const StyleManager = () => {
   const selectedLayout = useSelectedLayout();
 
-  console.log(selectedLayout)
-
   return (
     <div className={`${styles.root}`}>
       <CollapseMenu title={`Classes`}>

@@ -15,11 +15,18 @@ import {
   isCanContainsChildren,
   getEditableTagName,
   replceSpecialCharacters,
-  getDefaultDisplayClassEditable
+  getDefaultDisplayClassEditable,
 } from "../../utils";
 import ContentEditable from "react-contenteditable";
 
-export const Card = ({ index, moveCard, children, node, isEditable }) => {
+export const Card = ({
+  index,
+  moveCard,
+  children,
+  node,
+  isEditable,
+  windowFrame,
+}) => {
   const { id, backgroundImage, className } = node;
   const ref = useRef(null);
   const dispatch = useDispatch();
@@ -248,6 +255,10 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
     [selectedSection, hoveredSection, dropHighlight]
   );
 
+  const isBottom = () => {
+    return ref?.current?.getBoundingClientRect().top < 25;
+  };
+
   const stylesNotEditable = {
     ...style,
     ...(node.style ? checkAndReturnStyles(node) : {}),
@@ -262,6 +273,16 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
     ...(!children && isCanContainsChildren(node.tagName)
       ? { height: !className?.includes("h-") && !isPreview ? "30px" : "" }
       : {}),
+    zIndex: selectedSection?.id === id && isBottom() ? 2 : 1,
+  };
+
+  const isInner = () => {
+    if (node.tagName === "body")
+      return ref?.current?.getBoundingClientRect().bottom -
+        windowFrame?.innerHeight <
+        25
+        ? true
+        : false;
   };
 
   return isEditable && node.content ? (
@@ -288,10 +309,17 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
           : {}),
         ...(backgroundImage ? { backgroundSize: "cover" } : {}),
         ...(node.tagName === "li" ? { display: "list-item" } : {}),
+        zIndex: selectedSection?.id === id && isBottom() ? 2 : 1,
       }}
       data-handler-id={handlerId}
     >
-      {!isPreview && <Actions node={node} />}
+      {!isPreview && (
+        <Actions
+          isBottom={isBottom()}
+          isInner={isInner()}
+          node={node}
+        />
+      )}
       <ContentEditable
         style={{ textAlign: "inherit" }}
         html={node.content}
@@ -320,7 +348,9 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
       style={stylesNotEditable}
       data-handler-id={handlerId}
     >
-      {!isPreview && <Actions node={node} />}
+      {!isPreview && (
+        <Actions isBottom={isBottom()} isInner={isInner()} node={node} />
+      )}
       {children}
     </node.tagName>
   ) : (
@@ -342,7 +372,9 @@ export const Card = ({ index, moveCard, children, node, isEditable }) => {
       {...(node.width ? { width: node.width } : {})}
       {...(node.height ? { height: node.height } : {})}
     >
-      {!isPreview && <Actions node={node} />}
+      {!isPreview && (
+        <Actions isBottom={isBottom()} isInner={isInner()} node={node} />
+      )}
       <node.tagName
         className={`${node.children?.length ? "" : "empty"} ${
           !isPreview ? "pointer-events-none" : ""

@@ -15,14 +15,9 @@ import Frame, {
 } from "react-frame-component";
 import { DndContext } from "react-dnd";
 import { screens } from "../../configs/tailwind";
+import Canvas from "../Canvas";
 
-const Layout = ({
-  slotHeader,
-  slotSidebar,
-  slotCanvas,
-  slotBreadcrumb,
-  slotModals,
-}) => {
+const Layout = ({ slotHeader, slotSidebar, slotBreadcrumb, slotModals }) => {
   const { isPreview, responsiveView } = useSelector((state) => state.layout);
   const dispatch = useDispatch();
   const [isReady, setIsReady] = useState(false);
@@ -44,17 +39,17 @@ const Layout = ({
     return children;
   };
 
-  const FrameBindingContext = ({ children }) => (
+  const FrameBindingContext = () => (
     <FrameContextConsumer>
       {({ document, window }) => (
-        <Canvas document={document} window={window}>
-          {children}
-        </Canvas>
+        <CanvasInner document={document} window={window}>
+          <Canvas windowFrame={window} />
+        </CanvasInner>
       )}
     </FrameContextConsumer>
   );
 
-  const Canvas = ({ children, document, window }) => {
+  const CanvasInner = ({ children, document, window }) => {
     const onKeyDown = (e) => {
       const evtobj = window.event ? e : e;
       if (evtobj.keyCode == 90 && evtobj.ctrlKey) dispatch(setBackward());
@@ -110,7 +105,7 @@ const Layout = ({
           >
             <Frame style={{ width: "100%", height: "100%" }}>
               <FrameBindingContext>
-                <DndFrame>{slotCanvas}</DndFrame>
+                <DndFrame />
               </FrameBindingContext>
             </Frame>
           </div>

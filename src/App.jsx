@@ -40,7 +40,6 @@ const App = ({ userConfig }) => {
         <Layout
           slotHeader={<Header />}
           slotSidebar={<Sidebar />}
-          slotCanvas={<Canvas />}
           slotBreadcrumb={<Breadcrumb />}
           slotModals={<Modals />}
         />

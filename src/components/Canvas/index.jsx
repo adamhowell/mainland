@@ -5,16 +5,15 @@ import {
   setHoveredSection,
   setBackward,
   setForward,
-  removeNode
+  removeNode,
 } from "../../redux/data-reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { closeAllModals } from "../../redux/modals-reducer";
 import { Card } from "./Card";
 
-const Canvas = () => {
+const Canvas = ({ windowFrame }) => {
   const dispatch = useDispatch();
   const { dom, selectedSection } = useSelector((state) => state.data);
-  const { isPreview } = useSelector((state) => state.layout);
 
   console.log("DOM", dom);
 
@@ -30,7 +29,7 @@ const Canvas = () => {
     if (evtobj.keyCode == 89 && evtobj.ctrlKey) dispatch(setForward());
     if (evtobj.keyCode == 27) {
       dispatch(closeAllModals());
-      dispatch(setSelectedSection(null))
+      dispatch(setSelectedSection(null));
     }
     if (evtobj.keyCode == 46) dispatch(removeNode());
   };
@@ -47,6 +46,7 @@ const Canvas = () => {
           index={index}
           node={node}
           moveCard={moveCard}
+          windowFrame={windowFrame}
         >
           {node.children.map((n, i) => renderCard(n, i))}
         </Card>
@@ -58,6 +58,7 @@ const Canvas = () => {
             node={node}
             moveCard={moveCard}
             isEditable={true}
+            windowFrame={windowFrame}
           ></Card>
         )
       );
@@ -78,7 +79,7 @@ const Canvas = () => {
       onClick={onCanvasClick}
       onMouseEnter={onCanvasEnter}
       id="canvas"
-      className={`w-full h-screen text-white ${isPreview ? "" : "pt-6"}`}
+      className={`w-full h-screen text-white`}
     >
       <div className={`mx-auto h-full bg-slate-900`}>
         {dom?.map((item, i) => renderCard(item, i))}
