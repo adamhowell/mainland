@@ -5,6 +5,7 @@ import {
   setHoveredSection,
   setBackward,
   setForward,
+  removeNode
 } from "../../redux/data-reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { closeAllModals } from "../../redux/modals-reducer";
@@ -26,7 +27,11 @@ const Canvas = () => {
     const evtobj = window.event ? e : e;
     if (evtobj.keyCode == 90 && evtobj.ctrlKey) dispatch(setBackward());
     if (evtobj.keyCode == 89 && evtobj.ctrlKey) dispatch(setForward());
-    if (evtobj.keyCode == 27) dispatch(closeAllModals());
+    if (evtobj.keyCode == 27) {
+      dispatch(closeAllModals());
+      dispatch(setSelectedSection(null))
+    }
+    if (evtobj.keyCode == 46) dispatch(removeNode());
   };
 
   const moveCard = useCallback((dragId, hoverId, node) => {

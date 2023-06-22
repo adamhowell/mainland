@@ -3,7 +3,12 @@ import styles from "./Layout.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { IconEyeSlash } from "../Icons";
 import { setIsPreview } from "../../redux/layout-reducer";
-import { removeNode, setBackward, setForward } from "../../redux/data-reducer";
+import {
+  removeNode,
+  setBackward,
+  setForward,
+  setSelectedSection,
+} from "../../redux/data-reducer";
 import Frame, {
   FrameContextConsumer,
   FrameContext,
@@ -55,6 +60,7 @@ const Layout = ({
       if (evtobj.keyCode == 90 && evtobj.ctrlKey) dispatch(setBackward());
       if (evtobj.keyCode == 89 && evtobj.ctrlKey) dispatch(setForward());
       if (evtobj.keyCode == 46) dispatch(removeNode());
+      if (evtobj.keyCode == 27) dispatch(setSelectedSection(null));
     };
 
     useEffect(() => {
