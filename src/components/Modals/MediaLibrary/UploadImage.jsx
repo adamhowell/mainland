@@ -1,17 +1,37 @@
-import React, { useState } from "react";
-import { useSelectedNode } from "../../../helpers";
+import React, { useState, useCallback } from "react";
 import { setAttribute, addImage } from "../../../redux/data-reducer";
-import Input from "../../Inputs/Input";
-import { buttonSimple } from "../../../styles/classes";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "../../../redux/modals-reducer";
+import { useDropzone } from "react-dropzone";
 
 const UploadImage = () => {
   const { mediaLibrary } = useSelector((state) => state.data);
+  const onDrop = useCallback((acceptedFiles) => {
+    acceptedFiles.map((file)=>{
+      toBase64(file).then((data)=>{
+        dispatch(addImage(data));
+      })
+    })
+  }, []);
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    accept: {
+      "image/jpeg": [],
+      "image/png": [],
+      "image/svg": [],
+    },
+    onDrop,
+  });
 
-  const selectedNode = useSelectedNode();
   const [value, setValue] = useState("");
   const dispatch = useDispatch();
+
+  const toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+    });
 
   const onAdd = () => {
     setValue("");
@@ -20,24 +40,19 @@ const UploadImage = () => {
 
   return (
     <>
-      <h4>Add base64 image</h4>
-      <div className="flex items-center">
-        <Input
-          disabled={!selectedNode}
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          placeholder="data:image/jpeg;base64,/9j/4AA..."
-          className={`mt-3 mb-3 bg-slate-700`}
-        />
-        <button
-          disabled={!value}
-          onClick={() => onAdd()}
-          className={`${buttonSimple} whitespace-nowrap pointer-events-${
-            !value ? "none" : "auto"
-          } ${!value ? "opacity-30" : "opacity-100"}`}
-        >
-          Add
-        </button>
+      <h4>Add image</h4>
+      <div
+        {...getRootProps()}
+        className={`${
+          isDragActive ? "border-slate-200" : "border-slate-500"
+        } transition p-5 flex items-center justify-center border h-40 rounded my-5 w-full`}
+      >
+        <input {...getInputProps()} />
+        {isDragActive ? (
+          <p>Drop images here ...</p>
+        ) : (
+          <p>Drag 'n' drop images here, or click to select files</p>
+        )}
       </div>
       <h5>Images</h5>
       <div className="w-full h-96 mt-3">

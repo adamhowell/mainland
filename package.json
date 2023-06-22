@@ -36,6 +36,7 @@
     "react-dnd-html5-backend": "^16.0.1",
     "react-dnd-multi-backend": "^8.0.1",
     "react-dom": "^18.2.0",
+    "react-dropzone": "^14.2.3",
     "react-frame-component": "^5.2.6",
     "react-redux": "^8.0.5",
     "react-select": "^5.7.3",
