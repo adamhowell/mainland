@@ -14,6 +14,7 @@ import { Card } from "./Card";
 const Canvas = () => {
   const dispatch = useDispatch();
   const { dom, selectedSection } = useSelector((state) => state.data);
+  const { isPreview } = useSelector((state) => state.layout);
 
   console.log("DOM", dom);
 
@@ -77,7 +78,7 @@ const Canvas = () => {
       onClick={onCanvasClick}
       onMouseEnter={onCanvasEnter}
       id="canvas"
-      className={`w-full h-screen text-white`}
+      className={`w-full h-screen text-white ${isPreview ? "" : "pt-6"}`}
     >
       <div className={`mx-auto h-full bg-slate-900`}>
         {dom?.map((item, i) => renderCard(item, i))}
