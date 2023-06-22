@@ -22,7 +22,6 @@ const UploadImage = () => {
     onDrop,
   });
 
-  const [value, setValue] = useState("");
   const dispatch = useDispatch();
 
   const toBase64 = (file) =>
@@ -32,11 +31,6 @@ const UploadImage = () => {
       reader.onload = () => resolve(reader.result);
       reader.onerror = reject;
     });
-
-  const onAdd = () => {
-    setValue("");
-    dispatch(addImage(value));
-  };
 
   return (
     <>
@@ -55,7 +49,7 @@ const UploadImage = () => {
         )}
       </div>
       <h5>Images</h5>
-      <div className="w-full h-96 mt-3">
+      <div className="w-full h-96 mt-3 flex gap-3 flex-wrap">
         {mediaLibrary?.map((image, i) => (
           <img
             onClick={() => {
@@ -63,7 +57,7 @@ const UploadImage = () => {
               dispatch(setAttribute("backgroundImage", image));
             }}
             key={`mdi-${i}`}
-            className="w-48 h-40 object-cover cursor-pointer border border-slate-500 my-3 transition hover:border-slate-200"
+            className="w-44 h-36 object-cover cursor-pointer border border-slate-500 my-3 transition hover:border-slate-200"
             src={image}
           />
         ))}
