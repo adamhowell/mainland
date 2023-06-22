@@ -5,6 +5,7 @@ import PropertySelector from "../../StyleManager/PropertySelector";
 import TagSelector from "../../StyleManager/TagSelector";
 import { isTagVariants } from "../../../utils";
 import { useSelectedNode } from "../../../helpers";
+import SrcSelector from "../../StyleManager/SrcSelector";
 
 const StyleManager = () => {
   const selectedNode = useSelectedNode();
@@ -24,7 +25,8 @@ const StyleManager = () => {
       )}
       {selectedNode?.tagName === "img" && (
         <CollapseMenu title={`Image source`}>
-          <PropertySelector property="src" />
+          <PropertySelector label="url / base64" property="src" />
+          <SrcSelector property="src"/>
         </CollapseMenu>
       )}
       {selectedNode?.tagName === "iframe" && (

@@ -3,6 +3,7 @@ import { setAttribute, addImage } from "../../../redux/data-reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "../../../redux/modals-reducer";
 import { useDropzone } from "react-dropzone";
+import { toBase64 } from "../../../utils";
 
 const UploadImage = () => {
   const { mediaLibrary } = useSelector((state) => state.data);
@@ -23,14 +24,6 @@ const UploadImage = () => {
   });
 
   const dispatch = useDispatch();
-
-  const toBase64 = (file) =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = reject;
-    });
 
   return (
     <>
