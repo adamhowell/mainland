@@ -1243,6 +1243,7 @@ export const classes = {
     "mb-96",
   ],
   marginX: [
+    "mx-auto",
     "mx-0",
     "mx-px",
     "mx-0.5",
@@ -1280,6 +1281,7 @@ export const classes = {
     "mx-96",
   ],
   marginY: [
+    "my-auto",
     "my-0",
     "my-px",
     "my-0.5",

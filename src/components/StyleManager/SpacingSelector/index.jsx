@@ -49,12 +49,20 @@ const SpacingSelector = () => {
   const options2 = useMemo(
     () => [
       ...(active
-        ? classes[active?.includes("margin") ? "marginY" : "paddingY"].map(
-            (c) => ({
-              value: `${getResponsivePrefix(responsiveView)}${c}`,
-              label: `${getResponsivePrefix(responsiveView)}${c}`,
-            })
-          )
+        ? classes[
+            active?.includes("margin")
+              ? active?.includes("marginLeft") ||
+                active?.includes("marginRight")
+                ? "marginX"
+                : "marginY"
+              : active?.includes("paddingLeft") ||
+                active?.includes("paddingRight")
+              ? "paddingX"
+              : "paddingY"
+          ].map((c) => ({
+            value: `${getResponsivePrefix(responsiveView)}${c}`,
+            label: `${getResponsivePrefix(responsiveView)}${c}`,
+          }))
         : []),
     ],
     [responsiveView, active, classes]
@@ -230,7 +238,10 @@ const SpacingSelector = () => {
   const removeName = () => active?.replace("margin", "").replace("padding", "");
 
   const getOption = (name) => {
-    const className = getClassByPartOfName(`${selectedNode.className}`, `${getResponsivePrefix(responsiveView)}${name}`);
+    const className = getClassByPartOfName(
+      `${selectedNode.className}`,
+      `${getResponsivePrefix(responsiveView)}${name}`
+    );
     return className
       ? {
           value: className,
@@ -251,11 +262,22 @@ const SpacingSelector = () => {
         return getOption(isMargin() ? "mr-" : "pr-");
       case "Y":
         return getOption(isMargin() ? "my-" : "py-");
+      case "X":
+        return getOption(isMargin() ? "mx-" : "px-");
       case "all":
         return getOption(isMargin() ? "m-" : "p-");
     }
 
     return null;
+  };
+
+  const XorY = () => {
+    return active?.includes("marginLeft") ||
+      active?.includes("marginRight") ||
+      active?.includes("paddingLeft") ||
+      active?.includes("paddingRight")
+      ? "x"
+      : "y";
   };
 
   return (
@@ -274,8 +296,12 @@ const SpacingSelector = () => {
               onChange(
                 e,
                 isMargin()
-                  ? `${getResponsivePrefix(responsiveView)}m${removeName().toLowerCase()[0]}-`
-                  : `${getResponsivePrefix(responsiveView)}p${removeName().toLowerCase()[0]}-`
+                  ? `${getResponsivePrefix(responsiveView)}m${
+                      removeName().toLowerCase()[0]
+                    }-`
+                  : `${getResponsivePrefix(responsiveView)}p${
+                      removeName().toLowerCase()[0]
+                    }-`
               )
             }
             options={options1}
@@ -285,12 +311,21 @@ const SpacingSelector = () => {
         </div>
         <div className="flex items-center w-full mb-2">
           <span className="uppercase text-slate-400 text-xs font-medium w-2/4 shrink-0">
-            {active?.includes("margin") ? "Margin" : "Padding"} Y-axis
+            {active?.includes("margin") ? "Margin" : "Padding"}{" "}
+            {XorY().toUpperCase()}
+            -axis
           </span>
           <Select
             isDisabled={!selectedNode}
-            value={selectedNode ? getSelected("Y") : null}
-            onChange={(e) => onChange(e, isMargin() ? `${getResponsivePrefix(responsiveView)}my-` : `${getResponsivePrefix(responsiveView)}py-`)}
+            value={selectedNode ? getSelected(XorY().toUpperCase()) : null}
+            onChange={(e) =>
+              onChange(
+                e,
+                isMargin()
+                  ? `${getResponsivePrefix(responsiveView)}m${XorY()}-`
+                  : `${getResponsivePrefix(responsiveView)}p${XorY()}-`
+              )
+            }
             options={options2}
             className="w-full"
             placeholder={"Select"}
@@ -303,7 +338,14 @@ const SpacingSelector = () => {
           <Select
             isDisabled={!selectedNode}
             value={selectedNode ? getSelected("all") : null}
-            onChange={(e) => onChange(e, isMargin() ? `${getResponsivePrefix(responsiveView)}m-` : `${getResponsivePrefix(responsiveView)}p-`)}
+            onChange={(e) =>
+              onChange(
+                e,
+                isMargin()
+                  ? `${getResponsivePrefix(responsiveView)}m-`
+                  : `${getResponsivePrefix(responsiveView)}p-`
+              )
+            }
             options={options3}
             className="w-full"
             placeholder={"Select"}
@@ -341,7 +383,9 @@ const SpacingSelector = () => {
           type="text"
         />
 
-        <div className={`${styles.padding} rounded-lg border-4 border-slate-800`}>
+        <div
+          className={`${styles.padding} rounded-lg border-4 border-slate-800`}
+        >
           <div className="ps-4">
             <span className="uppercase text-slate-400 text-xs font-medium">
               Padding
