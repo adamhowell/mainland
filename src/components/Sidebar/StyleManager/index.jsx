@@ -14,9 +14,12 @@ import BoxShadow from "./BoxShadow";
 import Borders from "./Borders";
 import Flex from "./Flex";
 import Grid from "./Grid";
+import { getResponsivePrefix } from "../../../utils";
 
 const StyleManager = () => {
   const selectedLayout = useSelectedLayout();
+
+  console.log(selectedLayout)
 
   return (
     <div className={`${styles.root}`}>

@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { classes } from "../configs/tailwind";
-import { getResponsivePrefix } from "../utils";
+import { getResponsivePrefix, getResponsivePrefixes } from "../utils";
 
 const getNode = (dom, id) => {
   let resultNode = null;
@@ -27,11 +27,19 @@ export const useSelectedNode = () => {
 
 export const useSelectedLayout = () => {
   const { dom, selectedSection } = useSelector((state) => state.data);
-  const node = getNode(dom, selectedSection?.id)
+  const { responsiveView } = useSelector((state) => state.layout);
+  const node = getNode(dom, selectedSection?.id);
 
   if (node?.className) {
     const cls = node.className.split(" ");
-    const result = classes.display.filter((d) => cls.indexOf(d) != -1)
+    let result = null;
+
+    getResponsivePrefixes(responsiveView).map((view) => {
+      if (!result?.length)
+        result = classes.display.filter(
+          (d) => cls.indexOf(`${view}${d}`) != -1
+        );
+    });
 
     return result.length > 0 ? result[0] : null;
   } else {

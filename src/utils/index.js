@@ -188,6 +188,19 @@ export const getResponsivePrefix = (view) => {
   }
 };
 
+export const getResponsivePrefixes = (view) => {
+  switch (view) {
+    case "xl":
+      return ["xl:", "lg:", "md:", ""];
+    case "lg":
+      return ["lg:", "md:", ""];
+    case "md":
+      return ["md:", ""];
+    case "sm":
+      return [""];
+  }
+};
+
 export const isCanContainsChildren = (name) => {
   switch (name) {
     case "hr":
