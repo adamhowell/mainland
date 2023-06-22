@@ -18,6 +18,7 @@ const SET_HOVERED_LAYER = "data-reducer/SET_HOVERED_LAYER";
 const SET_SELECTED_PARENT = "data-reducer/SET_SELECTED_PARENT";
 const SET_SELECTED_CHILD = "data-reducer/SET_SELECTED_CHILD";
 const ADD_IMAGE = "data-reducer/ADD_IMAGE";
+const SET_ENABLE_REMOVE = "data-reducer/SET_ENABLE_REMOVE";
 
 const initialState = {
   config: null,
@@ -104,6 +105,7 @@ const initialState = {
   dropHighlightLayer: null,
   hoveredLayer: null,
   mediaLibrary: [],
+  enableRemove: true,
 };
 
 const dataReducer = (state = initialState, action) => {
@@ -213,6 +215,9 @@ const dataReducer = (state = initialState, action) => {
     case ADD_IMAGE: {
       return { ...state, mediaLibrary: [...state.mediaLibrary, action.data] };
     }
+    case SET_ENABLE_REMOVE: {
+      return { ...state, enableRemove: action.data };
+    }
     default:
       return state;
   }
@@ -289,6 +294,10 @@ const actions = {
   }),
   addImage: (data) => ({
     type: ADD_IMAGE,
+    data: data,
+  }),
+  setEnableRemove: (data) => ({
+    type: SET_ENABLE_REMOVE,
     data: data,
   }),
 };
@@ -507,12 +516,13 @@ export const setSelectedSection = (data) => (dispatch) => {
 
 export const removeNode = (id) => (dispatch, getState) => {
   const {
-    data: { dom, selectedSection },
+    data: { dom, selectedSection, enableRemove },
   } = getState();
 
-  dispatch(
-    actions.removeNode(removeNodeInternal(dom, id ? id : selectedSection.id))
-  );
+  if (enableRemove)
+    dispatch(
+      actions.removeNode(removeNodeInternal(dom, id ? id : selectedSection.id))
+    );
 };
 
 export const updateText = (id, text) => (dispatch, getState) => {
@@ -697,6 +707,10 @@ export const setForward = (data) => (dispatch) => {
 
 export const addImage = (data) => (dispatch) => {
   dispatch(actions.addImage(data));
+};
+
+export const setEnableRemove = (data) => (dispatch) => {
+  dispatch(actions.setEnableRemove(data));
 };
 
 export default dataReducer;
