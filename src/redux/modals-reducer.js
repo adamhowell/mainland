@@ -5,12 +5,15 @@ const OPEN_MODAL_EXPORT = "modals-reducer/OPEN_MODAL_EXPORT";
 const CLOSE_MODAL_EXPORT = "modals-reducer/CLOSE_MODAL_EXPORT";
 const CLOSE_MODAL_AI = "modals-reducer/CLOSE_MODAL_AI";
 const OPEN_MODAL_AI = "modals-reducer/OPEN_MODAL_AI";
+const OPEN_MODAL_IMAGE_SOURCE = "modals-reducer/OPEN_MODAL_IMAGE_SOURCE";
+const CLOSE_MODAL_IMAGE_SOURCE = "modals-reducer/CLOSE_MODAL_IMAGE_SOURCE";
 
 const initialState = {
   data: {},
   isMediaLibrary: false,
   isExport: false,
   isAI: false,
+  isImageSource: false,
   mediaRequestFrom: "",
 };
 
@@ -33,6 +36,12 @@ const modalsReducer = (state = initialState, action) => {
     }
     case CLOSE_MODAL_AI: {
       return { ...state, isAI: false };
+    }
+    case OPEN_MODAL_IMAGE_SOURCE: {
+      return { ...state, isImageSource: true };
+    }
+    case CLOSE_MODAL_IMAGE_SOURCE: {
+      return { ...state, isImageSource: false };
     }
     case CLOSE_ALL_MODALS: {
       return { ...state, ...initialState };
@@ -60,6 +69,11 @@ const actions = {
           type: OPEN_MODAL_AI,
           data: data,
         };
+      case "imageSource":
+        return {
+          type: OPEN_MODAL_IMAGE_SOURCE,
+          data: data,
+        };
     }
   },
   closeModal: (modalName) => {
@@ -75,6 +89,10 @@ const actions = {
       case "AI":
         return {
           type: CLOSE_MODAL_AI,
+        };
+      case "imageSource":
+        return {
+          type: CLOSE_MODAL_IMAGE_SOURCE,
         };
     }
   },

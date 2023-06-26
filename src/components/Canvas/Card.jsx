@@ -18,6 +18,7 @@ import {
   getDefaultDisplayClassEditable,
 } from "../../utils";
 import ContentEditable from "react-contenteditable";
+import { openModal } from "../../redux/modals-reducer";
 
 export const Card = ({
   index,
@@ -285,6 +286,10 @@ export const Card = ({
         : false;
   };
 
+  const onDoubleClick = () => {
+    if(node.tagName === "img") dispatch(openModal("imageSource"))
+  }
+
   return isEditable && node.content ? (
     <div
       className={`relative p-1 ${className ? className : ""}`}
@@ -361,6 +366,7 @@ export const Card = ({
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
       onDragLeave={onDragLeave}
+      onDoubleClick={onDoubleClick}
       ref={ref}
       style={{
         display: getDefaultDisplayClassEditable(node.tagName),
