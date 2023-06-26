@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelectedLayout } from "../../../helpers";
+import { useSelectedLayout, useParentLayout } from "../../../helpers";
 import styles from "./StyleManager.module.scss";
 import CollapseMenu from "../../CollapseMenu";
 import Classes from "./Classes";
@@ -13,11 +13,12 @@ import Effects from "./Effects";
 import BoxShadow from "./BoxShadow";
 import Borders from "./Borders";
 import Flex from "./Flex";
+import FlexChild from "./FlexChild";
 import Grid from "./Grid";
-import { getResponsivePrefix } from "../../../utils";
 
 const StyleManager = () => {
   const selectedLayout = useSelectedLayout();
+  const parentNodeLayout = useParentLayout();
 
   return (
     <div className={`${styles.root}`}>
@@ -30,6 +31,11 @@ const StyleManager = () => {
       {selectedLayout === "grid" && (
         <CollapseMenu title={`Grid`}>
           <Grid />
+        </CollapseMenu>
+      )}
+      {parentNodeLayout === "flex" && (
+        <CollapseMenu title={`Flex`}>
+          <FlexChild />
         </CollapseMenu>
       )}
       {selectedLayout === "flex" && (

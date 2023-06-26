@@ -20,6 +20,24 @@ const getNode = (dom, id) => {
   return resultNode;
 };
 
+const getParentNode = (dom, id) => {
+  let resultNode = null;
+  if (id) {
+    const checkEndReturnNode = (node) => {
+      if (node.children)
+        node.children.forEach((n) => {
+          n.id !== id ? checkEndReturnNode(n) : (resultNode = node);
+        });
+    };
+
+    dom?.forEach((node) => {
+      node.id !== id ? checkEndReturnNode(node) : (resultNode = null);
+    });
+  }
+
+  return resultNode;
+};
+
 export const useSelectedNode = () => {
   const { dom, selectedSection } = useSelector((state) => state.data);
   return getNode(dom, selectedSection?.id);
@@ -29,6 +47,28 @@ export const useSelectedLayout = () => {
   const { dom, selectedSection } = useSelector((state) => state.data);
   const { responsiveView } = useSelector((state) => state.layout);
   const node = getNode(dom, selectedSection?.id);
+
+  if (node?.className) {
+    const cls = node.className.split(" ");
+    let result = null;
+
+    getResponsivePrefixes(responsiveView).map((view) => {
+      if (!result?.length)
+        result = classes.display.filter(
+          (d) => cls.indexOf(`${view}${d}`) != -1
+        );
+    });
+
+    return result.length > 0 ? result[0] : null;
+  } else {
+    return null;
+  }
+};
+
+export const useParentLayout = () => {
+  const { dom, selectedSection } = useSelector((state) => state.data);
+  const { responsiveView } = useSelector((state) => state.layout);
+  const node = getParentNode(dom, selectedSection?.id);
 
   if (node?.className) {
     const cls = node.className.split(" ");
