@@ -10,14 +10,12 @@ import { buttonSimple } from "../../styles/classes";
 import { tab } from "../../styles/classes";
 import { Configuration, OpenAIApi } from "openai";
 import { addToDom } from "../../redux/data-reducer";
-import Frame, {
-  FrameContextConsumer,
-} from "react-frame-component";
+import Frame, { FrameContextConsumer } from "react-frame-component";
 
 const tabs = [{ name: "Preview" }, { name: "Code" }];
 
 const MediaLibrary = () => {
-  const { isAI } = useSelector((state) => state.modals);
+  const { isAI, data } = useSelector((state) => state.modals);
   const dispatch = useDispatch();
   const [prompt, setPrompt] = useState("");
   const [output, setOutput] = useState("");
@@ -27,6 +25,10 @@ const MediaLibrary = () => {
   const [active, setActive] = useState(0);
   const [error, setError] = useState("");
   const [tokens, setTokens] = useState(500);
+
+  useEffect(() => {
+    if (data.prompt) setPrompt(data.prompt);
+  }, [data]);
 
   useEffect(() => {
     if (error)
@@ -167,7 +169,11 @@ const MediaLibrary = () => {
             <h4>OpenAI API Key</h4>
             <div className="flex items-center">
               <Input
-                value={`${keyInput.slice(0, 10)}${keyInput.slice(10, keyInput.length).split("").map(c=>"●").join("")}`}
+                value={`${keyInput.slice(0, 10)}${keyInput
+                  .slice(10, keyInput.length)
+                  .split("")
+                  .map((c) => "●")
+                  .join("")}`}
                 onChange={(e) => setKeyInput(e.target.value)}
                 placeholder="..."
                 className={`mt-3 mb-3 bg-slate-700`}

@@ -32,10 +32,10 @@ const modalsReducer = (state = initialState, action) => {
       return { ...state, isExport: false };
     }
     case OPEN_MODAL_AI: {
-      return { ...state, isAI: true };
+      return { ...state, isAI: true, data: { prompt: action.data } };
     }
     case CLOSE_MODAL_AI: {
-      return { ...state, isAI: false };
+      return { ...state, isAI: false, data: {} };
     }
     case OPEN_MODAL_IMAGE_SOURCE: {
       return { ...state, isImageSource: true };
