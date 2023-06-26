@@ -39,11 +39,11 @@ const Layout = ({ slotHeader, slotSidebar, slotBreadcrumb, slotModals }) => {
     return children;
   };
 
-  const FrameBindingContext = () => (
+  const FrameBindingContext = ({ children }) => (
     <FrameContextConsumer>
       {({ document, window }) => (
         <CanvasInner document={document} window={window}>
-          <Canvas windowFrame={window} />
+          {children}
         </CanvasInner>
       )}
     </FrameContextConsumer>
@@ -105,7 +105,9 @@ const Layout = ({ slotHeader, slotSidebar, slotBreadcrumb, slotModals }) => {
           >
             <Frame style={{ width: "100%", height: "100%" }}>
               <FrameBindingContext>
-                <DndFrame />
+                <DndFrame>
+                  <Canvas windowFrame={window} />
+                </DndFrame>
               </FrameBindingContext>
             </Frame>
           </div>
