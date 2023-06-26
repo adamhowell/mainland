@@ -60,25 +60,42 @@ const MediaLibrary = () => {
 
     const openai = new OpenAIApi(configuration);
 
-    openai
-      .createChatCompletion({
-        model: "gpt-4",
-        messages: [
-          {
-            role: "user",
-            content: `output TailwindCSS markup that ${prompt}. Only respond with code as plain text without code block syntax around it.`,
-          },
-        ],
-        max_tokens: tokens ? tokens : 300,
-      })
-      .then((d) => {
-        setIsLoading(false);
-        setOutput(d.data.choices[0].message.content);
-      })
-      .catch((err) => {
-        setError(err.message);
-        console.log(err);
-      });
+    if (data.isImage) {
+      openai
+        .createImage({
+          prompt: prompt,
+          n: 1,
+          size: "512x512",
+        })
+        .then((d) => {
+          setIsLoading(false);
+          setOutput(`<img src="${d.data.data[0].url}"/>`);
+        })
+        .catch((err) => {
+          setError(err.message);
+          console.log(err);
+        });
+    } else {
+      openai
+        .createChatCompletion({
+          model: "gpt-4",
+          messages: [
+            {
+              role: "user",
+              content: `output TailwindCSS markup that ${prompt}. Only respond with code as plain text without code block syntax around it.`,
+            },
+          ],
+          max_tokens: tokens ? tokens : 300,
+        })
+        .then((d) => {
+          setIsLoading(false);
+          setOutput(d.data.choices[0].message.content);
+        })
+        .catch((err) => {
+          setError(err.message);
+          console.log(err);
+        });
+    }
   };
 
   const onAdd = () => {
@@ -224,16 +241,18 @@ const MediaLibrary = () => {
                     </button>
                   ))}
                 </div>
-                <div className="flex items-center">
-                  <Label className="w-auto">Tokens</Label>
-                  <Input
-                    value={tokens}
-                    onChange={(e) => setTokens(e.target.value)}
-                    placeholder="Tokens"
-                    type="number"
-                    className={`mt-3 mb-3 bg-slate-700 ml-3 w-28`}
-                  />
-                </div>
+                {!data.isImage && (
+                  <div className="flex items-center">
+                    <Label className="w-auto">Tokens</Label>
+                    <Input
+                      value={tokens}
+                      onChange={(e) => setTokens(e.target.value)}
+                      placeholder="Tokens"
+                      type="number"
+                      className={`mt-3 mb-3 bg-slate-700 ml-3 w-28`}
+                    />
+                  </div>
+                )}
               </div>
               {renderTab()}
               <div className="text-center mt-4">
