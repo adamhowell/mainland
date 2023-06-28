@@ -64,12 +64,13 @@ const MediaLibrary = () => {
       openai
         .createImage({
           prompt: prompt,
+          response_format: "b64_json",
           n: 1,
           size: "512x512",
         })
         .then((d) => {
           setIsLoading(false);
-          setOutput(`<img src="${d.data.data[0].url}"/>`);
+          setOutput(`<img src="data:image/png;base64,${d.data.data[0].b64_json}"/>`);
         })
         .catch((err) => {
           setError(err.message);
