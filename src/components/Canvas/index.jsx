@@ -81,7 +81,7 @@ const Canvas = ({ windowFrame }) => {
       id="canvas"
       className={`w-full h-screen text-white`}
     >
-      <div className={`mx-auto h-full bg-slate-900`}>
+      <div className={`mx-auto h-full`}>
         {dom?.map((item, i) => renderCard(item, i))}
       </div>
     </div>

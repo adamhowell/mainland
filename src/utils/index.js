@@ -304,3 +304,15 @@ new Promise((resolve, reject) => {
   reader.onload = () => resolve(reader.result);
   reader.onerror = reject;
 });
+
+export const clearHTML = (html) => {
+  if(html.search("</body>")) {
+    const result = html.match(
+      /\<body(.+?)\<\/body\>/g
+    );
+
+    return result[0]
+  }else {
+    return html
+  }
+}

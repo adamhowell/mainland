@@ -46,7 +46,7 @@ const MainActions = () => {
       >
         <IconEye />
       </Button>
-      <Button onClick={() => {}} className={`text-lg h-full`}>
+      <Button onClick={() => dispatch(openModal("import"))} className={`text-lg h-full`}>
         <IconDownload />
       </Button>
     </div>

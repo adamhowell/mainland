@@ -53,13 +53,10 @@ const Export = () => {
 
   useEffect(() => {
     const body = ReactDOMServer.renderToStaticMarkup(getNodes());
-    //const styles = createStyles(clientStyles.rootBr).replaceAll("& ", "")
 
-    //let result = htmlTemplate.replace(`{Body}`, body).replace(`{Styles}`, styles).replace("{Title}", "MainlandJs app").replace("{Dom}", JSON.stringify(dom))
     let result = htmlTemplate
       .replace(`{Body}`, body)
       .replace("{Title}", "MainlandJs app")
-      .replace("{Dom}", JSON.stringify(dom));
     setHtml(result);
   }, [dom]);
 

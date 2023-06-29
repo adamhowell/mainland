@@ -7,6 +7,7 @@ const SET_SELECTED_SECTION = "data-reducer/SET_SELECTED_SECTION";
 const SET_HOVERED_SECTION = "data-reducer/SET_HOVERED_SECTION";
 const MOVE_NODE = "data-reducer/MOVE_NODE";
 const ADD_TO_DOM = "data-reducer/ADD_TO_DOM";
+const REPLACE_DOM = "data-reducer/REPLACE_DOM";
 const REMOVE_NODE = "data-reducer/REMOVE_NODE";
 const UPDATE_TEXT = "data-reducer/UPDATE_TEXT";
 const SET_HIGHLIGHT = "data-reducer/SET_HIGHLIGHT";
@@ -139,6 +140,17 @@ const dataReducer = (state = initialState, action) => {
         past: [...state.past, state.dom],
       };
     }
+    case REPLACE_DOM: {
+      return {
+        ...state,
+        dom: [
+          {
+            ...action.data,
+          },
+        ],
+        past: [...state.past, state.dom],
+      };
+    }
     case SET_SELECTED_SECTION: {
       return { ...state, selectedSection: action.data };
     }
@@ -242,6 +254,10 @@ const actions = {
   }),
   addToDom: (data) => ({
     type: ADD_TO_DOM,
+    data: data,
+  }),
+  replaceDom: (data) => ({
+    type: REPLACE_DOM,
     data: data,
   }),
   setHoveredSection: (data) => ({
@@ -418,6 +434,17 @@ export const addToDom = (data) => (dispatch) => {
 
   dispatch(
     actions.addToDom(htmlToJson(doc.firstChild, data.attributes, data.label))
+  );
+};
+
+export const replaceDom = (data) => (dispatch) => {
+  const doc = new DOMParser().parseFromString(
+    replceSpecialCharacters(data.content),
+    "text/xml"
+  );
+
+  dispatch(
+    actions.replaceDom(htmlToJson(doc.firstChild, data.attributes, data.label))
   );
 };
 

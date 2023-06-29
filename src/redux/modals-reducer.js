@@ -7,6 +7,8 @@ const CLOSE_MODAL_AI = "modals-reducer/CLOSE_MODAL_AI";
 const OPEN_MODAL_AI = "modals-reducer/OPEN_MODAL_AI";
 const OPEN_MODAL_IMAGE_SOURCE = "modals-reducer/OPEN_MODAL_IMAGE_SOURCE";
 const CLOSE_MODAL_IMAGE_SOURCE = "modals-reducer/CLOSE_MODAL_IMAGE_SOURCE";
+const OPEN_MODAL_IMPORT = "modals-reducer/OPEN_MODAL_IMPORT";
+const CLOSE_MODAL_IMPORT = "modals-reducer/CLOSE_MODAL_IMPORT";
 
 const initialState = {
   data: {},
@@ -14,6 +16,7 @@ const initialState = {
   isExport: false,
   isAI: false,
   isImageSource: false,
+  isImport: false,
   mediaRequestFrom: "",
 };
 
@@ -42,6 +45,12 @@ const modalsReducer = (state = initialState, action) => {
     }
     case CLOSE_MODAL_IMAGE_SOURCE: {
       return { ...state, isImageSource: false };
+    }
+    case OPEN_MODAL_IMPORT: {
+      return { ...state, isImport: true };
+    }
+    case CLOSE_MODAL_IMPORT: {
+      return { ...state, isImport: false };
     }
     case CLOSE_ALL_MODALS: {
       return { ...state, ...initialState };
@@ -74,6 +83,11 @@ const actions = {
           type: OPEN_MODAL_IMAGE_SOURCE,
           data: data,
         };
+      case "import":
+        return {
+          type: OPEN_MODAL_IMPORT,
+          data: data,
+        };
     }
   },
   closeModal: (modalName) => {
@@ -93,6 +107,10 @@ const actions = {
       case "imageSource":
         return {
           type: CLOSE_MODAL_IMAGE_SOURCE,
+        };
+      case "import":
+        return {
+          type: CLOSE_MODAL_IMPORT,
         };
     }
   },

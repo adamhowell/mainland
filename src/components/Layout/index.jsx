@@ -99,7 +99,7 @@ const Layout = ({ slotHeader, slotSidebar, slotBreadcrumb, slotModals }) => {
                   ? screens[responsiveView]
                   : "100%",
             }}
-            className={`${styles.canvas} transition-opacity ${
+            className={`${styles.canvas} bg-slate-900 transition-all ${
               isReady ? "opacity-100" : "opacity-0"
             } mx-auto ${isPreview ? "expand" : ""}`}
           >

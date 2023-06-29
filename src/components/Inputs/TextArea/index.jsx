@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { setEnableRemove } from "../../../redux/data-reducer";
 
-const TextArea = ({ className, rows, onFocus, onBlur, ...rest }) => {
+const TextArea = ({ className, rows, onFocus, onBlur, border, ...rest }) => {
   const dispatch = useDispatch();
 
   const onFocusInner = (e) => {
@@ -22,7 +22,7 @@ const TextArea = ({ className, rows, onFocus, onBlur, ...rest }) => {
       onBlur={onBlurInner}
       className={`p-4 bg-slate-600 rounded-lg w-full text-slate-300 outline-0 ${
         className ? className : ""
-      }`}
+      } ${border ? 'border border-slate-500' : ""}`}
       rows={rows ? rows : "3"}
     />
   );

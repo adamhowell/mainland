@@ -8,12 +8,6 @@ export const htmlTemplate = `<!DOCTYPE html>
   <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico">
   <title>{Title}</title>
 
-  <script>
-    /*DOM
-    {Dom}
-    DOM*/
-  </script>
-
   <style>
     {Styles}
   </style>
