@@ -17,7 +17,7 @@ const Export = () => {
     let reactNodes = [];
 
     const checkEndReturnNode = (node) => {
-      if (node.children) {
+      if (node.children?.length) {
         return (
           <node.tagName
             {...(node.style ? { style: checkAndReturnStyles(node) } : {})}
@@ -56,7 +56,7 @@ const Export = () => {
 
     let result = htmlTemplate
       .replace(`{Body}`, body)
-      .replace("{Title}", "MainlandJs app")
+      .replace("{Title}", "MainlandJs app");
     setHtml(result);
   }, [dom]);
 

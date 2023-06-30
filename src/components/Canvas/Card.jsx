@@ -17,8 +17,9 @@ import {
   replceSpecialCharacters,
   getDefaultDisplayClassEditable,
 } from "../../utils";
-import ContentEditable from "react-contenteditable";
+//import ContentEditable from "react-contenteditable";
 import { openModal } from "../../redux/modals-reducer";
+import ContentEditable from "react-medium-editor";
 
 export const Card = ({
   index,
@@ -36,6 +37,28 @@ export const Card = ({
   );
   const [isCanEdit, setIsCanEdit] = useState(0);
   const { isPreview } = useSelector((state) => state.layout);
+  const editableRef = useRef();
+
+  useEffect(() => {
+    if ((!selectedSection && editableRef?.current) || (selectedSection?.id != id && editableRef?.current)) {
+      editableRef.current.medium.origElements.blur();
+      if (windowFrame.getSelection) {
+        if (windowFrame.getSelection().empty) {
+          windowFrame.getSelection().empty();
+        } else if (windowFrame.getSelection().removeAllRanges) {
+          windowFrame.getSelection().removeAllRanges();
+        }
+      } else if (windowFrame.document.selection) {
+        windowFrame.document.selection.empty();
+      }
+    }
+  }, [selectedSection]);
+
+  useEffect(() => {
+    if (selectedSection?.id != id && editableRef?.current) {
+      editableRef.current.medium.origElements.blur()
+    }
+  }, [hoveredSection]);
 
   const colorBright = useMemo(
     () => (node.tagName === "body" ? "#696969" : "#adadad"),
@@ -287,8 +310,8 @@ export const Card = ({
   };
 
   const onDoubleClick = () => {
-    if(node.tagName === "img") dispatch(openModal("imageSource"))
-  }
+    if (node.tagName === "img") dispatch(openModal("imageSource"));
+  };
 
   return isEditable && node.content ? (
     <div
@@ -319,24 +342,30 @@ export const Card = ({
       data-handler-id={handlerId}
     >
       {!isPreview && (
-        <Actions
-          isBottom={isBottom()}
-          isInner={isInner()}
-          node={node}
-        />
+        <Actions isBottom={isBottom()} isInner={isInner()} node={node} />
       )}
       <ContentEditable
-        style={{ textAlign: "inherit" }}
-        html={node.content}
+        style={{
+          textAlign: "inherit",
+          pointerEvents:
+            selectedSection?.id != id || isPreview ? "none" : "all",
+        }}
+        text={node.content}
+        ref={editableRef}
         onBlur={() => setIsCanEdit(false)}
         onClick={(e) => {
           dispatch(setSelectedSection(node));
           setIsCanEdit(true);
         }}
-        disabled={!isCanEdit || isPreview}
+        options={{
+          toolbar: { buttons: ["bold", "italic", "underline", "anchor"] },
+          contentWindow: windowFrame,
+          ownerDocument: windowFrame.document,
+          elementsContainer: windowFrame.document.body,
+        }}
         className="w-full block"
-        onChange={(e) => dispatch(updateText(id, e.target.value))}
-        tagName={getEditableTagName(node.tagName)}
+        onChange={(text) => dispatch(updateText(id, text))}
+        tag={getEditableTagName(node.tagName)}
       />
     </div>
   ) : children ? (

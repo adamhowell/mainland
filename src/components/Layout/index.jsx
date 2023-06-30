@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState, useRef } from "react";
 import styles from "./Layout.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { IconEyeSlash } from "../Icons";
@@ -16,11 +16,13 @@ import Frame, {
 import { DndContext } from "react-dnd";
 import { screens } from "../../configs/tailwind";
 import Canvas from "../Canvas";
+import mediumStyles from "../../styles/mediumTheme.js";
 
 const Layout = ({ slotHeader, slotSidebar, slotBreadcrumb, slotModals }) => {
   const { isPreview, responsiveView } = useSelector((state) => state.layout);
   const dispatch = useDispatch();
   const [isReady, setIsReady] = useState(false);
+  const iframeRef = useRef();
 
   useEffect(() => {
     setTimeout(() => {
@@ -39,11 +41,13 @@ const Layout = ({ slotHeader, slotSidebar, slotBreadcrumb, slotModals }) => {
     return children;
   };
 
-  const FrameBindingContext = ({ children }) => (
+  const FrameBindingContext = () => (
     <FrameContextConsumer>
       {({ document, window }) => (
         <CanvasInner document={document} window={window}>
-          {children}
+          <DndFrame>
+            <Canvas windowFrame={window} documentFrame={document} />
+          </DndFrame>
         </CanvasInner>
       )}
     </FrameContextConsumer>
@@ -60,13 +64,37 @@ const Layout = ({ slotHeader, slotSidebar, slotBreadcrumb, slotModals }) => {
 
     useEffect(() => {
       const tw = document.createElement("script");
+      const twS = document.createElement("link");
+      const twM = document.createElement("style");
       const twElm = document.querySelector("#tailwind");
 
       if (!twElm) {
         tw.setAttribute("src", "https://cdn.tailwindcss.com");
         tw.setAttribute("id", "tailwind");
+
+        twS.setAttribute("rel", "stylesheet");
+        twS.setAttribute("type", "text/css");
+        twS.setAttribute(
+          "href",
+          "//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css"
+        );
+
+        console.log(mediumStyles);
+
+        // twM.setAttribute("rel", "stylesheet");
+        // twM.setAttribute("type", "text/css");
+        // twM.setAttribute(
+        //   "href",
+        //   "//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/themes/default.min.css"
+        // );
+
+        twM.innerHTML = mediumStyles;
+
+        document.head.appendChild(twM);
+        document.head.appendChild(twS);
         document.head.appendChild(tw);
       }
+
       window.addEventListener("keydown", onKeyDown);
 
       return () => window.removeEventListener("keydown", onKeyDown);
@@ -103,12 +131,8 @@ const Layout = ({ slotHeader, slotSidebar, slotBreadcrumb, slotModals }) => {
               isReady ? "opacity-100" : "opacity-0"
             } mx-auto ${isPreview ? "expand" : ""}`}
           >
-            <Frame style={{ width: "100%", height: "100%" }}>
-              <FrameBindingContext>
-                <DndFrame>
-                  <Canvas windowFrame={window} />
-                </DndFrame>
-              </FrameBindingContext>
+            <Frame ref={iframeRef} style={{ width: "100%", height: "100%" }}>
+              <FrameBindingContext />
             </Frame>
           </div>
           <div className={`${styles.breadcrumb} ${isPreview ? "hide" : ""}`}>
