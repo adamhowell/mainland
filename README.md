@@ -1,8 +1,6 @@
 # TailwindCSS-powered WYSIWYG page builder
 
-<p align="center">
-  <img src="https://www.mainlandjs.com/logo.svg" width="500" height="75" alt="MainlandJS logo" style="margin: 20px auto;" />
-</p>
+<img src="https://www.mainlandjs.com/logo.svg" width="500" alt="MainlandJS logo" style="margin: 20px;" />
 
 MainlandJS is the first open source WYSIWYG page builder built exclusively with TailwindCSS in mind. [Try the live demo here](https://demo.mainlandjs.com).
 
