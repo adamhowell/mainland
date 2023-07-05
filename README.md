@@ -1,10 +1,10 @@
 # TailwindCSS-powered WYSIWYG page builder
 
 <p align="center">
-  <img src="https://www.mainlandjs.com/logo.svg" width="1000" height="151" alt="MainlandJS logo" />
+  <img src="https://www.mainlandjs.com/logo.svg" width="500" height="75" alt="MainlandJS logo" style="margin: 20px auto;" />
 </p>
 
-MainlandJS is an open source WYSIWYG landing page builder powered by TailwindCSS & enhanced with AI. Try the live demo here.
+MainlandJS is the first open source WYSIWYG page builder built exclusively with TailwindCSS in mind. [Try the live demo here](https://demo.mainlandjs.com).
 
 ## News
 
@@ -12,7 +12,7 @@ MainlandJS is an open source WYSIWYG landing page builder powered by TailwindCSS
 
 ## What is MainlandJS?
 
-MainlandJS is the first open source WYSIWYG page builder built exclusively with TailwindCSS in mind.
+MainlandJS is an open source WYSIWYG landing page builder powered by TailwindCSS & enhanced with AI. 
 
 With MainlandJS you can visually create web pages, landing pages and more using TailwindCSS – the world’s most popular CSS framework – and easily generate images, text and even HTML with AI.
 
@@ -23,8 +23,8 @@ The key features of MainlandJS are:
 - **XXX**: XXX.
 
 <p align="center">
-  <video autoplay muted loop playsinline width="320" height="240" class="rounded shadow w-full" preload="metadata" src="https://github.com/Accomplice-AI/mainland_js/assets/26133/f3d4fdb1-00e3-4999-8558-2271f99b4ed0">
-      Your browser does not support the video tag
+  <video controls="true" allowfullscreen="true">
+    <source src="https://github.com/Accomplice-AI/mainland_js/assets/26133/f3d4fdb1-00e3-4999-8558-2271f99b4ed0" type="video/mp4">
   </video>
 </p>
 
