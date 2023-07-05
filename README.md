@@ -22,11 +22,7 @@ The key features of MainlandJS are:
 - **XXX**: XXX.
 - **XXX**: XXX.
 
-<p align="center">
-  <video controls="true" allowfullscreen="true">
-    <source src="https://github.com/Accomplice-AI/mainland_js/assets/26133/f3d4fdb1-00e3-4999-8558-2271f99b4ed0" type="video/mp4">
-  </video>
-</p>
+https://github.com/Accomplice-AI/mainland_js/assets/26133/f3d4fdb1-00e3-4999-8558-2271f99b4ed0
 
 ## Why MainlandJS?
 
