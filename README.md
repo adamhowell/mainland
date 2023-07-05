@@ -23,7 +23,9 @@ The key features of MainlandJS are:
 - **XXX**: XXX.
 
 <p align="center">
-https://github.com/Accomplice-AI/mainland_js/assets/26133/f3d4fdb1-00e3-4999-8558-2271f99b4ed0
+  <video autoplay muted loop playsinline width="320" height="240" class="rounded shadow w-full" preload="metadata" src="https://github.com/Accomplice-AI/mainland_js/assets/26133/f3d4fdb1-00e3-4999-8558-2271f99b4ed0">
+      Your browser does not support the video tag
+  </video>
 </p>
 
 ## Why MainlandJS?
