@@ -23,7 +23,7 @@ The key features of MainlandJS are:
 - **XXX**: XXX.
 
 <p align="center">
-<img src="https://img.ly/showcases/cesdk/web/s/case-thumbnail/background-removal/background-removal-0.png?utm_source=github&utm_medium=project&utm_campaign=bg-removal" alt="background removal js showcase" />
+https://github.com/Accomplice-AI/mainland_js/assets/26133/f3d4fdb1-00e3-4999-8558-2271f99b4ed0
 </p>
 
 ## Why MainlandJS?
