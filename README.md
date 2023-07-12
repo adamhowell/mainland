@@ -1,30 +1,30 @@
 # TailwindCSS-powered WYSIWYG page builder
 
-<img src="https://www.mainlandjs.com/logo.svg" width="500" alt="MainlandJS logo" style="margin: 20px;" />
+<img src="https://www.mainland.ai/logo.svg" width="500" alt="Mainland logo" style="margin: 20px;" />
 
-MainlandJS is the first open source WYSIWYG page builder built exclusively with TailwindCSS in mind. [Try the live demo here](https://demo.mainlandjs.com).
+Mainland is the first open source WYSIWYG page builder built exclusively with TailwindCSS in mind. [Try the live demo here](https://demo.mainland.ai).
 
 ## News
 
-- **`July 11th, 2023`:** MainlandJS code is released
+- **`July 11th, 2023`:** Mainland code is released
 
-## What is MainlandJS?
+## What is Mainland?
 
-MainlandJS is an open source WYSIWYG landing page builder powered by TailwindCSS & enhanced with AI. 
+Mainland is an open source WYSIWYG landing page builder powered by TailwindCSS & enhanced with AI. 
 
-With MainlandJS you can visually create web pages, landing pages and more using TailwindCSS – the world’s most popular CSS framework – and easily generate images, text and even HTML with AI.
+With Mainland you can visually create web pages, landing pages and more using TailwindCSS – the world’s most popular CSS framework – and easily generate images, text and even HTML with AI.
 
-The key features of MainlandJS are:
+The key features of Mainland are:
 
 - **XXX**: XXX.
 - **XXX**: XXX.
 - **XXX**: XXX.
 
-https://github.com/Accomplice-AI/mainland_js/assets/26133/f3d4fdb1-00e3-4999-8558-2271f99b4ed0
+https://github.com/Accomplice-AI/mainland/assets/26133/f3d4fdb1-00e3-4999-8558-2271f99b4ed0
 
-## Why MainlandJS?
+## Why Mainland?
 
-MainlandJS was designed primarily for use inside Content Management Systems to speed up the creation of dynamic templates and replace common WYSIWYG editors, which are good for content editing, but inappropriate for creating HTML structures. It’s especially useful for teams that already use TailwindCSS everywhere else in their dev stack. Using MainlandJS user generated content can have the same class structure as everything else in your webapp and consume fewer resources.
+Mainland was designed primarily for use inside Content Management Systems to speed up the creation of dynamic templates and replace common WYSIWYG editors, which are good for content editing, but inappropriate for creating HTML structures. It’s especially useful for teams that already use TailwindCSS everywhere else in their dev stack. Using Mainland user generated content can have the same class structure as everything else in your webapp and consume fewer resources.
 
 ## Usage
 
