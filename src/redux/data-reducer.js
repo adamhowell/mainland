@@ -20,6 +20,7 @@ const SET_SELECTED_PARENT = "data-reducer/SET_SELECTED_PARENT";
 const SET_SELECTED_CHILD = "data-reducer/SET_SELECTED_CHILD";
 const ADD_IMAGE = "data-reducer/ADD_IMAGE";
 const SET_ENABLE_REMOVE = "data-reducer/SET_ENABLE_REMOVE";
+const SET_IS_SAVING = "data-reducer/SET_IS_SAVING";
 
 const initialState = {
   config: null,
@@ -107,6 +108,7 @@ const initialState = {
   hoveredLayer: null,
   mediaLibrary: [],
   enableRemove: true,
+  isSaving: false,
 };
 
 const dataReducer = (state = initialState, action) => {
@@ -230,6 +232,9 @@ const dataReducer = (state = initialState, action) => {
     case SET_ENABLE_REMOVE: {
       return { ...state, enableRemove: action.data };
     }
+    case SET_IS_SAVING: {
+      return { ...state, isSaving: action.data };
+    }
     default:
       return state;
   }
@@ -314,6 +319,10 @@ const actions = {
   }),
   setEnableRemove: (data) => ({
     type: SET_ENABLE_REMOVE,
+    data: data,
+  }),
+  setIsSaving: (data) => ({
+    type: SET_IS_SAVING,
     data: data,
   }),
 };
@@ -685,6 +694,28 @@ export const setSelectedChild = (id) => (dispatch, getState) => {
   dom.forEach((node) => checkNode(node));
 };
 
+export const save = (data) => (dispatch, getState) => {
+  const {
+    data: { dom, config },
+  } = getState();
+
+  if (config?.apiURL) {
+    dispatch(actions.setIsSaving(true));
+
+    fetch(`${config.apiURL}/save`, {
+      method: "POST",
+      body: JSON.stringify({ dom: dom }),
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        dispatch(actions.setIsSaving(false));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+};
+
 const removeNodeInternal = (dom, id) => {
   let newDom = [];
 
@@ -738,6 +769,10 @@ export const addImage = (data) => (dispatch) => {
 
 export const setEnableRemove = (data) => (dispatch) => {
   dispatch(actions.setEnableRemove(data));
+};
+
+export const setIsSaving = (data) => (dispatch) => {
+  dispatch(actions.setIsSaving(data));
 };
 
 export default dataReducer;

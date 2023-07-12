@@ -79,15 +79,6 @@ const Layout = ({ slotHeader, slotSidebar, slotBreadcrumb, slotModals }) => {
           "//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css"
         );
 
-        console.log(mediumStyles);
-
-        // twM.setAttribute("rel", "stylesheet");
-        // twM.setAttribute("type", "text/css");
-        // twM.setAttribute(
-        //   "href",
-        //   "//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/themes/default.min.css"
-        // );
-
         twM.innerHTML = mediumStyles;
 
         document.head.appendChild(twM);

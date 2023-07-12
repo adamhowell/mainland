@@ -6,6 +6,7 @@ import {
   setBackward,
   setForward,
   removeNode,
+  save
 } from "../../redux/data-reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { closeAllModals } from "../../redux/modals-reducer";
@@ -14,8 +15,11 @@ import { Card } from "./Card";
 const Canvas = ({ windowFrame }) => {
   const dispatch = useDispatch();
   const { dom, selectedSection } = useSelector((state) => state.data);
+  const { config } = useSelector((state) => state.data);
 
-  console.log("DOM", dom);
+  useEffect(()=>{
+    if(config?.apiURL) dispatch(save())
+  }, [dom])
 
   useEffect(() => {
     window.addEventListener("keydown", onKeyDown);
