@@ -56,7 +56,7 @@ const Export = () => {
 
     let result = htmlTemplate
       .replace(`{Body}`, body)
-      .replace("{Title}", "MainlandJs app");
+      .replace("{Title}", "Mainland app");
     setHtml(result);
   }, [dom]);
 
