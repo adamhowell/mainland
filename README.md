@@ -16,9 +16,9 @@ With Mainland you can visually create web pages, landing pages and more using Ta
 
 The key features of Mainland are:
 
-- **XXX**: XXX.
-- **XXX**: XXX.
-- **XXX**: XXX.
+- **Powered by Tailwind CSS**: The world’s most popular CSS framework, Tailwind CSS makes it easy for hundreds of thousands of developers and teams to build quickly and uniformly. Mainland’s support for Tailwind makes it easy for you and your team to integrate Mainland using the CSS framework you already know and love and run in production.
+- **Open Source WYSIWYG**: Mainland is the world’s first open source, WYSIWYG page builder that fully supports Tailwind by default.
+- **AI enhanced**: Securely use your Open AI API token to seemlessly add HTML templates, headers, paragraphs and images to your pages.
 
 https://github.com/Accomplice-AI/mainland/assets/26133/f3d4fdb1-00e3-4999-8558-2271f99b4ed0
 
@@ -53,7 +53,7 @@ Directly in the browser:
 
 ## License
 
-The software is free for use under the MIT License. Please contact [support@mainland.si](mailto:support@mainland.ai?subject=MainlandJS%20License) for questions about other licensing options.
+The software is free for use under the MIT License. Please contact [support@mainland.si](mailto:support@mainland.ai?subject=Mainland%20License) for questions about other licensing options.
 
 ## Authors & Contributors
 
