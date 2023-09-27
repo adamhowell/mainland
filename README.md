@@ -1,6 +1,6 @@
 # TailwindCSS-powered WYSIWYG page builder
 
-<img src="https://www.mainland.ai/logo.svg" width="500" alt="Mainland logo" style="margin: 20px;" />
+<img src="https://mainland.ai/assets/logo-344144e2998fd3671a1881bbed99b554f01c511ac261be4054c950c4fb25f7e3.svg" width="500" alt="Mainland logo" style="margin: 20px;" />
 
 Mainland is the first open source WYSIWYG page builder built exclusively with TailwindCSS in mind. [Try the live demo here](https://demo.mainland.ai).
 
