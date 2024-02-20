@@ -1,12 +1,6 @@
 # TailwindCSS-powered WYSIWYG page builder
 
-<img src="https://mainland.ai/assets/logo-344144e2998fd3671a1881bbed99b554f01c511ac261be4054c950c4fb25f7e3.svg" width="500" alt="Mainland logo" style="margin: 20px;" />
-
-Mainland is the first open source WYSIWYG page builder built exclusively with TailwindCSS in mind. [Try the live demo here](https://demo.mainland.ai).
-
-## News
-
-- **`July 11th, 2023`:** Mainland code is released
+Mainland is an open source WYSIWYG page builder built exclusively with TailwindCSS in mind.
 
 ## What is Mainland?
 
@@ -53,9 +47,8 @@ Directly in the browser:
 
 ## License
 
-The software is free for use under the MIT License. Please contact [support@mainland.si](mailto:support@mainland.ai?subject=Mainland%20License) for questions about other licensing options.
+The software is free for use under the MIT License.
 
 ## Authors & Contributors
 
-This library is made by Mainland.ai a hosted version of MainlandJS for teams.
 Developed by Yaroslav Luchenko and Adam Howell.
